@@ -1,0 +1,26 @@
+services:
+  skill-scanner:
+    build: !reset null
+    image: ghcr.io/iflytek/skillhub-scanner:latest
+    ports: !override ["127.0.0.1:48200:8000"]
+    environment:
+      SKILL_SCANNER_LLM_API_KEY: ""
+      SKILL_SCANNER_LLM_BASE_URL: ""
+      SKILL_SCANNER_LLM_MODEL: ""
+  postgres:
+    ports: !override ["127.0.0.1:48232:5432"]
+  redis:
+    ports: !override ["127.0.0.1:48279:6379"]
+  minio:
+    ports: !override ["127.0.0.1:48290:9000", "127.0.0.1:48291:9001"]
+  server:
+    image: norte-skillhub-web-git:staging-check
+    ports: !override ["127.0.0.1:48280:8080"]
+    environment:
+      SPRING_APPLICATION_JSON: ${NORTE_GIT_CONFIG_JSON:?Run scripts/norte-local.sh to load private Git settings}
+      SKILLHUB_PUBLIC_BASE_URL: http://127.0.0.1:48230
+      DEVICE_AUTH_VERIFICATION_URI: http://127.0.0.1:48230/cli/auth
+      SKILLHUB_STORAGE_S3_PUBLIC_ENDPOINT: http://127.0.0.1:48290
+  web:
+    image: nginx:1.27-alpine
+    ports: !override ["127.0.0.1:48230:80"]

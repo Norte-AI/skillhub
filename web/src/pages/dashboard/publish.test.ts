@@ -8,6 +8,7 @@ const selectRecords: Array<{ value?: string }> = []
 vi.mock('@tanstack/react-query', () => ({ useQueryClient: () => ({ invalidateQueries: vi.fn() }), useQuery: () => ({ data: null, isLoading: false, isError: false }) }))
 
 vi.mock('@tanstack/react-router', () => ({
+  Link: ({ children }: { children: unknown }) => children,
   useNavigate: () => vi.fn(),
   useSearch: () => useSearchMock(),
 }))

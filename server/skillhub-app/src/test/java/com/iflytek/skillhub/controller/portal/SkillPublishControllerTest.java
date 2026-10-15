@@ -55,6 +55,40 @@ class SkillPublishControllerTest {
     private SkillPublishService skillPublishService;
 
     @MockBean
+    private com.iflytek.skillhub.service.GitImportService gitImportService;
+
+    @Test
+    void gitImport_requiresAuthenticationAndCsrf() throws Exception {
+        String body = "{\"repository\":\"https://github.com/Norte-AI/skillhub\"}";
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/api/web/skills/git-import")
+                .contentType("application/json").content(body).with(csrf()))
+                .andExpect(status().isUnauthorized());
+        var principal = new PlatformPrincipal("usr_1", "publisher", "publisher@example.com", "", "local", Set.of());
+        var auth = new UsernamePasswordAuthenticationToken(principal, null, List.of());
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/api/web/skills/git-import")
+                .contentType("application/json").content(body).with(authentication(auth)))
+                .andExpect(status().isUnauthorized());
+        verify(gitImportService, never()).prepare(ArgumentMatchers.any(), ArgumentMatchers.anyString());
+    }
+
+    @Test
+    void gitImport_returnsPreviewWithoutPublishing() throws Exception {
+        var result = new com.iflytek.skillhub.dto.GitImportResponse(
+                new com.iflytek.skillhub.dto.GitImportResponse.Source("https://github.com/Norte-AI/skillhub.git", "main", "a".repeat(40), "."),
+                "weather", "1.0.0", "Weather", List.of("SKILL.md"), 100, List.of(), "UEs=");
+        given(gitImportService.prepare(ArgumentMatchers.any(), ArgumentMatchers.anyString())).willReturn(result);
+        var principal = new PlatformPrincipal("usr_1", "publisher", "publisher@example.com", "", "local", Set.of());
+        var auth = new UsernamePasswordAuthenticationToken(principal, null, List.of());
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/api/web/skills/git-import")
+                .contentType("application/json").content("{\"repository\":\"https://github.com/Norte-AI/skillhub\",\"ref\":\"main\",\"subdir\":\".\"}")
+                .with(authentication(auth)).with(csrf()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.data.source.commit").value("a".repeat(40)))
+                .andExpect(jsonPath("$.data.name").value("weather"));
+        verify(skillHubMetrics, never()).incrementSkillPublish(ArgumentMatchers.anyString(), ArgumentMatchers.anyString());
+    }
+
+
+    @MockBean
     private NamespaceMemberRepository namespaceMemberRepository;
 
     @MockBean

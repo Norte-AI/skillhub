@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useNavigate, useSearch } from '@tanstack/react-router'
+import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { GitImportPanel } from '@/features/publish/git-import-panel'
 import { UploadZone } from '@/features/publish/upload-zone'
 import { packageFolderAsZip } from '@/features/publish/folder-zip'
 import {
@@ -52,14 +53,16 @@ export function PublishPage() {
   const [warningDialogOpen, setWarningDialogOpen] = useState(false)
   const [precheckWarnings, setPrecheckWarnings] = useState<string[]>([])
   const [isPackaging, setIsPackaging] = useState(false)
+  const [sourceMode, setSourceMode] = useState<'upload' | 'git'>('upload')
+  const [isImportingGit, setIsImportingGit] = useState(false)
 
   const { data: namespaces, isLoading: isLoadingNamespaces } = useMyNamespaces()
   const publishMutation = usePublishSkill()
   const avatarTarget = useQuery({ queryKey: ['skill-avatar', namespaceSlug, updateSlug], queryFn: () => skillAvatarApi.status(namespaceSlug, updateSlug), enabled: !!namespaceSlug && !!updateSlug })
   const avatarUnavailable = !!updateSlug && (avatarTarget.isLoading || avatarTarget.isError)
-  const isBusy = publishMutation.isPending || isSavingAvatar
-  const avatarOnly = isUpdate && !selectedFile
-  const canSubmit = !!namespaceSlug && avatarEdit.ready && !avatarUnavailable && !isBusy && (selectedFile !== null || (isUpdate && avatarEdit.action !== 'KEEP'))
+  const isBusy = publishMutation.isPending || isSavingAvatar || isImportingGit || isPackaging
+  const avatarOnly = isUpdate && sourceMode === 'upload' && !selectedFile
+  const canSubmit = !!namespaceSlug && avatarEdit.ready && !avatarUnavailable && !isBusy && (selectedFile !== null || (avatarOnly && avatarEdit.action !== 'KEEP'))
   const selectedNamespace = namespaces?.find((ns) => ns.slug === namespaceSlug)
   const namespaceOnlyLabel = selectedNamespace?.type === 'GLOBAL'
     ? t('publish.visibilityOptions.loggedInUsersOnly')
@@ -193,7 +196,7 @@ export function PublishPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-8 animate-fade-up">
-      <DashboardPageHeader title={t(isUpdate ? 'publish.updateTitle' : 'publish.title')} subtitle={t(isUpdate ? 'publish.updateSubtitle' : 'publish.subtitle')} />
+      <DashboardPageHeader title={t(isUpdate ? 'publish.updateTitle' : 'publish.title')} subtitle={t(isUpdate ? 'publish.updateSubtitle' : 'publish.subtitle')} actions={<Link to="/dashboard/git-sources" className="text-sm text-primary underline underline-offset-4">{t('gitSources.title')}</Link>} />
 
       <Card className="space-y-8 p-6 md:p-8">
         {prefill.resubmitSkill && prefill.resubmitVersion ? (
@@ -263,12 +266,24 @@ export function PublishPage() {
         <div className="space-y-3">
           <Label className="text-sm font-semibold font-heading">{t('publish.file')}</Label>
           {isUpdate && <p className="text-sm text-muted-foreground">{t('publish.optionalPackage')}</p>}
-          <UploadZone
+          <fieldset disabled={isBusy} className="flex flex-wrap gap-4">
+            <legend className="sr-only">{t('publish.git.source')}</legend>
+            {(['upload', 'git'] as const).map(mode => (
+              <label key={mode} className="flex cursor-pointer items-center gap-2 text-sm">
+                <input type="radio" name="package-source" value={mode} checked={sourceMode === mode}
+                  className="accent-primary" onChange={() => { setSourceMode(mode); handleRemoveSelectedFile() }} />
+                {t(mode === 'upload' ? 'publish.git.upload' : 'publish.git.repositorySource')}
+              </label>
+            ))}
+          </fieldset>
+          {sourceMode === 'git' ? (
+            <GitImportPanel disabled={isBusy} onFileSelect={handleFileSelect} onBusyChange={setIsImportingGit} />
+          ) : <UploadZone
             onFileSelect={handleFileSelect}
             onFolderSelect={handleFolderSelect}
-            disabled={isBusy || isPackaging}
-          />
-          {selectedFile && (
+            disabled={isBusy}
+          />}
+          {selectedFile && sourceMode === 'upload' && (
             <div className="flex items-center justify-between gap-3 rounded-lg border border-border/60 bg-secondary/30 px-4 py-3">
               <div className="min-w-0 text-sm text-muted-foreground flex items-center gap-2">
                 <svg className="w-4 h-4 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

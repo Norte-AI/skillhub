@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 const mocks = vi.hoisted(() => ({ publish: vi.fn(), navigate: vi.fn(), submit: vi.fn(), remove: vi.fn(), refresh: vi.fn(), search: { namespace: 'team', visibility: 'PUBLIC', updateSkill: 'foo', resubmitSkill: '' } }))
 vi.mock('@tanstack/react-query', () => ({ useQueryClient: () => ({ invalidateQueries: mocks.refresh }), useQuery: () => ({ data: { avatarUrl: '/owner-active' }, isLoading: false, isError: false }) }))
-vi.mock('@tanstack/react-router', () => ({ useNavigate: () => mocks.navigate, useSearch: () => mocks.search }))
+vi.mock('@tanstack/react-router', () => ({ Link: ({ children }: { children: React.ReactNode }) => children, useNavigate: () => mocks.navigate, useSearch: () => mocks.search }))
 vi.mock('react-i18next', async () => ({ ...await vi.importActual<typeof import('react-i18next')>('react-i18next'), useTranslation: () => ({ t: (key: string) => key }) }))
 vi.mock('@/shared/hooks/use-skill-queries', () => ({
   usePublishSkill: () => ({ mutateAsync: mocks.publish, isPending: false }),
@@ -23,11 +23,37 @@ vi.mock('@/shared/lib/navigate-after-overlays', () => ({ navigateAfterOverlays: 
 vi.mock('@/shared/lib/toast', () => ({ toast: { success: vi.fn(), error: vi.fn() } }))
 vi.mock('@/features/skill/skill-avatar-manager', () => ({ SkillAvatarManager: () => null }))
 vi.mock('@/api/client', async () => ({ ...await vi.importActual<typeof import('@/api/client')>('@/api/client'), skillAvatarApi: { submit: mocks.submit, delete: mocks.remove } }))
+vi.mock('@/features/publish/git-import-panel', () => ({ GitImportPanel: ({ onFileSelect }: { onFileSelect: (file: File | null) => void }) => <>
+  <button onClick={() => onFileSelect(new File(['git snapshot'], 'git.zip'))}>preview git package</button>
+  <button onClick={() => onFileSelect(null)}>edit git source</button>
+</> }))
 import { PublishPage } from './publish'
 
 describe('Publish avatar submission', () => {
   beforeEach(() => { mocks.publish.mockReset(); mocks.navigate.mockReset(); mocks.search.updateSkill = 'foo'; mocks.search.resubmitSkill = ''; mocks.submit.mockReset(); mocks.remove.mockReset(); mocks.refresh.mockReset(); mocks.refresh.mockResolvedValue(undefined) })
   afterEach(cleanup)
+
+  it('requires a Git preview even when an avatar draft is ready, and clears it after source editing', async () => {
+    render(<PublishPage />)
+    fireEvent.click(screen.getByText('image uploaded'))
+    fireEvent.click(screen.getByRole('radio', { name: 'publish.git.repositorySource' }))
+    expect(screen.getByRole('button', { name: 'publish.confirm' }).hasAttribute('disabled')).toBe(true)
+    fireEvent.click(screen.getByText('preview git package'))
+    expect(screen.getByRole('button', { name: 'publish.confirm' }).hasAttribute('disabled')).toBe(false)
+    fireEvent.click(screen.getByText('edit git source'))
+    expect(screen.getByRole('button', { name: 'publish.confirm' }).hasAttribute('disabled')).toBe(true)
+    expect(mocks.publish).not.toHaveBeenCalled()
+  })
+
+  it('clears a Git package on switching back to file upload', async () => {
+    mocks.search.updateSkill = ''
+    render(<PublishPage />)
+    fireEvent.click(screen.getByRole('radio', { name: 'publish.git.repositorySource' }))
+    fireEvent.click(screen.getByText('preview git package'))
+    fireEvent.click(screen.getByRole('radio', { name: 'publish.git.upload' }))
+    expect(screen.getByRole('button', { name: 'publish.confirm' }).hasAttribute('disabled')).toBe(true)
+    expect(mocks.publish).not.toHaveBeenCalled()
+  })
 
   it('blocks publishing a selected image until staged upload completes', async () => {
     mocks.publish.mockResolvedValue({ namespace: 'team', slug: 'foo', version: '1.1', status: 'PENDING_REVIEW' })

@@ -1,0 +1,46 @@
+{
+  "sourceId": "4c3f9b6b-300b-4c9c-b386-04fb1779dc7b",
+  "namespace": "git-sync-acceptance",
+  "checks": {
+    "createDoesNotPublish": true,
+    "ownerIsolation": true,
+    "ordinarySyncEntersScanReview": true,
+    "sameCommitIdempotent": true,
+    "forgedWebhookRejected": true,
+    "signedWebhookRechecksConfiguredCommit": true,
+    "secretRotationInvalidatesOldSignature": true,
+    "pausedSyncBlocked": true,
+    "automaticChecksConfigured": true,
+    "restartPreservesSource": true,
+    "scheduledDueSourceActuallyRechecked": true,
+    "webhookImmediate202PersistedQueue": true,
+    "queuedWebhookActuallyProcessed": true
+  },
+  "firstStatus": "SCANNING",
+  "source": {
+    "id": "4c3f9b6b-300b-4c9c-b386-04fb1779dc7b",
+    "repository": "https://github.com/Norte-AI/skillhub.git",
+    "ref": "accdfeba94f4c6d2083c79965ba28303e890d41a",
+    "subdir": "builtin-skills/skills/weather",
+    "credentialId": null,
+    "namespace": "git-sync-acceptance",
+    "visibility": "PUBLIC",
+    "autoSync": false,
+    "enabled": true,
+    "lastCommit": "accdfeba94f4c6d2083c79965ba28303e890d41a",
+    "lastVersion": "1.0.0",
+    "lastStatus": "UNCHANGED",
+    "lastError": null,
+    "lastCheckedAt": "2026-10-15T10:01:08.752485Z"
+  },
+  "schedulerProof": {
+    "before": "2026-10-15T10:01:21.383910Z",
+    "after": "2026-10-15T10:03:39.905869Z",
+    "method": "Only this test source timestamp aged by16min to trigger real15min due schedule; scheduler performed actual remote import"
+  },
+  "webhookQueueProof": {
+    "responseStatus": 202,
+    "responseSeconds": 0.018,
+    "finalStatus": "UNCHANGED"
+  }
+}
