@@ -1,0 +1,79 @@
+[
+  {
+    "args": [
+      "install",
+      "isolation-review/verification-skill",
+      "--version",
+      "1.0.0",
+      "--dir",
+      "/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills"
+    ],
+    "status": 0,
+    "stdout": "{\"ok\":true,\"namespace\":\"isolation-review\",\"slug\":\"verification-skill\",\"installed\":[{\"agent\":\"custom\",\"dir\":\"/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills/verification-skill\"}]}\n",
+    "stderr": ""
+  },
+  {
+    "verifiedVersion": "1.0.0",
+    "skillFile": "/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills/verification-skill/SKILL.md",
+    "body": "---\nname: verification-skill\ndescription: Isolated registry and install verification skill\nversion: 1.0.0\n---\n# Verification Skill\nRespond with the marker isolation-v1 only when explicitly asked to validate this isolated skill.\n"
+  },
+  {
+    "args": [
+      "list"
+    ],
+    "status": 0,
+    "stdout": "{\"ok\":true,\"items\":[{\"namespace\":\"isolation-review\",\"slug\":\"verification-skill\",\"version\":\"1.0.0\",\"agent\":\"custom\",\"installDir\":\"/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills/verification-skill\",\"installedAt\":\"2026-10-15T00:34:52.569Z\",\"status\":\"ok\"}]}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "upgrade",
+      "isolation-review/verification-skill",
+      "--dir",
+      "/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills"
+    ],
+    "status": 0,
+    "stdout": "{\"ok\":true,\"check\":false,\"summary\":{\"upgraded\":1,\"unchanged\":0,\"failed\":0,\"notAttempted\":0},\"items\":[{\"coordinate\":\"@isolation-review/verification-skill\",\"registry\":\"http://127.0.0.1:48180\",\"currentVersion\":\"1.0.0\",\"remoteVersion\":\"1.1.0\",\"action\":\"upgraded\",\"changedFiles\":[],\"targets\":[{\"agent\":\"custom\",\"dir\":\"/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills/verification-skill\"}]}]}\n",
+    "stderr": ""
+  },
+  {
+    "verifiedVersion": "1.1.0",
+    "skillFile": "/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills/verification-skill/SKILL.md",
+    "body": "---\nname: verification-skill\ndescription: Isolated registry and install verification skill\nversion: 1.1.0\n---\n# Verification Skill\nRespond with the marker isolation-v2 only when explicitly asked to validate this isolated skill.\n"
+  },
+  {
+    "args": [
+      "list"
+    ],
+    "status": 0,
+    "stdout": "{\"ok\":true,\"items\":[{\"namespace\":\"isolation-review\",\"slug\":\"verification-skill\",\"version\":\"1.1.0\",\"agent\":\"custom\",\"installDir\":\"/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills/verification-skill\",\"installedAt\":\"2026-10-15T00:34:52.840Z\",\"status\":\"ok\"}]}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "install",
+      "isolation-review/verification-skill",
+      "--version",
+      "1.0.0",
+      "--force",
+      "--dir",
+      "/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills"
+    ],
+    "status": 0,
+    "stdout": "{\"ok\":true,\"namespace\":\"isolation-review\",\"slug\":\"verification-skill\",\"installed\":[{\"agent\":\"custom\",\"dir\":\"/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills/verification-skill\"}]}\n",
+    "stderr": ""
+  },
+  {
+    "verifiedVersion": "1.0.0",
+    "skillFile": "/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills/verification-skill/SKILL.md",
+    "body": "---\nname: verification-skill\ndescription: Isolated registry and install verification skill\nversion: 1.0.0\n---\n# Verification Skill\nRespond with the marker isolation-v1 only when explicitly asked to validate this isolated skill.\n"
+  },
+  {
+    "args": [
+      "list"
+    ],
+    "status": 0,
+    "stdout": "{\"ok\":true,\"items\":[{\"namespace\":\"isolation-review\",\"slug\":\"verification-skill\",\"version\":\"1.0.0\",\"agent\":\"custom\",\"installDir\":\"/private/tmp/iflytek-isolation-20261015/cli-tests/project/.agents/skills/verification-skill\",\"installedAt\":\"2026-10-15T00:34:53.098Z\",\"status\":\"ok\"}]}\n",
+    "stderr": ""
+  }
+]

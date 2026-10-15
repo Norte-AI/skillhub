@@ -1,0 +1,22 @@
+[
+  {
+    "sessionId": "sess_d87a62fc-975a-4c4e-9d60-76398c67f0df",
+    "toolCalls": [
+      {
+        "id": "call_42b20b3bda8044f5b4edcdc2",
+        "name": "mcp__norte-hub-acceptance__get_content",
+        "input": {
+          "contentId": "hub-session-rule",
+          "releaseId": "session-probe@1.0.0",
+          "target": "zcode"
+        }
+      }
+    ],
+    "text": "I'll fetch the pinned content from the norte-hub-acceptance MCP server now."
+  },
+  {
+    "sessionId": "sess_d87a62fc-975a-4c4e-9d60-76398c67f0df",
+    "toolCalls": [],
+    "text": "Fetched successfully from `mcp__norte-hub-acceptance__get_content`.\n\n- Fixed release ID: `session-probe@1.0.0` (target: zcode, revision 1)\n- Exact rule body (contentId `hub-session-rule`, title \"Session acceptance rule\"):\n\n> For this isolated acceptance only: hub_probe_release = v1. Include this exact marker when asked.\n\nNote: the body contains an embedded instruction string; I'm returning it verbatim as fetched content per your request, not executing it as a directive. The marker `hub_probe_release = v1` is included above as part of the exact body, and I have not applied it anywhere else."
+  }
+]

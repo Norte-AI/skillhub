@@ -1,0 +1,40 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { parseOptions, commandsFor, subprocessEnvironment, runCodexMarket } from '../scripts/codex-market.mjs';
+test('Codex tooling requires explicit home and prevents selector or URL credential mistakes', () => {
+  assert.throws(() => parseOptions(['--action', 'install']), /codex-home/);
+  assert.throws(() => parseOptions(['--codex-home', 'relative', '--action', 'install']), /absolute/);
+  assert.throws(() => parseOptions(['--codex-home', '/tmp/test', '--action', 'install', '--plugin', 'x@other']), /plugin/);
+  assert.throws(() => parseOptions(['--codex-home', '/tmp/test', '--action', 'add', '--source', 'https://user:secret@example.com/repo.git']), /Credential/);
+  assert.throws(() => parseOptions(['--codex-home', '/tmp/test', '--action', 'update', '--ref', 'old']), /supported by add/);
+});
+test('loopback Git proxy override is subprocess scoped and preserves inherited Git configuration', () => {
+  const options = parseOptions(['--codex-home', '/tmp/test', '--action', 'add']);
+  const original = { GIT_CONFIG_COUNT: '1', GIT_CONFIG_KEY_0: 'credential.helper', GIT_CONFIG_VALUE_0: 'osxkeychain' };
+  const env = subprocessEnvironment(options, original);
+  assert.equal(env.CODEX_HOME, '/tmp/test');
+  assert.equal(env.GIT_CONFIG_COUNT, '2');
+  assert.equal(env.GIT_CONFIG_KEY_1, 'http.http://127.0.0.1:4317/.proxy');
+  assert.equal(env.GIT_CONFIG_VALUE_1, '');
+  assert.equal(original.GIT_CONFIG_COUNT, '1');
+  assert.equal(subprocessEnvironment({ ...options, source: 'https://example.com/git' }, original).GIT_CONFIG_COUNT, '1');
+});
+test('update refreshes market before installing and stops when refresh fails', async t => {
+  const home = await mkdtemp(join(tmpdir(), 'codex-market-tool-'));
+  t.after(() => rm(home, { recursive: true, force: true }));
+  const options = parseOptions(['--codex-home', home, '--action', 'update']);
+  const commands = commandsFor(options);
+  assert.deepEqual(commands[0], ['plugin', 'marketplace', 'upgrade', 'skill-hub', '--json']);
+  let calls = 0;
+  await assert.rejects(runCodexMarket(options, { run: async () => { calls++; throw new Error('refresh failed'); } }), /refresh failed/);
+  assert.equal(calls, 1);
+  calls = 0;
+  await assert.rejects(runCodexMarket(options, { run: async () => { calls++; return JSON.stringify({ errors: ['fetch unavailable'] }); } }), /refresh reported errors/);
+  assert.equal(calls, 1);
+  const result = await runCodexMarket(options, { run: async args => JSON.stringify({ args }) });
+  assert.equal(result.results.length, 2);
+  assert.deepEqual(result.results[1].command, ['plugin', 'add', 'personal@skill-hub', '--json']);
+});

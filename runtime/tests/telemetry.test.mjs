@@ -1,0 +1,55 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, rm, readFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { HubStore } from '../packages/core/index.mjs';
+import { authenticate } from '../packages/auth/index.mjs';
+
+test('device tokens rotate and revoke without leaking credentials into views or audit', async t => {
+  const dir = await mkdtemp(join(tmpdir(), 'skillhub-device-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const store = await new HubStore({ dataDir: dir }).init();
+  await store.registerDevice({ id: 'laptop', name: 'Laptop', client: 'codex' });
+  const first = await store.issueDeviceToken('laptop');
+  assert.deepEqual(await store.authenticateDeviceToken(first.token), { role: 'device', deviceId: 'laptop' });
+  const next = await store.issueDeviceToken('laptop');
+  assert.equal(await store.authenticateDeviceToken(first.token), null);
+  const visible = JSON.stringify([await store.listDevices(), await store.getDevice('laptop'), await store.listAudit()]);
+  assert.ok(!visible.includes(next.token)); assert.ok(!visible.includes('tokenHash'));
+  assert.ok(!(await readFile(join(dir, 'hub.json'), 'utf8')).includes(next.token));
+  await store.revokeDeviceToken('laptop');
+  assert.equal(await store.authenticateDeviceToken(next.token), null);
+  const req = { headers: {}, socket: { remoteAddress: '10.0.0.1' } };
+  assert.equal(await authenticate(req, { store, allowLocalAdmin: true }), null);
+  req.socket.remoteAddress = '127.0.0.1';
+  assert.deepEqual(await authenticate(req, { store, allowLocalAdmin: true }), { role: 'admin' });
+  assert.equal(await authenticate(req, { store, adminToken: 'admin', allowLocalAdmin: true }), null);
+});
+
+test('session locks and receipt idempotency preserve provenance and reject cross-assignment reports', async t => {
+  const dir = await mkdtemp(join(tmpdir(), 'skillhub-evidence-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const store = await new HubStore({ dataDir: dir }).init();
+  await store.saveContent({ id: 'r', kind: 'rule', title: 'Rule', body: 'v1' });
+  await store.saveBundle({ id: 'b', name: 'Bundle', items: ['r'] });
+  const old = await store.buildRelease('b', '1.0.0');
+  const current = await store.buildRelease('b', '1.1.0');
+  await store.registerDevice({ id: 'd', name: 'Device', client: 'codex', assignments: ['b'] });
+  const binding = { id: 's', deviceId: 'd', releaseIds: [old.id], source: 'client-reported' };
+  assert.deepEqual(await store.bindSession(binding), await store.bindSession(binding));
+  await assert.rejects(store.bindSession({ ...binding, releaseIds: [current.id] }), { code: 'CONFLICT' });
+  const receipt = { id: 'receipt', deviceId: 'd', sessionId: 's', releaseId: old.id, kind: 'injection_claim', evidence: 'model says loaded' };
+  const first = await store.reportReceipt(receipt);
+  assert.equal(first.trusted, false); assert.equal(first.verification, 'unverified');
+  assert.deepEqual(await store.reportReceipt(receipt), first);
+  await assert.rejects(store.reportReceipt({ ...receipt, evidence: 'different' }), { code: 'CONFLICT' });
+  await assert.rejects(store.reportReceipt({ ...receipt, id: 'another', releaseId: current.id }), { code: 'FORBIDDEN' });
+  await store.registerDevice({ id: 'other', name: 'Other', client: 'kimi' });
+  await assert.rejects(store.reportReceipt({ ...receipt, id: 'outside', deviceId: 'other', sessionId: undefined }), { code: 'FORBIDDEN' });
+  const reopened = await new HubStore({ dataDir: dir }).init();
+  assert.equal((await reopened.listReceipts({ deviceId: 'd' })).length, 1);
+  await store.setChannel('b', 'stable', old.id, { expectedGeneration: 0 });
+  const results = await Promise.allSettled([store.setChannel('b', 'stable', current.id, { expectedGeneration: 1 }), store.setChannel('b', 'stable', old.id, { expectedGeneration: 1 })]);
+  assert.equal(results.filter(x => x.status === 'fulfilled').length, 1);
+});

@@ -1,0 +1,238 @@
+{
+  "sourceCommit": "72429e6f69ac5d04e8314b1eed2f8c055809c9f5",
+  "imageVersion": "0.2.22",
+  "api": "http://127.0.0.1:48180",
+  "namespace": "isolation-review",
+  "skill": "verification-skill",
+  "checks": [
+    {
+      "name": "isolated_admin_login",
+      "passed": true,
+      "roles": [
+        "SUPER_ADMIN"
+      ]
+    },
+    {
+      "name": "api_token_created",
+      "passed": true,
+      "tokenId": 2
+    },
+    {
+      "name": "publisher_account_approval",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "isolated_namespace_and_publisher",
+      "passed": true,
+      "namespaceId": 3
+    },
+    {
+      "name": "publish_v1",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "pending_review_1.0.0",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "pending_anonymous_download_blocked",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "pending_anonymous_resolution_blocked",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "isolated_admin_login",
+      "passed": true,
+      "roles": [
+        "SUPER_ADMIN"
+      ]
+    },
+    {
+      "name": "api_token_created",
+      "passed": true,
+      "tokenId": 3
+    },
+    {
+      "name": "publisher_account_approval",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "isolated_admin_login",
+      "passed": true,
+      "roles": [
+        "SUPER_ADMIN"
+      ]
+    },
+    {
+      "name": "api_token_created",
+      "passed": true,
+      "tokenId": 4
+    },
+    {
+      "name": "publisher_account_approval",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "isolated_namespace_and_publisher",
+      "passed": true,
+      "namespaceId": 3
+    },
+    {
+      "name": "approved_v1_resolves",
+      "passed": true,
+      "fingerprint": "sha256:b24cfe4b7bd7dd996eca369b0c62363827fdcbe20b3e85eecc3a39c5e5c1864e"
+    },
+    {
+      "name": "approved_v1_download",
+      "passed": true,
+      "status": 200,
+      "sha256": "de56f3b3e9ca3730758d8e747c82c920c2cad38b6b399d21f90ed61e68eadd0d"
+    },
+    {
+      "name": "published_duplicate_version_rejected",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "published_v1_immutable",
+      "passed": true
+    },
+    {
+      "name": "publish_v2",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "pending_review_1.1.0",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "pending_v2_download_blocked",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "approval_waits_for_security_scan",
+      "passed": true,
+      "status": 400,
+      "message": "Security scan is still in progress. Approval is unavailable until scanning finishes."
+    },
+    {
+      "name": "review_approved",
+      "passed": true,
+      "reviewId": 2,
+      "waitAttempts": 6
+    },
+    {
+      "name": "isolated_admin_login",
+      "passed": true,
+      "roles": [
+        "SUPER_ADMIN"
+      ]
+    },
+    {
+      "name": "publisher_account_approval",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "isolated_namespace_and_publisher",
+      "passed": true,
+      "namespaceId": 3
+    },
+    {
+      "name": "approved_v1_resolves",
+      "passed": true,
+      "fingerprint": "sha256:b24cfe4b7bd7dd996eca369b0c62363827fdcbe20b3e85eecc3a39c5e5c1864e"
+    },
+    {
+      "name": "approved_v1_download",
+      "passed": true,
+      "status": 200,
+      "sha256": "de56f3b3e9ca3730758d8e747c82c920c2cad38b6b399d21f90ed61e68eadd0d"
+    },
+    {
+      "name": "published_duplicate_version_rejected",
+      "passed": true,
+      "status": 400
+    },
+    {
+      "name": "published_v1_immutable",
+      "passed": true
+    },
+    {
+      "name": "stable_moves_to_v2",
+      "passed": true,
+      "version": "1.1.0"
+    },
+    {
+      "name": "stable_rolls_back_v1",
+      "passed": true,
+      "version": "1.0.0"
+    },
+    {
+      "name": "rollback_preserves_v1_bytes",
+      "passed": true
+    },
+    {
+      "name": "publish_rejection_candidate",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "name": "pending_review_1.2.0",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "rejected_download_blocked",
+      "passed": true,
+      "status": 400
+    }
+  ],
+  "complete": true,
+  "diagnosticAttempts": [
+    {
+      "name": "unexpected_api_status",
+      "passed": false,
+      "path": "/api/v1/reviews/1/approve",
+      "status": 400,
+      "apiCode": 400
+    },
+    {
+      "name": "unexpected_api_status",
+      "passed": false,
+      "path": "/api/v1/skills/isolation-review/verification-skill/tags/stable",
+      "status": 400,
+      "apiCode": 400
+    },
+    {
+      "name": "initial_nonexistent_capabilities_route",
+      "status": 500,
+      "message": "Stable0.2.22 has no /api/v1/auth/local/capabilities; unmapped route becomes generic500. Switched to actual /api/v1/auth/methods.",
+      "origin": "observed initial driver run"
+    },
+    {
+      "name": "initial_publisher_invalid_username",
+      "status": 400,
+      "message": "Local usernames permit letters, digits and underscore; initial hyphen username rejected. Corrected isolated username.",
+      "origin": "observed initial driver run"
+    },
+    {
+      "name": "rejected_version_post_scan_confirmation",
+      "status": 400,
+      "versionStatus": "REJECTED",
+      "message": "Anonymous download remains blocked after asynchronous scan completed."
+    }
+  ]
+}

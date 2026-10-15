@@ -104,6 +104,7 @@ const dashboardRouteOptions = { silentFallback: true } satisfies LazyRouteOption
 
 const DashboardPage = createLazyRouteComponent(() => import('@/pages/dashboard'), 'DashboardPage', dashboardRouteOptions)
 const MySkillsPage = createLazyRouteComponent(() => import('@/pages/dashboard/my-skills'), 'MySkillsPage', dashboardRouteOptions)
+const RuntimePage = createLazyRouteComponent(() => import('@/pages/dashboard/runtime'), 'RuntimePage', dashboardRouteOptions)
 const GitSourcesPage = createLazyRouteComponent(() => import('@/pages/dashboard/git-sources'), 'GitSourcesPage', dashboardRouteOptions)
 const PublishPage = createLazyRouteComponent(() => import('@/pages/dashboard/publish'), 'PublishPage', dashboardRouteOptions)
 const SuiteCreatePage = createLazyRouteComponent(
@@ -376,6 +377,13 @@ const dashboardSkillsRoute = createRoute({
     filter: typeof search.filter === 'string' && search.filter ? search.filter : undefined,
   }),
   component: MySkillsPage,
+})
+
+const dashboardRuntimeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'dashboard/runtime',
+  beforeLoad: requireAuth,
+  component: () => <RoleGuard allowedRoles={['SUPER_ADMIN']}><RuntimePage /></RoleGuard>,
 })
 
 const dashboardGitSourcesRoute = createRoute({
@@ -725,6 +733,7 @@ const routeTree = rootRoute.addChildren([
   dashboardSkillsRoute,
   dashboardPublishRoute,
   dashboardGitSourcesRoute,
+  dashboardRuntimeRoute,
   dashboardSuitesRoute,
   dashboardSuiteManagementRoute,
   dashboardSuitePublishingTaskRoute,

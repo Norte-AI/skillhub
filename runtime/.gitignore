@@ -1,0 +1,10 @@
+node_modules/
+.skillhub-data/
+.skillhub-test/
+.env
+coverage/
+.DS_Store
+
+.skillhub-git/
+
+.skillhub-keys/

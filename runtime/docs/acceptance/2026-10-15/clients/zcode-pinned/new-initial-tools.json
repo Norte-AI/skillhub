@@ -1,0 +1,36 @@
+[
+  {
+    "sessionId": "sess_ab6c7c8d-1c5b-4384-8087-97fe5a6e3977",
+    "model": "glm-5.3",
+    "toolCalls": [
+      {
+        "id": "call_f353a40e4b1842e18631077c",
+        "name": "Skill",
+        "input": {
+          "skill": "pinned-probe-1060c1aa9edc:hub-acceptance-probe"
+        }
+      }
+    ],
+    "text": ""
+  },
+  {
+    "sessionId": "sess_ab6c7c8d-1c5b-4384-8087-97fe5a6e3977",
+    "model": "glm-5.3",
+    "toolCalls": [
+      {
+        "id": "call_a5876e91d28441a4a5ad2fc8",
+        "name": "Read",
+        "input": {
+          "file_path": "/Users/badpasta/.zcode/cli/plugins/cache/skill-hub-pinned-probe-1060c1aa9edc/pinned-probe-1060c1aa9edc/1.1.0/skills/hub-acceptance-probe/references/probe.md"
+        }
+      }
+    ],
+    "text": ""
+  },
+  {
+    "sessionId": "sess_ab6c7c8d-1c5b-4384-8087-97fe5a6e3977",
+    "model": "glm-5.3",
+    "toolCalls": [],
+    "text": "```json\n{\n  \"rule_marker\": \"v2\",\n  \"reference_marker\": \"v2\"\n}\n```"
+  }
+]

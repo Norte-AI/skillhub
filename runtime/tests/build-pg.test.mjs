@@ -1,0 +1,23 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
+import { Pool } from 'pg';
+import { PostgresStore } from '../packages/storage/index.mjs';
+import { enqueueBuild, createBuildWorker, listBuilds } from '../packages/build/index.mjs';
+const url = process.env.SKILLHUB_TEST_DATABASE_URL;
+test('PostgreSQL build leases persist across instances and prevent duplicate release commits', { skip: !url && 'SKILLHUB_TEST_DATABASE_URL unset' }, async t => {
+  const pool = new Pool({ connectionString: url });
+  const schema = `build_${randomUUID().replaceAll('-', '')}`;
+  const a = await new PostgresStore({ pool, schema }).init(); const b = await new PostgresStore({ pool, schema }).init();
+  t.after(async () => { await a.close(); await b.close(); await pool.query(`DROP SCHEMA "${schema}" CASCADE`); await pool.end(); });
+  await a.saveContent({ id: 'one', kind: 'rule', title: 'One', body: 'One' });
+  await a.saveBundle({ id: 'bundle', name: 'Bundle', items: ['one'], targets: ['codex'] });
+  const attempts = await Promise.allSettled([enqueueBuild(a, { bundleId: 'bundle', version: '1.0.0' }), enqueueBuild(b, { bundleId: 'bundle', version: '1.0.0' })]);
+  assert.equal(attempts.filter(value => value.status === 'fulfilled').length, 1);
+  const job = attempts.find(value => value.status === 'fulfilled').value;
+  await a.mutate(state => Object.assign(state.builds[job.id], { status: 'running', leaseUntil: new Date(0).toISOString(), owner: 'crashed' }));
+  const first = createBuildWorker(a), second = createBuildWorker(b);
+  await Promise.all([first.kick(), second.kick()]); await Promise.all([first.close(), second.close()]);
+  assert.equal((await listBuilds(a))[0].status, 'ready'); assert.equal((await listBuilds(b))[0].releaseId, 'bundle@1.0.0');
+  assert.equal((await a.listReleases()).length, 1); assert.equal((await b.listReleases()).length, 1);
+});

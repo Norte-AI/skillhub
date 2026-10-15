@@ -1,0 +1,33 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, rm, readFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { HubStore } from '../packages/core/index.mjs';
+import { publishGitMarketplace } from '../packages/git-market/index.mjs';
+import { createServer } from '../apps/server/src/index.mjs';
+
+test('main API serves a cloneable Git market without turning the API or MCP into marketplace sources', async t => {
+  const directory = await mkdtemp(join(tmpdir(), 'skillhub-git-server-'));
+  const store = await new HubStore({ dataDir: join(directory, 'data') }).init();
+  await store.saveContent({ id: 'review.summary', kind: 'skill', title: 'Review', body: 'Review the requirements.' });
+  await store.saveBundle({ id: 'personal', name: 'Personal', items: ['review.summary'] });
+  const release = await store.buildRelease('personal', '1.0.0');
+  await store.publishListing({ bundleId: 'personal', releaseId: release.id });
+  const gitRootDir = join(directory, 'markets');
+  await publishGitMarketplace({ store, outDir: join(gitRootDir, 'codex.git') });
+  const app = await createServer({ store, token: 'test-admin', gitRootDir });
+  await new Promise(resolve => app.server.listen(0, '127.0.0.1', resolve));
+  t.after(async () => { await app.close(); await rm(directory, { recursive: true, force: true }); });
+  const base = `http://127.0.0.1:${app.server.address().port}`;
+  assert.equal((await fetch(`${base}/api/marketplace`)).status, 401);
+  const clone = join(directory, 'clone');
+  await promisify(execFile)('git', ['-c', 'http.proxy=', 'clone', '--branch', 'main', `${base}/git/codex.git`, clone], { env: { PATH: process.env.PATH, HOME: directory, GIT_CONFIG_GLOBAL: '/dev/null', GIT_CONFIG_NOSYSTEM: '1' }, timeout: 15000 });
+  const catalog = JSON.parse(await readFile(join(clone, '.agents/plugins/marketplace.json'), 'utf8'));
+  assert.equal(catalog.name, 'skill-hub'); assert.equal(catalog.plugins[0].name, 'personal');
+  assert.match(await readFile(join(clone, 'plugins/personal/skills/review-summary/SKILL.md'), 'utf8'), /Review the requirements/);
+  assert.equal((await fetch(`${base}/git/codex.git/config`)).status, 404);
+  assert.equal((await fetch(`${base}/git/codex.git/info/refs?service=git-receive-pack`)).status, 403);
+});

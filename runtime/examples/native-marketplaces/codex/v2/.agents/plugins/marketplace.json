@@ -1,0 +1,17 @@
+{
+  "name": "skill-hub-probe",
+  "plugins": [
+    {
+      "name": "hub-probe",
+      "source": {
+        "source": "local",
+        "path": "./plugins/hub-probe"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

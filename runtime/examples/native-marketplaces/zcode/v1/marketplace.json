@@ -1,0 +1,10 @@
+{
+  "name": "skill-hub-probe",
+  "plugins": [
+    {
+      "name": "hub-probe",
+      "source": "./plugins/hub-probe",
+      "version": "0.1.0"
+    }
+  ]
+}

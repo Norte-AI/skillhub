@@ -1,0 +1,59 @@
+name: skillhub-app
+services:
+  postgres:
+    image: postgres:17.11-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: skillhub
+      POSTGRES_USER: skillhub
+      POSTGRES_PASSWORD: ${SKILLHUB_POSTGRES_PASSWORD:?Set a dedicated PostgreSQL password}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U skillhub -d skillhub"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    init: true
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SKILLHUB_DATABASE_URL: ${SKILLHUB_DATABASE_URL:?Set postgres://skillhub:URL_ENCODED_PASSWORD@postgres:5432/skillhub}
+      SKILLHUB_TOKEN: ${SKILLHUB_TOKEN:?Set a strong admin token}
+      SKILLHUB_EDITOR_TOKEN: ${SKILLHUB_EDITOR_TOKEN:-}
+      SKILLHUB_REVIEWER_TOKEN: ${SKILLHUB_REVIEWER_TOKEN:-}
+      SKILLHUB_PUBLISHER_TOKEN: ${SKILLHUB_PUBLISHER_TOKEN:-}
+      SKILLHUB_HOST: 0.0.0.0
+      PORT: "4317"
+      SKILLHUB_DATA_DIR: /var/lib/skillhub/data
+      SKILLHUB_GIT_ROOT: /var/lib/skillhub/git
+      SKILLHUB_GIT_ALLOW_REMOTE: "1"
+      SKILLHUB_SIGNING_KEY_FILE: /run/secrets/signing_key
+      SKILLHUB_ALLOWED_HOSTS: ${SKILLHUB_ALLOWED_HOSTS:-127.0.0.1,localhost,[::1]}
+    ports:
+      - "${SKILLHUB_BIND_ADDRESS:-127.0.0.1}:${SKILLHUB_PORT:-4317}:4317"
+    volumes:
+      - app-data:/var/lib/skillhub/data
+      - git-data:/var/lib/skillhub/git
+    secrets:
+      - signing_key
+    healthcheck:
+      test: ["CMD", "node", "--input-type=module", "-e", "const r=await fetch('http://127.0.0.1:4317/ready');process.exit(r.ok?0:1)"]
+      interval: 10s
+      timeout: 5s
+      start_period: 20s
+      retries: 6
+    stop_grace_period: 30s
+secrets:
+  signing_key:
+    file: ${SKILLHUB_SIGNING_KEY_SOURCE:?Set an absolute path to the signing private key}
+volumes:
+  postgres-data:
+  app-data:
+  git-data:

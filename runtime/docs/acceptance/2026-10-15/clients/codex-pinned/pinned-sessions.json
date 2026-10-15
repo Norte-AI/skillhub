@@ -1,0 +1,45 @@
+{
+  "client": "codex",
+  "root": "/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-pinned-codex-7KjL5K",
+  "status": "old-session-fixed-after-new-release-passed",
+  "createdAt": "2026-10-15T08:00:37.351Z",
+  "loadingRoute": "immutable-session-workspace-and-release-specific-plugin-id",
+  "cases": [
+    {
+      "phase": "old-initial",
+      "releaseId": "pinned-probe@1.0.0",
+      "pluginName": "pinned-probe-2f36db8ada40",
+      "workspace": "/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-pinned-codex-7KjL5K/old",
+      "sessionId": "01a13e93-d28b-7e13-9819-8fede6c79a49",
+      "answer": {
+        "rule_marker": "hub_probe_release = v1",
+        "reference_marker": "hub_probe_reference = v1"
+      },
+      "status": "passed"
+    },
+    {
+      "phase": "new-initial",
+      "releaseId": "pinned-probe@1.1.0",
+      "pluginName": "pinned-probe-1060c1aa9edc",
+      "workspace": "/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-pinned-codex-7KjL5K/new",
+      "sessionId": "01a13e94-2cbb-7461-838c-7a3a66826220",
+      "answer": {
+        "rule_marker": "hub_probe_release = v2",
+        "reference_marker": "hub_probe_reference = v2"
+      },
+      "status": "passed"
+    },
+    {
+      "phase": "old-resumed",
+      "releaseId": "pinned-probe@1.0.0",
+      "pluginName": "pinned-probe-2f36db8ada40",
+      "workspace": "/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-pinned-codex-7KjL5K/old",
+      "sessionId": "01a13e93-d28b-7e13-9819-8fede6c79a49",
+      "answer": {
+        "rule_marker": "hub_probe_release = v1",
+        "reference_marker": "hub_probe_reference = v1"
+      },
+      "status": "passed"
+    }
+  ]
+}

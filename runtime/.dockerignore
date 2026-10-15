@@ -1,0 +1,9 @@
+.git
+node_modules
+.skillhub-data
+.skillhub-test
+.skillhub-git
+.skillhub-keys
+.env
+.env.*
+coverage

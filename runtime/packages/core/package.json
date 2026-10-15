@@ -1,0 +1,6 @@
+{
+  "name": "@skill-hub/core",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./index.mjs"
+}

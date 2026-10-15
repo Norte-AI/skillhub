@@ -1,3 +1,18 @@
+# Norte SkillHub
+
+Norte SkillHub 是 Norte-AI 的统一技能与规则分发项目，基于 iflytek/skillhub，整合技能注册审核、Git 来源同步、规则运行时和三端客户端适配。主仓库：[Norte-AI/skillhub](https://github.com/Norte-AI/skillhub)。上游项目介绍保留在下方。
+
+- 当前里程碑、任务与验收边界：[统一项目计划](docs/unified-project-plan.md)。
+- 本机部署：[单一启动入口](deploy/norte-local/README.md)，仓库根运行 `scripts/norte-local.sh up`。
+- 规则组合、签名Release、设备与MCP：[runtime模块](runtime/README.md)。
+- 本机统一页面：`http://127.0.0.1:48230/`；SUPER_ADMIN规则运行时：`/dashboard/runtime`。
+
+Git 发布支持GitHub/GitLab。runtime入仓、登录网关与固定公开技能导入已实现；旧数据已迁入，统一权限、导入、签名发布、设备MCP/Git及本机18项冒烟验收通过；后端全量2285项零失败/错误、1跳过；真实导入后三端签名构建复验通过，最终runtime回归与仓库交付以统一项目计划为准。旧原型与评估站是历史材料，不再按三个独立项目维护。
+
+---
+
+## 上游项目介绍与参考资料
+
 <div align="center">
   <img src="./skillhub-logo.svg" alt="SkillHub Logo" width="120" height="120" />
   <h1>SkillHub</h1>

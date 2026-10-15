@@ -1,0 +1,6 @@
+{
+  "name": "hub-probe",
+  "version": "0.1.0",
+  "description": "Skill Hub isolated integration probe",
+  "skills": "./skills/"
+}

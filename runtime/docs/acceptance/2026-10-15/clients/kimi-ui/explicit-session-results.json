@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-15",
+  "client": "Kimi Desktop 3.2.16 Work",
+  "model": "K2.8 Preview",
+  "acceptedDelivery": "fixed release plugin identity plus explicit first-message RULES initialization",
+  "automaticInjection": "not passed: both systemPromptPath and inline systemPrompt/sessionStart comparison reported UNKNOWN",
+  "checks": [
+    {"task": "读取固定V1规则与探针值", "time": "16:04", "action": "new rollback task selected retained V1 plugin and actually read fixed RULES.md and skill reference", "rule": "v1", "reference": "v1"},
+    {"task": "V2独立验收探针核查", "time": "17:59", "action": "explicitly read fixed V2 RULES.md and selected V2 plugin reference", "rule": "v2", "reference": "v2"},
+    {"task": "读取固定V1规则与探针值", "time": "17:59", "action": "after V2 initialization, resumed V1 and re-read its rule and reference", "rule": "v1", "reference": "v1"}
+  ],
+  "independentPluginIds": ["norte-hub-acceptance-20261015", "norte-hub-acceptance-20261015-v2"],
+  "limitation": "Observed synthetic values in real model sessions are not platform-attested injection receipts. Mutable same-ID hot updates are not certified by these checks.",
+  "cleanup": "Named synthetic tasks and plugins retained for review; no business conversations modified. Uninstall test plugins through native plugin detail after no test task needs their resources."
+}

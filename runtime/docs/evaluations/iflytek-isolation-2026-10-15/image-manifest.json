@@ -1,0 +1,66 @@
+{
+  "ghcr.io/iflytek/skillhub-server:latest": {
+    "repoDigests": [
+      "ghcr.io/iflytek/skillhub-server@sha256:9d5fb1d10794e3067a6a1e4ced15c0ac3b79f628b2396b56860aedfc220a9f34"
+    ],
+    "id": "sha256:9d5fb1d10794e3067a6a1e4ced15c0ac3b79f628b2396b56860aedfc220a9f34",
+    "labels": {
+      "org.opencontainers.image.created": "2026-10-10T10:44:23.571Z",
+      "org.opencontainers.image.description": "Self-hosted, open-source agent skill registry for enterprises. Publish & version skill packages, govern with RBAC and audit logs, deploy   on-premise with Docker or Kubernetes.",
+      "org.opencontainers.image.licenses": "Apache-2.0",
+      "org.opencontainers.image.revision": "72429e6f69ac5d04e8314b1eed2f8c055809c9f5",
+      "org.opencontainers.image.source": "https://github.com/iflytek/skillhub",
+      "org.opencontainers.image.title": "skillhub",
+      "org.opencontainers.image.url": "https://github.com/iflytek/skillhub",
+      "org.opencontainers.image.version": "0.2.22"
+    }
+  },
+  "ghcr.io/iflytek/skillhub-web:latest": {
+    "repoDigests": [
+      "ghcr.io/iflytek/skillhub-web@sha256:787decc80c2c2f9afb70f5340d81676c10ea544835cd808ef7340261e563fa57"
+    ],
+    "id": "sha256:787decc80c2c2f9afb70f5340d81676c10ea544835cd808ef7340261e563fa57",
+    "labels": {
+      "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>",
+      "org.opencontainers.image.created": "2026-10-10T10:44:28.826Z",
+      "org.opencontainers.image.description": "Self-hosted, open-source agent skill registry for enterprises. Publish & version skill packages, govern with RBAC and audit logs, deploy   on-premise with Docker or Kubernetes.",
+      "org.opencontainers.image.licenses": "Apache-2.0",
+      "org.opencontainers.image.revision": "72429e6f69ac5d04e8314b1eed2f8c055809c9f5",
+      "org.opencontainers.image.source": "https://github.com/iflytek/skillhub",
+      "org.opencontainers.image.title": "skillhub",
+      "org.opencontainers.image.url": "https://github.com/iflytek/skillhub",
+      "org.opencontainers.image.version": "0.2.22"
+    }
+  },
+  "ghcr.io/iflytek/skillhub-scanner:latest": {
+    "repoDigests": [
+      "ghcr.io/iflytek/skillhub-scanner@sha256:da1e75bdb5ef510cdff249e6b34a56d3e4c48203afb1e57df1aa62bb89f2fcaf"
+    ],
+    "id": "sha256:da1e75bdb5ef510cdff249e6b34a56d3e4c48203afb1e57df1aa62bb89f2fcaf",
+    "labels": {
+      "org.opencontainers.image.created": "2026-10-10T10:44:35.888Z",
+      "org.opencontainers.image.description": "Self-hosted, open-source agent skill registry for enterprises. Publish & version skill packages, govern with RBAC and audit logs, deploy   on-premise with Docker or Kubernetes.",
+      "org.opencontainers.image.licenses": "Apache-2.0",
+      "org.opencontainers.image.revision": "72429e6f69ac5d04e8314b1eed2f8c055809c9f5",
+      "org.opencontainers.image.source": "https://github.com/iflytek/skillhub",
+      "org.opencontainers.image.title": "skillhub",
+      "org.opencontainers.image.url": "https://github.com/iflytek/skillhub",
+      "org.opencontainers.image.version": "0.2.22"
+    }
+  },
+  "postgres:16-alpine": {
+    "repoDigests": [
+      "postgres@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea"
+    ],
+    "id": "sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+    "labels": null
+  },
+  "redis:7-alpine": {
+    "repoDigests": [
+      "docker.1ms.run/library/redis@sha256:ff02b58f971e7d7d156a1267e283fcbbeee91773b6aa36c49dac28ecfe28eadf",
+      "redis@sha256:ff02b58f971e7d7d156a1267e283fcbbeee91773b6aa36c49dac28ecfe28eadf"
+    ],
+    "id": "sha256:ff02b58f971e7d7d156a1267e283fcbbeee91773b6aa36c49dac28ecfe28eadf",
+    "labels": null
+  }
+}

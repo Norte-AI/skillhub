@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "newSessionId": "sess_b2c58f1c-e414-425a-a12d-da378b6ecd54",
+  "releaseId": "session-probe@1.0.0",
+  "response": "```json\n{\n  \"rule_marker\": \"hub_probe_release = v1\",\n  \"reference_marker\": \"hub_probe_reference = v1\"\n}\n```\n\nrule_marker came from startup workspace rules (not by opening AGENTS.md); reference_marker from `references/probe.md` in plugin `session-probe-695141385a7b` (skill `hub-acceptance-probe` v1.0.0). No files were modified.",
+  "afterVersion2": true
+}

@@ -45,6 +45,7 @@ export const SIDEBAR_GROUPS: SidebarGroup[] = [
     label: 'sidebar.skillsAndData',
     items: [
       { key: 'skills', icon: Package, label: 'sidebar.mySkills', to: '/dashboard/skills' },
+      { key: 'runtime', icon: Boxes, label: 'runtime.title', to: '/dashboard/runtime', admin: true },
       { key: 'gitSources', icon: GitBranch, label: 'gitSources.title', to: '/dashboard/git-sources' },
       { key: 'suites', icon: Boxes, label: 'sidebar.mySuites', to: '/dashboard/suites' },
       { key: 'namespaces', icon: Globe, label: 'sidebar.namespaces', to: '/dashboard/namespaces' },

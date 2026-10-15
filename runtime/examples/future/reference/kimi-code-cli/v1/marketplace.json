@@ -1,0 +1,9 @@
+{
+  "version": "2",
+  "plugins": [
+    {
+      "id": "hub-probe",
+      "source": "./plugins/hub-probe"
+    }
+  ]
+}

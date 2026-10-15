@@ -1,0 +1,25 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { createServer } from '../apps/server/src/index.mjs';
+test('registry bridge requires service authentication, records source and imports idempotently', async t => {
+  const dataDir = await mkdtemp(join(tmpdir(), 'registry-bridge-'));
+  const { server, close } = await createServer({ dataDir, token: 'fixture-service-secret', allowLocalAdmin: false });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  t.after(async () => { await close(); await rm(dataDir, { recursive: true, force: true }); });
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const source = { namespace: 'global', slug: 'weather', version: '1.0.0', packageSha256: 'a'.repeat(64) };
+  const input = { id: 'registry-weather-1', title: 'Weather', body: '# Weather', resources: [], source };
+  const call = (body, actor = 'user-admin') => fetch(base + '/internal/registry-import', { method: 'POST', headers: { Authorization: 'Bearer fixture-service-secret', 'Content-Type': 'application/json', ...(actor ? { 'X-SkillHub-Actor': actor } : {}) }, body: JSON.stringify(body) });
+  assert.equal((await call(input, '')).status, 403);
+  const first = await (await call(input)).json();
+  const second = await (await call(input)).json();
+  assert.equal(first.revision, 1); assert.deepEqual(first, second);
+  const changed = structuredClone(input); changed.source.packageSha256 = 'b'.repeat(64);
+  assert.equal((await call(changed)).status, 409);
+  const content = await (await fetch(base + '/api/content', { headers: { Authorization: 'Bearer fixture-service-secret' } })).json();
+  assert.equal(content.length, 1);
+  assert.equal(JSON.parse(content[0].resources[0].body).packageSha256, source.packageSha256);
+});

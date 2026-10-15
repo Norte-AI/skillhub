@@ -1,0 +1,26 @@
+{
+  "sessionId": "sess_b2c58f1c-e414-425a-a12d-da378b6ecd54",
+  "traceId": "0ea694ff-fd71-476a-ae63-fcd2905174b9",
+  "turnId": "turn_70c5724a-4aca-4c45-b49d-89f69f58bd14",
+  "response": "```json\n{\n  \"rule_marker\": \"hub_probe_release = v1\",\n  \"reference_marker\": \"hub_probe_reference = v1\"\n}\n```\n\nrule_marker came from startup workspace rules (not by opening AGENTS.md); reference_marker from `references/probe.md` in plugin `session-probe-695141385a7b` (skill `hub-acceptance-probe` v1.0.0). No files were modified.",
+  "usage": {
+    "source": "provider",
+    "modelRequestCount": 3,
+    "inputTokens": 91447,
+    "outputTokens": 1583,
+    "totalTokens": 93030,
+    "cacheReadTokens": 79104,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 1351,
+    "webFetchRequests": 0,
+    "webSearchRequests": 0
+  },
+  "eventCount": 121,
+  "projection": {
+    "status": "idle",
+    "turnCount": 1,
+    "totalTokenCount": 93030,
+    "contextUsed": 30761,
+    "contextWindow": 200000
+  }
+}

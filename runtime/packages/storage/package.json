@@ -1,0 +1,7 @@
+{
+  "name": "@skill-hub/storage",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./index.mjs",
+  "dependencies": { "pg": "8.23.1" }
+}

@@ -17,6 +17,8 @@ import org.springframework.util.AntPathMatcher;
 public class RouteSecurityPolicyRegistry {
 
     private static final List<RouteAuthorizationPolicy> AUTHORIZATION_POLICIES = List.of(
+            RouteAuthorizationPolicy.authenticated(null, "/api/web/runtime/**"),
+            RouteAuthorizationPolicy.authenticated(HttpMethod.POST, "/api/web/runtime-import-skill"),
             RouteAuthorizationPolicy.authenticated(HttpMethod.GET, "/api/web/skills/git-import/options"),
             RouteAuthorizationPolicy.authenticated(HttpMethod.GET, "/api/v1/skills/git-import/options"),
             RouteAuthorizationPolicy.authenticated(null, "/api/web/git-sources/**"),
@@ -309,6 +311,8 @@ public class RouteSecurityPolicyRegistry {
      * authorization list opens must also be reachable with a token holding the required scope.</p>
      */
     private static final Set<String> SESSION_ONLY_ROUTES = Set.of(
+            "ANY /api/web/runtime/**",
+            "POST /api/web/runtime-import-skill",
             "ANY /api/v1/auth/session/bootstrap",
             "ANY /api/v1/auth/direct/login",
             "ANY /api/v1/auth/local/**",

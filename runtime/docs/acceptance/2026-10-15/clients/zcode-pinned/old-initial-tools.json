@@ -1,0 +1,104 @@
+[
+  {
+    "sessionId": "sess_af381220-36f6-4e6b-967a-deea15345f66",
+    "model": "glm-5.3",
+    "toolCalls": [
+      {
+        "id": "call_63a6ac144a07486da41bb8a7",
+        "name": "Skill",
+        "input": {
+          "skill": "pinned-probe-2f36db8ada40:hub-acceptance-probe"
+        }
+      }
+    ],
+    "text": ""
+  },
+  {
+    "sessionId": "sess_af381220-36f6-4e6b-967a-deea15345f66",
+    "model": "glm-5.3",
+    "toolCalls": [
+      {
+        "id": "call_769c173aa1464898a5c7b247",
+        "name": "Read",
+        "input": {
+          "file_path": "/Users/badpasta/.zcode/cli/plugins/cache/skill-hub-pinned-probe-2f36db8ada40/pinned-probe-2f36db8ada40/1.0.0/skills/hub-acceptance-probe/references/probe.md"
+        }
+      }
+    ],
+    "text": ""
+  },
+  {
+    "sessionId": "sess_af381220-36f6-4e6b-967a-deea15345f66",
+    "model": "glm-5.3",
+    "toolCalls": [],
+    "text": "```json\n{\n  \"rule_marker\": \"hub_probe_release = v1\",\n  \"reference_marker\": \"hub_probe_reference = v1\"\n}\n```"
+  },
+  {
+    "sessionId": "sess_af381220-36f6-4e6b-967a-deea15345f66",
+    "model": "glm-5.3",
+    "toolCalls": [
+      {
+        "id": "call_2ee1111f7c3444efbff3cfbe",
+        "name": "Skill",
+        "input": {
+          "skill": "pinned-probe-2f36db8ada40:hub-acceptance-probe"
+        }
+      }
+    ],
+    "text": ""
+  },
+  {
+    "sessionId": "sess_af381220-36f6-4e6b-967a-deea15345f66",
+    "model": "glm-5.3",
+    "toolCalls": [
+      {
+        "id": "call_d031153aeb0a4ae6bcd95da2",
+        "name": "Read",
+        "input": {
+          "file_path": "/Users/badpasta/.zcode/cli/plugins/cache/skill-hub-pinned-probe-2f36db8ada40/pinned-probe-2f36db8ada40/1.0.0/skills/hub-acceptance-probe/references/probe.md"
+        }
+      }
+    ],
+    "text": ""
+  },
+  {
+    "sessionId": "sess_af381220-36f6-4e6b-967a-deea15345f66",
+    "model": "glm-5.3",
+    "toolCalls": [],
+    "text": "```json\n{\n  \"rule_marker\": \"hub_probe_release = v1\",\n  \"reference_marker\": \"hub_probe_reference = v1\"\n}\n```"
+  },
+  {
+    "sessionId": "sess_af381220-36f6-4e6b-967a-deea15345f66",
+    "model": "glm-5.3",
+    "toolCalls": [
+      {
+        "id": "call_5f82116cdb2f4b499278a911",
+        "name": "Skill",
+        "input": {
+          "skill": "pinned-probe-2f36db8ada40:hub-acceptance-probe"
+        }
+      }
+    ],
+    "text": ""
+  },
+  {
+    "sessionId": "sess_af381220-36f6-4e6b-967a-deea15345f66",
+    "model": "glm-5.3",
+    "toolCalls": [
+      {
+        "id": "call_e9998cee3a8c44d39df56090",
+        "name": "Read",
+        "input": {
+          "file_path": "/Users/badpasta/.zcode/cli/plugins/cache/skill-hub-pinned-probe-2f36db8ada40/pinned-probe-2f36db8ada40/1.0.0/skills/hub-acceptance-probe/references/probe.md"
+        }
+      }
+    ],
+    "text": ""
+  },
+  {
+    "sessionId": "sess_af381220-36f6-4e6b-967a-deea15345f66",
+    "model": "glm-5.3",
+    "toolCalls": [],
+    "text": "```json\n{\n  \"rule_marker\": \"hub_probe_release = v1\",\n  \"reference_marker\": \"hub_probe_reference = v1\"\n}\n```"
+  }
+]

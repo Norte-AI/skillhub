@@ -1,0 +1,15 @@
+{
+  "code": 0,
+  "msg": "发布成功",
+  "data": {
+    "skillId": 26,
+    "namespace": "web-git-review",
+    "slug": "weather",
+    "version": "1.0.0",
+    "status": "SCANNING",
+    "fileCount": 4,
+    "totalSize": 5153
+  },
+  "timestamp": "2026-10-15T07:38:04.412910209Z",
+  "requestId": "6ec24a2c-f20f-454f-a52a-ea8dff643fa7"
+}

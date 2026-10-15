@@ -1,0 +1,71 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { once } from 'node:events';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+import { HubStore } from '../packages/core/index.mjs';
+import { handleMcpRequest } from '../apps/mcp/src/index.mjs';
+
+test('stateless HTTP SDK handshake, resources, manual prompt and receipt access are isolated', async t => {
+  const dataDir = await mkdtemp(join(tmpdir(), 'skillhub-mcp-http-'));
+  const store = await new HubStore({ dataDir }).init();
+  await store.saveContent({ id: 'rule', kind: 'rule', title: 'Rule', body: 'Fixed body' });
+  for (const bundle of ['allowed', 'private']) {
+    await store.saveBundle({ id: bundle, name: bundle, items: ['rule'] });
+    const release = await store.buildRelease(bundle, '1.0.0');
+    await store.setChannel(bundle, 'stable', release.id);
+  }
+  await store.registerDevice({ id: 'dev1', name: 'First device', client: 'codex', assignments: ['allowed'] });
+  await store.registerDevice({ id: 'dev2', name: 'Second device', client: 'kimi', assignments: ['private'] });
+  const boundary = store;
+  const identities = { admin: { role: 'admin' }, one: { role: 'device', deviceId: 'dev1', assignments: ['allowed', 'private'] }, two: { role: 'device', deviceId: 'dev2' } };
+  const http = createServer((req, res) => handleMcpRequest(req, res, { store: boundary, identity: identities[req.headers.authorization?.replace('Bearer ', '')], maxBodyBytes: 4096 }).catch(error => { res.statusCode = 500; res.end(error.message); }));
+  http.listen(0, '127.0.0.1'); await once(http, 'listening');
+  const endpoint = new URL(`http://127.0.0.1:${http.address().port}/mcp`);
+  const clients = [];
+  t.after(async () => { for (const client of clients) await client.close(); http.closeAllConnections(); await new Promise(resolve => http.close(resolve)); await rm(dataDir, { recursive: true, force: true }); });
+  async function connect(token) {
+    const client = new Client({ name: `test-${token}`, version: '1.0.0' });
+    clients.push(client);
+    await client.connect(new StreamableHTTPClientTransport(endpoint, { requestInit: { headers: { Authorization: `Bearer ${token}` } } }));
+    return client;
+  }
+  assert.equal((await fetch(endpoint)).status, 401);
+  assert.equal((await fetch(endpoint, { headers: { Authorization: 'Bearer admin' } })).status, 405);
+  assert.equal((await fetch(endpoint, { method: 'POST', headers: { Authorization: 'Bearer admin' }, body: '{}' })).status, 415);
+  const requestHeaders = { Authorization: 'Bearer admin', 'Content-Type': 'application/json' };
+  assert.equal((await fetch(endpoint, { method: 'POST', headers: requestHeaders, body: '{bad' })).status, 400);
+  assert.equal((await fetch(endpoint, { method: 'POST', headers: requestHeaders, body: JSON.stringify({ padding: 'x'.repeat(5000) }) })).status, 413);
+  const [admin, one, two] = await Promise.all(['admin', 'one', 'two'].map(connect));
+  const call = (client, name, args) => client.callTool({ name, arguments: args });
+  assert.equal((await call(one, 'resolve_bundle', { bundleId: 'allowed' })).structuredContent.releaseId, 'allowed@1.0.0');
+  assert.equal((await call(one, 'get_bundle', { releaseId: 'private@1.0.0' })).isError, true);
+  assert.equal((await call(two, 'get_content', { releaseId: 'allowed@1.0.0' })).isError, true);
+  assert.equal((await call(admin, 'get_bundle', { releaseId: 'private@1.0.0' })).structuredContent.version, '1.0.0');
+  assert.equal((await one.listResourceTemplates()).resourceTemplates.length, 2);
+  const manifest = await one.readResource({ uri: 'skillhub://releases/allowed%401.0.0/manifest' });
+  assert.equal(JSON.parse(manifest.contents[0].text).releaseId, 'allowed@1.0.0');
+  const content = await one.readResource({ uri: 'skillhub://releases/allowed%401.0.0/content/rule' });
+  assert.equal(JSON.parse(content.contents[0].text).items[0].body, 'Fixed body');
+  await assert.rejects(one.readResource({ uri: 'skillhub://releases/private%401.0.0/manifest' }), /denied/);
+  assert.equal((await one.listPrompts()).prompts[0].name, 'load_bundle');
+  assert.match((await one.getPrompt({ name: 'load_bundle', arguments: { bundleId: 'allowed' } })).messages[0].content.text, /Manual reference.*allowed@1.0.0/);
+  await assert.rejects(one.getPrompt({ name: 'load_bundle', arguments: { bundleId: 'private' } }), /denied/);
+  const receipt = await call(one, 'report_receipt', { releaseId: 'allowed@1.0.0', kind: 'injection_claim', evidence: 'I injected it' });
+  assert.equal(receipt.structuredContent.trusted, false);
+  const receipts = await store.listReceipts();
+  assert.equal(receipts[0].deviceId, 'dev1'); assert.equal(receipts[0].source, 'mcp-self-report');
+  const audit = (await store.listAudit()).find(event => event.action === 'receipt.reported');
+  assert.deepEqual(audit.actor, { role: 'device', deviceId: 'dev1' });
+  assert.equal(JSON.stringify(audit).includes('I injected it'), false);
+  assert.equal((await call(one, 'report_receipt', { releaseId: 'allowed@1.0.0', kind: 'injected' })).isError, true);
+  assert.equal((await call(one, 'report_receipt', { releaseId: 'allowed@1.0.0', kind: 'installed', deviceId: 'dev2' })).isError, true);
+  assert.equal((await call(one, 'report_receipt', { releaseId: 'private@1.0.0', kind: 'fetched' })).isError, true);
+  assert.equal((await store.listReceipts()).length, 1);
+  await store.registerDevice({ id: 'dev1', name: 'First device', client: 'codex', assignments: [] });
+  assert.equal((await call(one, 'get_bundle', { releaseId: 'allowed@1.0.0' })).isError, true);
+});

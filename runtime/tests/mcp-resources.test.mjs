@@ -1,0 +1,34 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
+import { HubStore } from '../packages/core/index.mjs';
+import { createMcpServer } from '../apps/mcp/src/index.mjs';
+
+test('resources and manual prompts retain immutable content and honor current device assignments', async t => {
+  const dataDir = await mkdtemp(join(tmpdir(), 'skillhub-mcp-resources-'));
+  const store = await new HubStore({ dataDir }).init();
+  await store.saveContent({ id: 'rule', kind: 'rule', title: 'Rule', body: 'Original' });
+  await store.saveBundle({ id: 'demo', name: 'Demo', items: ['rule'] });
+  const first = await store.buildRelease('demo', '1.0.0'); await store.setChannel('demo', 'stable', first.id);
+  await store.registerDevice({ id: 'dev', name: 'Device', client: 'zcode', assignments: ['demo'] });
+  const server = createMcpServer(store, { identity: { role: 'device', deviceId: 'dev', assignments: ['demo'] } });
+  const client = new Client({ name: 'resource-client', version: '1.0.0' });
+  const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
+  await server.connect(serverTransport); await client.connect(clientTransport);
+  t.after(async () => { await client.close(); await server.close(); await rm(dataDir, { recursive: true, force: true }); });
+  const uri = 'skillhub://releases/demo%401.0.0/content/rule';
+  assert.equal(JSON.parse((await client.readResource({ uri })).contents[0].text).items[0].body, 'Original');
+  const writer = await new HubStore({ dataDir }).init();
+  await writer.saveContent({ id: 'rule', kind: 'rule', title: 'Rule', body: 'Updated' });
+  const second = await writer.buildRelease('demo', '1.1.0'); await writer.setChannel('demo', 'stable', second.id);
+  assert.equal(JSON.parse((await client.readResource({ uri })).contents[0].text).items[0].body, 'Original');
+  assert.match((await client.getPrompt({ name: 'load_bundle', arguments: { bundleId: 'demo' } })).messages[0].content.text, /demo@1.1.0/);
+  await writer.registerDevice({ id: 'dev', name: 'Device', client: 'zcode', assignments: [] });
+  await assert.rejects(client.readResource({ uri }), /denied/);
+  await assert.rejects(client.readResource({ uri: 'skillhub://releases/demo%401.0.0/manifest' }), /denied/);
+  await assert.rejects(client.getPrompt({ name: 'load_bundle', arguments: { bundleId: 'demo' } }), /denied/);
+});

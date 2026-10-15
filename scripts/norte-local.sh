@@ -14,6 +14,20 @@ with open(sys.argv[1],'w') as output:json.dump(config,output)
 PY
   )
 fi
+export NORTE_RUNTIME_TOKEN NORTE_LOCAL_STATE_ABSOLUTE
+NORTE_LOCAL_STATE_ABSOLUTE="$(cd "$STATE" && pwd)"
+if [[ ! -f "$STATE/runtime-token" ]]; then
+  (umask 077; python3 -c 'import secrets;print(secrets.token_urlsafe(48))' > "$STATE/runtime-token")
+fi
+NORTE_RUNTIME_TOKEN="$(cat "$STATE/runtime-token")"
+if [[ ! -f "$STATE/runtime-keys/private.pem" ]]; then
+  (umask 077; mkdir -p "$STATE/runtime-keys"; node - "$STATE/runtime-keys" <<'NODE'
+const {generateKeyPairSync}=require('node:crypto');const fs=require('node:fs');const path=require('node:path');const key=generateKeyPairSync('ed25519');
+fs.writeFileSync(path.join(process.argv[2],'private.pem'),key.privateKey.export({format:'pem',type:'pkcs8'}),{mode:0o600});
+fs.writeFileSync(path.join(process.argv[2],'public.pem'),key.publicKey.export({format:'pem',type:'spki'}),{mode:0o644});
+NODE
+  )
+fi
 export NORTE_GIT_CONFIG_JSON
 NORTE_GIT_CONFIG_JSON="$(cat "$CONFIG")"
 cd "$ROOT"
@@ -22,6 +36,7 @@ case "${1:-status}" in
   up)
     (cd server && ./mvnw package -DskipTests -B -q)
     docker build -t norte-skillhub-web-git:staging-check -f server/Dockerfile.dev server
+    docker build -t norte-skillhub-runtime:local runtime
     (cd web && pnpm run build)
     "${COMPOSE[@]}" up -d --wait
     echo 'Web: http://127.0.0.1:48230 — local test admin: admin / Admin@staging2026'

@@ -52,7 +52,6 @@ public class GitRepositoryProvider {
         String path = switch (repository.provider().getKind()) {
             case GITHUB -> "/repos/" + repository.coordinate() + "/commits/" + encode(ref);
             case GITLAB -> "/projects/" + encode(repository.coordinate()) + "/repository/commits/" + encode(ref);
-            case GITEE -> "/repos/" + repository.coordinate() + "/commits/" + encode(ref);
         };
         return new Fetch(URI.create(base + path), repository.provider().getKind() == GitImportProperties.Kind.GITHUB ? "application/vnd.github.sha" : "application/json", headers(repository, credentialId, actor));
     }
@@ -73,7 +72,6 @@ public class GitRepositoryProvider {
         String path = switch (repository.provider().getKind()) {
             case GITHUB -> "/" + repository.coordinate() + "/zip/" + sha;
             case GITLAB -> "/projects/" + encode(repository.coordinate()) + "/repository/archive.zip?sha=" + sha;
-            case GITEE -> "/" + repository.coordinate() + "/repository/archive/" + sha + ".zip";
         };
         return new Fetch(URI.create(repository.provider().getArchiveBase() + path), "application/zip", headers(repository, credentialId, actor));
     }

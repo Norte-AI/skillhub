@@ -1,0 +1,26 @@
+{
+  "sessionId": "sess_8c4412f1-fa13-410e-849d-6ccb7cbec5a5",
+  "traceId": "9689f4f8-5153-48bc-8814-ea29df298efb",
+  "turnId": "turn_aa77a7ab-89ed-4f4a-9df6-8e32fb7d3a2a",
+  "response": "```json\n{\n  \"rule_marker\": \"hub_probe_release = v1\",\n  \"reference_marker\": \"hub_probe_reference = v1\"\n}\n```\n\n- rule_marker comes from this workspace's startup rules (hub-probe@1.0.0, probe rule section): `hub_probe_release = v1`\n- reference_marker comes from the probe-skill's `references/probe.md`: `hub_probe_reference = v1`",
+  "usage": {
+    "source": "provider",
+    "modelRequestCount": 3,
+    "inputTokens": 90379,
+    "outputTokens": 2473,
+    "totalTokens": 92852,
+    "cacheReadTokens": 59904,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 2285,
+    "webFetchRequests": 0,
+    "webSearchRequests": 0
+  },
+  "eventCount": 114,
+  "projection": {
+    "status": "idle",
+    "turnCount": 1,
+    "totalTokenCount": 92852,
+    "contextUsed": 30469,
+    "contextWindow": 200000
+  }
+}
