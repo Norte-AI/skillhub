@@ -1,0 +1,28 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
+import { Pool } from 'pg';
+import { PostgresStore } from '../packages/storage/index.mjs';
+import { submitSkill, reviewSubmission, getSubmission } from '../packages/review/index.mjs';
+const connectionString = process.env.SKILLHUB_TEST_DATABASE_URL;
+test('PostgreSQL review records survive cross-store reads and concurrent decisions are atomic', { skip: !connectionString && 'SKILLHUB_TEST_DATABASE_URL is unset' }, async t => {
+  const schema = `review_test_${randomUUID().replaceAll('-', '')}`;
+  const pool = new Pool({ connectionString });
+  const first = new PostgresStore({ pool, schema });
+  const second = new PostgresStore({ pool, schema });
+  t.after(async () => { await Promise.all([first.close(), second.close()]); await pool.query(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`); await pool.end(); });
+  await Promise.all([first.init(), second.init()]);
+  const actor = { role: 'admin' };
+  const pending = await submitSkill(first, { contentId: 'writing', body: '---\nname: writing\ndescription: Write clearly\n---\nBe concise.' }, actor);
+  assert.equal((await getSubmission(second, pending.id)).status, 'pending');
+  const results = await Promise.allSettled([reviewSubmission(first, pending.id, { decision: 'approve', comment: 'Ready' }, actor), reviewSubmission(second, pending.id, { decision: 'approve', comment: 'Ready' }, actor)]);
+  assert.equal(results.filter(item => item.status === 'fulfilled').length, 1);
+  assert.equal(results.find(item => item.status === 'rejected').reason.code, 'CONFLICT');
+  assert.equal((await getSubmission(second, pending.id)).status, 'approved');
+  assert.equal((await second.listContent())[0].revision, 1);
+  await second.saveBundle({ id: 'personal', name: 'Personal', items: ['writing'] });
+  const release = await first.buildRelease('personal', '1.0.0');
+  await second.saveContent({ id: 'writing', kind: 'skill', title: 'Unreviewed', body: 'Bypass' });
+  await assert.rejects(first.buildRelease('personal', '1.0.1'), { code: 'FORBIDDEN' });
+  assert.equal((await second.getRelease(release.id)).items[0].revision, 1);
+});

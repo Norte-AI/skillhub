@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-15T07:48:58.188Z",
+  "backend": "isolated-single-process-json",
+  "node": "v25.6.1",
+  "jobs": 100,
+  "workers": 4,
+  "targetsPerJob": 3,
+  "queueMs": 52,
+  "buildMs": 1079,
+  "jobsPerSecond": 92.69,
+  "p50ServiceMs": 40,
+  "p95ServiceMs": 57,
+  "ready": 100,
+  "signedArtifactsVerified": 300,
+  "assertion": "no lost jobs, duplicate releases, failed jobs or invalid signatures",
+  "limitation": "Local bounded baseline; not a production capacity claim or multi-process JSON support."
+}

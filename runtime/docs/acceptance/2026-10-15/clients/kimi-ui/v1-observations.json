@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-15",
+  "client": "Kimi Desktop 3.2.16 Work",
+  "model": "K2.8 Preview",
+  "plugin": "norte-hub-acceptance-20261015",
+  "version": "1.0.0",
+  "interface": "native UI via cua_repl",
+  "registration": "Official Plugin Builder in new task: Norte Skill Hub 插件导入验收",
+  "installObserved": "已安装Norte Hub Acceptance 20261015",
+  "newSessionWithoutSelection": {
+    "request": "不要读取任何文件，不要调用工具，也不要搜索。请只报告当前系统上下文中 hub_probe_release 的值；若未提供则回答 UNKNOWN。",
+    "response": "UNKNOWN 系统上下文中未提供 hub_probe_release 的值。",
+    "automaticRuleLoaded": false
+  },
+  "explicitSelection": {
+    "action": "Plugin detail 使用 adds plugin chip to composer",
+    "response": "hub_probe_release：UNKNOWN（当前系统上下文中未提供该值）；references/probe.md 参考标记：hub_probe_reference = v1",
+    "skillReferenceLoaded": true,
+    "ruleInSystemContextObserved": false
+  },
+  "uiSettings": "Plugin detail has 使用 and 更多→卸载; no default activation switch observed.",
+  "privacy": "Only new test tasks and synthetic local plugin; no messages sent to existing business conversations. No credentials or business content copied."
+}

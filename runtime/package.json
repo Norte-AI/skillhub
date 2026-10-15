@@ -1,0 +1,45 @@
+{
+  "name": "skill-hub",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "node apps/server/src/index.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "cli": "node apps/cli/src/index.mjs",
+    "seed": "node examples/seed.mjs",
+    "check": "node scripts/check.mjs",
+    "mcp": "node apps/mcp/src/index.mjs",
+    "export:marketplace": "node scripts/export-marketplace.mjs",
+    "db:up": "docker compose -f infra/docker-compose.yml up -d --wait",
+    "db:down": "docker compose -f infra/docker-compose.yml down",
+    "db:migrate": "node scripts/db-migrate.mjs",
+    "db:import": "node packages/storage/import-legacy.mjs",
+    "dev:db": "node scripts/dev-db.mjs",
+    "test:db": "node scripts/test-db.mjs",
+    "backend:smoke": "node scripts/backend-smoke.mjs",
+    "seed:db": "node scripts/seed-db.mjs",
+    "publish:git": "node scripts/publish-git-market.mjs",
+    "publish:git:db": "node scripts/publish-git-market-db.mjs",
+    "signing:keygen": "node scripts/signing-keygen.mjs",
+    "codex:market": "node scripts/codex-market.mjs",
+    "service:start": "node scripts/service.mjs start",
+    "service:status": "node scripts/service.mjs status",
+    "service:stop": "node scripts/service.mjs stop",
+    "bench:build": "node scripts/build-benchmark.mjs",
+    "drill:restore": "node scripts/restore-drill.mjs",
+    "test:fault": "node --test tests/delivery-fault.test.mjs tests/cli.test.mjs tests/signing-cli.test.mjs tests/http-security.test.mjs tests/http-devices.test.mjs tests/build.test.mjs tests/git-market.test.mjs",
+    "native:market": "node scripts/native-market.mjs",
+    "client:session": "node scripts/client-session-workspace.mjs",
+    "acceptance:clients:native": "node scripts/client-native-acceptance.mjs",
+    "client:receipts": "node scripts/client-receipts.mjs",
+    "migrate:unified": "node scripts/migrate-unified.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

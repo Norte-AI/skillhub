@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-15T07:49:03.908Z",
+  "backend": "isolated-json-and-bare-git",
+  "releaseId": "recovery@1.0.0",
+  "releaseDigest": "e448f673f0803b8d3bd4a675373e00918b90b9bc8c839d8f02554b8bfb1caf2a",
+  "gitCommit": "98d296cd549acdb69842a3b6beb56a960be5ab08",
+  "snapshotDigest": "863fad9f27c40fe0544894d388d1ee1fee3cea43c77acc4e4b2cddfb45a708e6",
+  "checks": [
+    "source removed before restore",
+    "immutable release identical",
+    "Ed25519 signatures trusted",
+    "channel restored",
+    "device token remains revoked",
+    "fixed session and receipt restored",
+    "bare Git fsck and commit match"
+  ],
+  "limitation": "Synthetic local quiescent snapshot; PostgreSQL pg_dump/pg_restore is verified separately by test:db. No production restore executed."
+}

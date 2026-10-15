@@ -1,0 +1,764 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:skill-hub:contracts:v1",
+  "title": "Skill Hub current entity contracts",
+  "description": "Entity contracts for current schemaVersion 1. Named definitions are intended to be selected by consumers. Cross-entity identities, digest verification, UTF-8 byte limits, review policy, immutable history and dependency graph validation are enforced by runtime code; this document does not attest client loading.",
+  "$defs": {
+    "Id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$",
+      "not": {
+        "enum": [
+          "constructor",
+          "__proto__",
+          "toString",
+          "valueOf",
+          "hasOwnProperty",
+          "isPrototypeOf",
+          "propertyIsEnumerable",
+          "toLocaleString",
+          "__defineGetter__",
+          "__defineSetter__",
+          "__lookupGetter__",
+          "__lookupSetter__"
+        ]
+      }
+    },
+    "Digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "Version": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "Target": {
+      "enum": [
+        "codex",
+        "kimi",
+        "zcode"
+      ]
+    },
+    "Resource": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Relative POSIX path; runtime additionally rejects traversal, empty segments, backslashes, absolute paths and duplicate paths."
+        },
+        "body": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "body"
+      ],
+      "additionalProperties": false
+    },
+    "Actor": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "enum": [
+            "admin",
+            "editor",
+            "reviewer",
+            "publisher",
+            "system",
+            "device"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "deviceId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "role"
+      ],
+      "additionalProperties": false
+    },
+    "Content": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "kind": {
+          "enum": [
+            "rule",
+            "role",
+            "skill"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Resource"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "body",
+        "resources"
+      ],
+      "additionalProperties": false
+    },
+    "ContentRevision": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "kind": {
+          "enum": [
+            "rule",
+            "role",
+            "skill"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Resource"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          },
+          "uniqueItems": true
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "submissionId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "body",
+        "resources",
+        "revision",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "Bundle": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Target"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "items",
+        "tags",
+        "targets",
+        "revision"
+      ],
+      "additionalProperties": false
+    },
+    "LockedRevision": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "Manifest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "releaseId": {
+          "type": "string"
+        },
+        "bundleId": {
+          "$ref": "#/$defs/Id"
+        },
+        "version": {
+          "$ref": "#/$defs/Version"
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        },
+        "adapterStatus": {
+          "const": "generic-package"
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "releaseId",
+        "bundleId",
+        "version",
+        "target",
+        "adapterStatus",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "Signature": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "algorithm": {
+          "const": "Ed25519"
+        },
+        "keyId": {
+          "$ref": "#/$defs/Digest"
+        },
+        "releaseDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "signature": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9+/]{86}==$"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "algorithm",
+        "keyId",
+        "releaseDigest",
+        "signature"
+      ],
+      "additionalProperties": false
+    },
+    "Artifact": {
+      "type": "object",
+      "properties": {
+        "manifest": {
+          "$ref": "#/$defs/Manifest"
+        },
+        "content": {
+          "type": "string",
+          "description": "Canonical JSON array of locked content revisions, including resolved dependencies."
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature"
+        }
+      },
+      "required": [
+        "manifest",
+        "content",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "Release": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "bundleId": {
+          "$ref": "#/$defs/Id"
+        },
+        "version": {
+          "$ref": "#/$defs/Version"
+        },
+        "bundleRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "bundle": {
+          "$ref": "#/$defs/Bundle"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LockedRevision"
+          },
+          "minItems": 1
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "status": {
+          "const": "ready"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "artifacts": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/Target"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/Artifact"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "bundleId",
+        "version",
+        "bundleRevision",
+        "bundle",
+        "items",
+        "digest",
+        "status",
+        "createdAt",
+        "artifacts"
+      ],
+      "additionalProperties": false
+    },
+    "Submission": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "contentId": {
+          "$ref": "#/$defs/Id"
+        },
+        "payload": {
+          "$ref": "#/$defs/Content"
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "approved",
+            "rejected"
+          ]
+        },
+        "submittedBy": {
+          "$ref": "#/$defs/Actor"
+        },
+        "submittedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "approvedRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "approvedDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "comment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewedBy": {
+          "$ref": "#/$defs/Actor"
+        },
+        "reviewedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "contentId",
+        "payload",
+        "digest",
+        "status",
+        "submittedBy",
+        "submittedAt"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "approved",
+                  "rejected"
+                ]
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "comment",
+              "reviewedBy",
+              "reviewedAt"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "approved"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "approvedRevision",
+              "approvedDigest"
+            ]
+          }
+        }
+      ]
+    },
+    "BuildJob": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "bundleId": {
+          "$ref": "#/$defs/Id"
+        },
+        "version": {
+          "$ref": "#/$defs/Version"
+        },
+        "inputDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "running",
+            "ready",
+            "failed"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "startedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "leaseUntil": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "releaseId": {
+          "type": "string"
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "completedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "error": {
+          "type": "string"
+        },
+        "actor": {
+          "$ref": "#/$defs/Actor"
+        }
+      },
+      "required": [
+        "id",
+        "bundleId",
+        "version",
+        "inputDigest",
+        "status",
+        "createdAt"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "ready"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "releaseId",
+              "digest",
+              "completedAt"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "failed"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "error",
+              "completedAt"
+            ]
+          }
+        }
+      ]
+    },
+    "DeviceCapability": {
+      "$ref": "#/$defs/Target",
+      "description": "Declared client adapter target only; this field does not prove client installation or loading."
+    },
+    "Device": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "client": {
+          "$ref": "#/$defs/DeviceCapability"
+        },
+        "assignments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          },
+          "uniqueItems": true
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "tokenRevoked": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "client",
+        "assignments",
+        "updatedAt"
+      ],
+      "additionalProperties": false,
+      "description": "Public device representation; internal credential hashes are deliberately excluded."
+    },
+    "SessionBinding": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "deviceId": {
+          "$ref": "#/$defs/Id"
+        },
+        "releaseIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trusted": {
+          "const": false
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "deviceId",
+        "releaseIds",
+        "digest",
+        "source",
+        "trusted",
+        "createdAt"
+      ],
+      "additionalProperties": false
+    },
+    "Receipt": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "deviceId": {
+          "$ref": "#/$defs/Id"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/Id"
+        },
+        "releaseId": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "fetched",
+            "installed",
+            "injection_claim",
+            "injected",
+            "behavior"
+          ],
+          "description": "Reported evidence stage. injected and behavior remain unverified claims, not server-attested loading."
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "evidence": {
+          "type": "string",
+          "description": "Runtime UTF-8 limit 16 KiB; may contain user supplied evidence."
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trusted": {
+          "const": false
+        },
+        "verification": {
+          "const": "unverified"
+        },
+        "receivedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "deviceId",
+        "releaseId",
+        "kind",
+        "source",
+        "trusted",
+        "verification",
+        "receivedAt"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

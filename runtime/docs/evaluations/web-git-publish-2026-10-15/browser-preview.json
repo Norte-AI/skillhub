@@ -1,0 +1,19 @@
+{
+  "source": {
+    "repository": "https://github.com/Norte-AI/skillhub.git",
+    "requestedRef": "main",
+    "commit": "accdfeba94f4c6d2083c79965ba28303e890d41a",
+    "subdir": "builtin-skills/skills/weather"
+  },
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "Retrieve and summarize current weather and forecasts for locations, rain, temperature, and travel planning using an available web tool or wttr.in over HTTPS.",
+  "files": [
+    "LICENSE.txt",
+    "NOTICE.md",
+    "SKILL.md",
+    ".skillhub-source.json"
+  ],
+  "totalSize": 5117,
+  "warnings": []
+}

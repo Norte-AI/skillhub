@@ -1,0 +1,127 @@
+{
+  "testedAt": "2026-10-15T00:34:38.865790+00:00",
+  "baseUrl": "http://127.0.0.1:48130",
+  "scope": "anonymous browser smoke; no login or namespace/skill mutations",
+  "market": {
+    "url": "http://127.0.0.1:48130/search?q=&sort=newest&page=0&starredOnly=false",
+    "seedSkillVisible": true,
+    "visibleSkillCount": 26,
+    "horizontalOverflow": false
+  },
+  "skillDetail": {
+    "url": "http://127.0.0.1:48130/space/isolation-review/verification-skill?returnTo=%2Fsearch%3Fq%3D%26sort%3Dnewest%26page%3D0%26starredOnly%3Dfalse",
+    "renderedReadme": true,
+    "versionVisible": true,
+    "fileBrowserVisible": true,
+    "installRegistryLocal": true,
+    "horizontalOverflow": false
+  },
+  "login": {
+    "url": "http://127.0.0.1:48130/login",
+    "usernameAndPasswordFields": [
+      {
+        "placeholder": "输入用户名",
+        "type": "text"
+      },
+      {
+        "placeholder": "输入密码",
+        "type": "password"
+      }
+    ],
+    "horizontalOverflow": false,
+    "authenticated": false
+  },
+  "network": {
+    "capturedRequestCount": 62,
+    "externalRequests": [],
+    "failedResponses": [
+      {
+        "url": "http://127.0.0.1:48130/api/v1/auth/me",
+        "method": "GET",
+        "status": 401
+      },
+      {
+        "url": "http://127.0.0.1:48130/api/v1/auth/me",
+        "method": "GET",
+        "status": 401
+      },
+      {
+        "url": "http://127.0.0.1:48130/api/v1/auth/me",
+        "method": "GET",
+        "status": 401
+      },
+      {
+        "url": "http://127.0.0.1:48130/api/v1/auth/me",
+        "method": "GET",
+        "status": 401
+      },
+      {
+        "url": "http://127.0.0.1:48130/api/web/skills/26/star",
+        "method": "GET",
+        "status": 401
+      },
+      {
+        "url": "http://127.0.0.1:48130/api/web/skills/26/rating",
+        "method": "GET",
+        "status": 401
+      },
+      {
+        "url": "http://127.0.0.1:48130/api/v1/auth/me",
+        "method": "GET",
+        "status": 401
+      },
+      {
+        "url": "http://127.0.0.1:48130/api/v1/auth/me",
+        "method": "GET",
+        "status": 401
+      }
+    ],
+    "unexpectedCloudRegistryRequestsObserved": false,
+    "browserExtensionResources": [
+      "chrome-extension://aeblfdkhhhdcdjpifhhbdiojplfjncoa/inline/injected.js"
+    ],
+    "failedResponsesClassification": "All captured 401s are anonymous auth/profile or optional star/rating queries; public detail and file content rendered."
+  },
+  "externalLinks": [
+    {
+      "href": "https://github.com/iflytek/skillhub/tree/main/docs/skillhub",
+      "text": "文档"
+    },
+    {
+      "href": "https://www.npmjs.com/package/@astron-team/skillhub",
+      "text": "CLI"
+    },
+    {
+      "href": "https://github.com/iflytek/skillhub",
+      "text": "GitHub"
+    },
+    {
+      "href": "https://github.com/iflytek/skillhub/blob/main/LICENSE",
+      "text": "License"
+    },
+    {
+      "href": "https://github.com/iflytek/skillhub/blob/main/CONTRIBUTING.md",
+      "text": "Contributing"
+    },
+    {
+      "href": "https://github.com/iflytek/skillhub/releases",
+      "text": "Changelog"
+    },
+    {
+      "href": "https://github.com/iflytek/skillhub/blob/main/CODE_OF_CONDUCT.md",
+      "text": "行为准则"
+    },
+    {
+      "href": "https://github.com/iflytek/skillhub/discussions",
+      "text": "社区"
+    }
+  ],
+  "screenshots": [],
+  "limitations": [
+    "Screenshot helper exited 4 without usable image",
+    "Desktop only; no mobile screenshot validation",
+    "Authenticated dashboard not inspected",
+    "Network observations cover this isolated browser session, not backend egress"
+  ],
+  "sourceChanges": false
+}

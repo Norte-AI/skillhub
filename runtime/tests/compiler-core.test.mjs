@@ -1,0 +1,35 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { HubStore } from '../packages/core/index.mjs';
+import { submitSkill, reviewSubmission } from '../packages/review/index.mjs';
+import { enqueueBuild, createBuildWorker, listBuilds } from '../packages/build/index.mjs';
+test('dependency expansion locks revisions and applies review gates to transitive content', async t => {
+  const root = await mkdtemp(join(tmpdir(), 'hub-compiler-')); t.after(() => rm(root, { recursive: true, force: true }));
+  const store = await new HubStore({ dataDir: root }).init();
+  const submission = await submitSkill(store, { contentId: 'base-skill', body: '---\nname: base-skill\ndescription: Test\n---\nBase' }, { role: 'admin' });
+  await reviewSubmission(store, submission.id, { decision: 'approve', comment: 'approved' }, { role: 'admin' });
+  await store.saveContent({ id: 'main', kind: 'rule', title: 'Main', body: 'Main', dependencies: ['base-skill'] });
+  await store.saveBundle({ id: 'bundle', name: 'Bundle', items: ['main'], targets: ['codex'] });
+  const release = await store.buildRelease('bundle', '1.0.0');
+  assert.deepEqual(release.items.map(item => item.id), ['base-skill', 'main']);
+  await store.saveContent({ id: 'base-skill', kind: 'skill', title: 'Edited', body: 'Unreviewed change' });
+  await assert.rejects(store.buildRelease('bundle', '1.1.0'), /approved/);
+  assert.equal(JSON.parse((await store.getArtifact(release.id, 'codex')).content)[0].body.endsWith('Base'), true);
+});
+test('queued dependency changes invalidate the build and cyclic references cannot publish', async t => {
+  const root = await mkdtemp(join(tmpdir(), 'hub-compiler-')); t.after(() => rm(root, { recursive: true, force: true }));
+  const store = await new HubStore({ dataDir: root }).init();
+  await store.saveContent({ id: 'base', kind: 'rule', title: 'Base', body: 'Base' });
+  await store.saveContent({ id: 'main', kind: 'rule', title: 'Main', body: 'Main', dependencies: ['base'] });
+  await store.saveBundle({ id: 'bundle', name: 'Bundle', items: ['main'], targets: ['codex'] });
+  await enqueueBuild(store, { bundleId: 'bundle', version: '1.0.0' });
+  await store.saveContent({ id: 'base', kind: 'rule', title: 'Base', body: 'Changed' });
+  const worker = createBuildWorker(store); await worker.kick(); await worker.close();
+  assert.equal((await listBuilds(store))[0].status, 'failed');
+  await store.saveContent({ id: 'base', kind: 'rule', title: 'Base', body: 'Base', dependencies: ['main'] });
+  await assert.rejects(store.buildRelease('bundle', '1.0.0'), /cycle.*main -> base -> main/);
+  assert.equal((await store.listReleases()).length, 0);
+});

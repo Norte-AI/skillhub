@@ -1,0 +1,38 @@
+
+> skill-hub@0.1.0 test:fault
+> node --test tests/delivery-fault.test.mjs tests/cli.test.mjs tests/signing-cli.test.mjs tests/http-security.test.mjs tests/http-devices.test.mjs tests/build.test.mjs tests/git-market.test.mjs
+
+✔ durable build queue deduplicates pending work and produces signed immutable releases (50.805083ms)
+✔ restart recovers expired jobs and reports build failures without publishing a release (51.703292ms)
+✔ two workers claim one queued job once (29.546417ms)
+✔ queued inputs cannot silently change and invalid native exports never become ready releases (18.865292ms)
+✔ CLI stages, verifies, backs up, rolls back and uninstalls within isolated home (120.978709ms)
+✔ rejects unsafe identifiers and unsupported clients (2.745167ms)
+✔ operation lock refuses concurrent operations and doctor reports it without removing it (21.748833ms)
+✔ managed directory symlinks are rejected without writing outside home; root symlink is allowed (18.854166ms)
+✔ killed download never commits an install; stale lock is diagnosable and offline first install fails (197.3275ms)
+✔ publishes cloneable native Git marketplace with fixed mappings, immutable tags and no-op duplicate snapshot (2054.401291ms)
+✔ refuses unmanaged repositories, resource Git control paths and slug collisions without changing published refs (602.33825ms)
+✔ publication lock serializes processes and disables inherited config and bare receive hooks (645.52525ms)
+✔ forced staging retains mandatory files hidden by resource gitignore and refuses attributes before ref updates (452.959583ms)
+✔ publisher CLI ignores inherited global config, GIT_DIR and author variables without running configured hooks (372.1015ms)
+✔ ZCode Rule-only plugin retains the manifest skills directory after Git clone (344.473542ms)
+✔ real store issues revocable device tokens and keeps session bindings immutable (181.126167ms)
+✔ HTTP rejects malformed objects, MIME and oversized byte streams with accurate statuses (80.820875ms)
+✔ HTTP maps domain errors and hides unexpected exception details (12.078875ms)
+✔ devices can only read assigned bundles and write their own untrusted telemetry (19.2615ms)
+✔ list pagination preserves old arrays and readiness distinguishes storage failures (7.7755ms)
+✔ channel compare-and-swap generation is passed to storage and MCP shares authentication (11.071042ms)
+✔ HTTP rejects untrusted Host names even when Origin matches the forged host (5.108167ms)
+✔ signed CLI install, update, offline rollback and doctor verify fixed trusted key (112.008792ms)
+✔ signed cache tamper with recomputed hashes fails doctor and rollback without changing active state (42.128958ms)
+✔ trusted-key mode rejects unsigned artifacts; legacy mode still stages them (26.839792ms)
+✔ CLI rejects signed artifact when configured trust contains a different publisher key (18.06875ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4596.357125

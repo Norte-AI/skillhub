@@ -13,6 +13,7 @@ import type { FileTreeNode } from '@/features/skill/file-tree-builder'
 import type { SkillFile } from '@/api/types'
 import { InstallCommand } from '@/features/skill/install-command'
 import { ShareButton } from '@/features/skill/share-button'
+import { ImportToRuntimeButton } from '@/features/skill/import-to-runtime-button'
 import { InstallForAgentButton } from '@/features/skill/install-for-agent-button'
 import { SkillLabelPanel } from '@/features/skill/skill-label-panel'
 import { ComplianceSnapshotPanel } from '@/features/skill/compliance-snapshot-panel'
@@ -1409,6 +1410,8 @@ export function SkillDetailPage() {
           </svg>
           {t('skillDetail.download')}
         </Button>
+
+        {hasRole('SUPER_ADMIN') && skill.visibility === 'PUBLIC' && selectedVersionEntry?.status === 'PUBLISHED' && <ImportToRuntimeButton namespace={namespace} slug={slug} version={selectedVersionEntry.version} />}
 
         <ShareButton
           namespace={namespace}

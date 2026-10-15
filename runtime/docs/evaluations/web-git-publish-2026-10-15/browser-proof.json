@@ -1,0 +1,37 @@
+{
+  "checks": {
+    "unsupportedSourceRejected": true,
+    "previewRequired": true,
+    "sourceEditInvalidatesPreview": true,
+    "fixedCommitReimport": true,
+    "mobileNoOverflow": true,
+    "ordinaryPublisherInitiallyScanning": true,
+    "pendingAnonymousDownloadBlocked": true,
+    "scanAndReviewApproved": true,
+    "publishedDownloadMatchesPreviewEveryFile": true
+  },
+  "source": {
+    "repository": "https://github.com/Norte-AI/skillhub.git",
+    "requestedRef": "accdfeba94f4c6d2083c79965ba28303e890d41a",
+    "commit": "accdfeba94f4c6d2083c79965ba28303e890d41a",
+    "subdir": "builtin-skills/skills/weather"
+  },
+  "initialPublish": {
+    "skillId": 26,
+    "namespace": "web-git-review",
+    "slug": "weather",
+    "version": "1.0.0",
+    "status": "SCANNING",
+    "fileCount": 4,
+    "totalSize": 5153
+  },
+  "pendingDownloadStatus": 400,
+  "approvedDownloadStatus": 200,
+  "artifactSha256": "1a8f884b3f353069c1cafca34f46eeb5be3a56f46eb1c4dba31413a3172117c9",
+  "artifactFiles": [
+    "LICENSE.txt",
+    "NOTICE.md",
+    "SKILL.md",
+    ".skillhub-source.json"
+  ]
+}

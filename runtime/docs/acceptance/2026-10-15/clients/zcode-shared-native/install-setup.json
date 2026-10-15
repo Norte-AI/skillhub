@@ -1,0 +1,27 @@
+[
+  {
+    "args": [
+      "plugins",
+      "marketplace",
+      "add",
+      "/private/tmp/skillhub-zcode-session-20261015/market",
+      "--scope",
+      "project"
+    ],
+    "code": 0,
+    "out": "Added marketplace skill-hub-hub-probe (1 plugins)\n",
+    "err": ""
+  },
+  {
+    "args": [
+      "plugins",
+      "install",
+      "hub-probe@skill-hub-hub-probe",
+      "--scope",
+      "project"
+    ],
+    "code": 0,
+    "out": "Installed plugin hub-probe@skill-hub-hub-probe (1.0.0) [enabled]\n",
+    "err": ""
+  }
+]

@@ -1,0 +1,14 @@
+✔ PostgreSQL build leases persist across instances and prevent duplicate release commits (237.311541ms)
+✔ real PostgreSQL migrations, cross-instance refresh and concurrent writes retain every revision (245.786709ms)
+✔ real PostgreSQL serializes duplicate releases and channel CAS, rolls back partial writes and preserves history (151.594125ms)
+✔ real PostgreSQL persists device tokens, fixed sessions, unverified receipts and audit as separate entities (151.539667ms)
+✔ real PostgreSQL legacy import is transactional and refuses populated schemas (108.026291ms)
+✔ real pg_dump/pg_restore recover fixed releases, session receipts and revoked tokens in an isolated database (749.721792ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1510.443542

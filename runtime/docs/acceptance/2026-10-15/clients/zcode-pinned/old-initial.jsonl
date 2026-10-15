@@ -1,0 +1,26 @@
+{
+  "sessionId": "sess_af381220-36f6-4e6b-967a-deea15345f66",
+  "traceId": "e989e0dd-cc47-40b2-8bad-518764191b4e",
+  "turnId": "turn_e57e2cab-9c16-4e2e-9ade-53c14d058803",
+  "response": "```json\n{\n  \"rule_marker\": \"hub_probe_release = v1\",\n  \"reference_marker\": \"hub_probe_reference = v1\"\n}\n```",
+  "usage": {
+    "source": "provider",
+    "modelRequestCount": 3,
+    "inputTokens": 90949,
+    "outputTokens": 1073,
+    "totalTokens": 92022,
+    "cacheReadTokens": 78592,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 943,
+    "webFetchRequests": 0,
+    "webSearchRequests": 0
+  },
+  "eventCount": 64,
+  "projection": {
+    "status": "idle",
+    "turnCount": 1,
+    "totalTokenCount": 92022,
+    "contextUsed": 30524,
+    "contextWindow": 200000
+  }
+}

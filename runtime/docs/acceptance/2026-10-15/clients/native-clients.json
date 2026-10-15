@@ -1,0 +1,442 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-15T08:00:38.411Z",
+  "root": "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173",
+  "modelCalls": 0,
+  "network": "denied-by-os-sandbox",
+  "loaded": false,
+  "checks": [
+    {
+      "client": "codex",
+      "args": [
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "codex-cli 0.162.0-alpha.17.2\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173\" (codex_home: AbsolutePathBuf(\"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home\"))\n"
+    },
+    {
+      "client": "codex",
+      "args": [
+        "plugin",
+        "marketplace",
+        "add",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/market",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"marketplaceName\": \"skill-hub-hub-probe\",\n  \"installedRoot\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/market\",\n  \"alreadyAdded\": false\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173\" (codex_home: AbsolutePathBuf(\"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home\"))\n"
+    },
+    {
+      "client": "codex",
+      "args": [
+        "plugin",
+        "add",
+        "hub-probe@skill-hub-hub-probe",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"pluginId\": \"hub-probe@skill-hub-hub-probe\",\n  \"name\": \"hub-probe\",\n  \"marketplaceName\": \"skill-hub-hub-probe\",\n  \"version\": \"1.0.0\",\n  \"installedPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home/plugins/cache/skill-hub-hub-probe/hub-probe/1.0.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173\" (codex_home: AbsolutePathBuf(\"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home\"))\n"
+    },
+    {
+      "client": "codex",
+      "args": [
+        "plugin",
+        "list",
+        "--marketplace",
+        "skill-hub-hub-probe",
+        "--available",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"installed\": [\n    {\n      \"pluginId\": \"hub-probe@skill-hub-hub-probe\",\n      \"name\": \"hub-probe\",\n      \"marketplaceName\": \"skill-hub-hub-probe\",\n      \"version\": \"1.0.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/market/plugins/hub-probe\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/market\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    }\n  ],\n  \"available\": []\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173\" (codex_home: AbsolutePathBuf(\"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home\"))\n"
+    },
+    {
+      "client": "codex",
+      "args": [
+        "plugin",
+        "add",
+        "hub-probe@skill-hub-hub-probe",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"pluginId\": \"hub-probe@skill-hub-hub-probe\",\n  \"name\": \"hub-probe\",\n  \"marketplaceName\": \"skill-hub-hub-probe\",\n  \"version\": \"1.1.0\",\n  \"installedPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home/plugins/cache/skill-hub-hub-probe/hub-probe/1.1.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173\" (codex_home: AbsolutePathBuf(\"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home\"))\n"
+    },
+    {
+      "client": "codex",
+      "args": [
+        "plugin",
+        "list",
+        "--marketplace",
+        "skill-hub-hub-probe",
+        "--available",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"installed\": [\n    {\n      \"pluginId\": \"hub-probe@skill-hub-hub-probe\",\n      \"name\": \"hub-probe\",\n      \"marketplaceName\": \"skill-hub-hub-probe\",\n      \"version\": \"1.1.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/market/plugins/hub-probe\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/market\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    }\n  ],\n  \"available\": []\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173\" (codex_home: AbsolutePathBuf(\"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home\"))\n"
+    },
+    {
+      "client": "codex",
+      "args": [
+        "plugin",
+        "add",
+        "hub-probe@skill-hub-hub-probe",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"pluginId\": \"hub-probe@skill-hub-hub-probe\",\n  \"name\": \"hub-probe\",\n  \"marketplaceName\": \"skill-hub-hub-probe\",\n  \"version\": \"1.0.0\",\n  \"installedPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home/plugins/cache/skill-hub-hub-probe/hub-probe/1.0.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173\" (codex_home: AbsolutePathBuf(\"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home\"))\n"
+    },
+    {
+      "client": "codex",
+      "args": [
+        "plugin",
+        "list",
+        "--marketplace",
+        "skill-hub-hub-probe",
+        "--available",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"installed\": [\n    {\n      \"pluginId\": \"hub-probe@skill-hub-hub-probe\",\n      \"name\": \"hub-probe\",\n      \"marketplaceName\": \"skill-hub-hub-probe\",\n      \"version\": \"1.0.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/market/plugins/hub-probe\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/market\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    }\n  ],\n  \"available\": []\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173\" (codex_home: AbsolutePathBuf(\"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home\"))\n"
+    },
+    {
+      "client": "codex",
+      "args": [
+        "plugin",
+        "remove",
+        "hub-probe@skill-hub-hub-probe",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"pluginId\": \"hub-probe@skill-hub-hub-probe\",\n  \"name\": \"hub-probe\",\n  \"marketplaceName\": \"skill-hub-hub-probe\"\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173\" (codex_home: AbsolutePathBuf(\"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/codex/home\"))\n"
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "version"
+      ],
+      "exitCode": 0,
+      "stdout": "0.16.9\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "validate",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/market"
+      ],
+      "exitCode": 0,
+      "stdout": "Plugin manifest is valid: /private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/market\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "marketplace",
+        "add",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/market"
+      ],
+      "exitCode": 0,
+      "stdout": "Added marketplace skill-hub-hub-probe (1 plugins)\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "marketplace",
+        "update",
+        "skill-hub-hub-probe"
+      ],
+      "exitCode": 0,
+      "stdout": "Updated marketplace skill-hub-hub-probe (1 plugins)\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "install",
+        "hub-probe@skill-hub-hub-probe"
+      ],
+      "exitCode": 0,
+      "stdout": "Installed plugin hub-probe@skill-hub-hub-probe (1.0.0) [enabled]\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "list",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "[\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/visualize@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"visualize@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/visualize/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"visualize\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/visualize/0.1.0\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Create interactive explanations, charts and design previews in ZCode conversations.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/node-repl-host@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"node-repl-host@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/node-repl-host/0.6.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"node-repl-host\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/node-repl-host/0.6.1\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Shared node_repl runtime host for ZCode official capabilities. Not user-facing: it carries no skill and appears in no marketplace listing; Browser Use and Computer Use enable it and contribute their own skills, docs and runtime assets.\",\n    \"version\": \"0.6.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/android-emulator@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"android-emulator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/android-emulator/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [\n      \"android-emulator\"\n    ],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"android-emulator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/android-emulator/0.1.0\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Provides Android development workflows and emulator automation for ZCode.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/browser-use@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"browser-use@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/browser-use/0.5.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"browser-use\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/browser-use/0.5.1\",\n    \"skillCount\": 2,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Built-in browser automation runtime and guidance for Desktop IAB and explicitly enabled CLI-managed headless CDP: open, navigate, inspect, click, type, screenshot, record workspace WebM videos, and verify web pages and local dev targets.\",\n    \"version\": \"0.5.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/documents@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"documents@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/documents/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"documents\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/documents/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"DOCX document production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/pdf@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"pdf@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/pdf/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"pdf\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/pdf/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"PDF document production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/presentations@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"presentations@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/presentations/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"presentations\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/presentations/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"PPTX presentation production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/spreadsheets@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"spreadsheets@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/spreadsheets/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"spreadsheets\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/spreadsheets/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"XLSX spreadsheet production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/image-search@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"image-search@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/image-search/0.1.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [\n      \"image_search\"\n    ],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"image-search\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/image-search/0.1.1\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [\n      {\n        \"code\": \"plugin_variable_missing\",\n        \"message\": \"Missing environment variable: ZCODE_BASE_URL\",\n        \"severity\": \"error\",\n        \"path\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/image-search/0.1.1/.zcode-plugin/plugin.json\",\n        \"pluginId\": \"image-search@zcode-plugins-official\"\n      }\n    ],\n    \"description\": \"Official ZCode image search MCP server for finding illustrations and reference images.\",\n    \"version\": \"0.1.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/ios-simulator@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"ios-simulator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/ios-simulator/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [\n      \"ios-simulator\"\n    ],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"ios-simulator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/ios-simulator/0.1.0\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Provides iOS development workflows and simulator automation for ZCode.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/restore-legacy-sessions@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"restore-legacy-sessions@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/restore-legacy-sessions/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"restore-legacy-sessions\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/restore-legacy-sessions/0.1.0\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Select and restore legacy ACP-era ZCode sessions into the new ZCode task and session store.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/plugin-creator@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"plugin-creator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/plugin-creator/0.1.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"plugin-creator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/plugin-creator/0.1.1\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Develop and validate ZCode plugins through a local dev marketplace, installation, trials and updates.\",\n    \"version\": \"0.1.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/skill-creator@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"skill-creator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/skill-creator/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"skill-creator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/skill-creator/0.1.0\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Create, edit, and iterate local ZCode skills.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/zcode-guide@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"zcode-guide@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/zcode-guide/0.3.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"zcode-guide\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/zcode-guide/0.3.0\",\n    \"skillCount\": 6,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"ZCode usage and self-diagnosis guide: teaches agents and users how to configure MCP servers, commands, skills, hooks, and plugins, and how to locate and fix configuration problems for each.\",\n    \"version\": \"0.3.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/computer-use@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"computer-use@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/computer-use/0.6.4/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"computer-use\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/computer-use/0.6.4\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Computer Use: automate desktop apps with mouse, keyboard, and UI element control.\",\n    \"version\": \"0.6.4\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/hub-probe@skill-hub-hub-probe\",\n    \"enabled\": true,\n    \"id\": \"hub-probe@skill-hub-hub-probe\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/skill-hub-hub-probe/hub-probe/1.0.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"skill-hub-hub-probe\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"hub-probe\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/skill-hub-hub-probe/hub-probe/1.0.0\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"cache\",\n    \"diagnostics\": [],\n    \"description\": \"Isolated Hub Probe\",\n    \"version\": \"1.0.0\"\n  }\n]\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "marketplace",
+        "update",
+        "skill-hub-hub-probe"
+      ],
+      "exitCode": 0,
+      "stdout": "Updated marketplace skill-hub-hub-probe (1 plugins)\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "install",
+        "hub-probe@skill-hub-hub-probe"
+      ],
+      "exitCode": 0,
+      "stdout": "Installed plugin hub-probe@skill-hub-hub-probe (1.1.0) [enabled]\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "list",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "[\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/visualize@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"visualize@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/visualize/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"visualize\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/visualize/0.1.0\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Create interactive explanations, charts and design previews in ZCode conversations.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/node-repl-host@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"node-repl-host@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/node-repl-host/0.6.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"node-repl-host\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/node-repl-host/0.6.1\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Shared node_repl runtime host for ZCode official capabilities. Not user-facing: it carries no skill and appears in no marketplace listing; Browser Use and Computer Use enable it and contribute their own skills, docs and runtime assets.\",\n    \"version\": \"0.6.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/android-emulator@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"android-emulator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/android-emulator/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [\n      \"android-emulator\"\n    ],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"android-emulator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/android-emulator/0.1.0\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Provides Android development workflows and emulator automation for ZCode.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/browser-use@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"browser-use@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/browser-use/0.5.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"browser-use\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/browser-use/0.5.1\",\n    \"skillCount\": 2,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Built-in browser automation runtime and guidance for Desktop IAB and explicitly enabled CLI-managed headless CDP: open, navigate, inspect, click, type, screenshot, record workspace WebM videos, and verify web pages and local dev targets.\",\n    \"version\": \"0.5.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/documents@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"documents@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/documents/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"documents\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/documents/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"DOCX document production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/pdf@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"pdf@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/pdf/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"pdf\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/pdf/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"PDF document production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/presentations@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"presentations@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/presentations/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"presentations\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/presentations/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"PPTX presentation production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/spreadsheets@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"spreadsheets@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/spreadsheets/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"spreadsheets\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/spreadsheets/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"XLSX spreadsheet production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/image-search@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"image-search@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/image-search/0.1.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [\n      \"image_search\"\n    ],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"image-search\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/image-search/0.1.1\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [\n      {\n        \"code\": \"plugin_variable_missing\",\n        \"message\": \"Missing environment variable: ZCODE_BASE_URL\",\n        \"severity\": \"error\",\n        \"path\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/image-search/0.1.1/.zcode-plugin/plugin.json\",\n        \"pluginId\": \"image-search@zcode-plugins-official\"\n      }\n    ],\n    \"description\": \"Official ZCode image search MCP server for finding illustrations and reference images.\",\n    \"version\": \"0.1.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/ios-simulator@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"ios-simulator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/ios-simulator/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [\n      \"ios-simulator\"\n    ],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"ios-simulator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/ios-simulator/0.1.0\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Provides iOS development workflows and simulator automation for ZCode.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/restore-legacy-sessions@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"restore-legacy-sessions@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/restore-legacy-sessions/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"restore-legacy-sessions\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/restore-legacy-sessions/0.1.0\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Select and restore legacy ACP-era ZCode sessions into the new ZCode task and session store.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/plugin-creator@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"plugin-creator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/plugin-creator/0.1.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"plugin-creator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/plugin-creator/0.1.1\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Develop and validate ZCode plugins through a local dev marketplace, installation, trials and updates.\",\n    \"version\": \"0.1.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/skill-creator@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"skill-creator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/skill-creator/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"skill-creator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/skill-creator/0.1.0\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Create, edit, and iterate local ZCode skills.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/zcode-guide@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"zcode-guide@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/zcode-guide/0.3.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"zcode-guide\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/zcode-guide/0.3.0\",\n    \"skillCount\": 6,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"ZCode usage and self-diagnosis guide: teaches agents and users how to configure MCP servers, commands, skills, hooks, and plugins, and how to locate and fix configuration problems for each.\",\n    \"version\": \"0.3.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/computer-use@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"computer-use@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/computer-use/0.6.4/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"computer-use\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/computer-use/0.6.4\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Computer Use: automate desktop apps with mouse, keyboard, and UI element control.\",\n    \"version\": \"0.6.4\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/hub-probe@skill-hub-hub-probe\",\n    \"enabled\": true,\n    \"id\": \"hub-probe@skill-hub-hub-probe\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/skill-hub-hub-probe/hub-probe/1.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"skill-hub-hub-probe\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"hub-probe\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/skill-hub-hub-probe/hub-probe/1.1.0\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"cache\",\n    \"diagnostics\": [],\n    \"description\": \"Isolated Hub Probe\",\n    \"version\": \"1.1.0\"\n  }\n]\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "marketplace",
+        "update",
+        "skill-hub-hub-probe"
+      ],
+      "exitCode": 0,
+      "stdout": "Updated marketplace skill-hub-hub-probe (1 plugins)\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "install",
+        "hub-probe@skill-hub-hub-probe"
+      ],
+      "exitCode": 0,
+      "stdout": "Installed plugin hub-probe@skill-hub-hub-probe (1.0.0) [enabled]\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "list",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "[\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/visualize@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"visualize@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/visualize/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"visualize\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/visualize/0.1.0\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Create interactive explanations, charts and design previews in ZCode conversations.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/node-repl-host@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"node-repl-host@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/node-repl-host/0.6.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"node-repl-host\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/node-repl-host/0.6.1\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Shared node_repl runtime host for ZCode official capabilities. Not user-facing: it carries no skill and appears in no marketplace listing; Browser Use and Computer Use enable it and contribute their own skills, docs and runtime assets.\",\n    \"version\": \"0.6.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/android-emulator@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"android-emulator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/android-emulator/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [\n      \"android-emulator\"\n    ],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"android-emulator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/android-emulator/0.1.0\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Provides Android development workflows and emulator automation for ZCode.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/browser-use@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"browser-use@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/browser-use/0.5.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"browser-use\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/browser-use/0.5.1\",\n    \"skillCount\": 2,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Built-in browser automation runtime and guidance for Desktop IAB and explicitly enabled CLI-managed headless CDP: open, navigate, inspect, click, type, screenshot, record workspace WebM videos, and verify web pages and local dev targets.\",\n    \"version\": \"0.5.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/documents@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"documents@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/documents/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"documents\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/documents/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"DOCX document production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/pdf@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"pdf@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/pdf/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"pdf\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/pdf/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"PDF document production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/presentations@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"presentations@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/presentations/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"presentations\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/presentations/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"PPTX presentation production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/spreadsheets@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"spreadsheets@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/spreadsheets/0.1.8/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"spreadsheets\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/spreadsheets/0.1.8\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"XLSX spreadsheet production skills, published as an official ZCode plugin.\",\n    \"version\": \"0.1.8\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/image-search@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"image-search@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/image-search/0.1.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [\n      \"image_search\"\n    ],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"image-search\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/image-search/0.1.1\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [\n      {\n        \"code\": \"plugin_variable_missing\",\n        \"message\": \"Missing environment variable: ZCODE_BASE_URL\",\n        \"severity\": \"error\",\n        \"path\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/image-search/0.1.1/.zcode-plugin/plugin.json\",\n        \"pluginId\": \"image-search@zcode-plugins-official\"\n      }\n    ],\n    \"description\": \"Official ZCode image search MCP server for finding illustrations and reference images.\",\n    \"version\": \"0.1.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/ios-simulator@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"ios-simulator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/ios-simulator/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [\n      \"ios-simulator\"\n    ],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"ios-simulator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/ios-simulator/0.1.0\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Provides iOS development workflows and simulator automation for ZCode.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/restore-legacy-sessions@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"restore-legacy-sessions@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/restore-legacy-sessions/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"restore-legacy-sessions\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/restore-legacy-sessions/0.1.0\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Select and restore legacy ACP-era ZCode sessions into the new ZCode task and session store.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/plugin-creator@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"plugin-creator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/plugin-creator/0.1.1/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"plugin-creator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/plugin-creator/0.1.1\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Develop and validate ZCode plugins through a local dev marketplace, installation, trials and updates.\",\n    \"version\": \"0.1.1\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/skill-creator@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"skill-creator@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/skill-creator/0.1.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"skill-creator\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/skill-creator/0.1.0\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Create, edit, and iterate local ZCode skills.\",\n    \"version\": \"0.1.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/zcode-guide@zcode-plugins-official\",\n    \"enabled\": true,\n    \"id\": \"zcode-guide@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/zcode-guide/0.3.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"zcode-guide\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/zcode-guide/0.3.0\",\n    \"skillCount\": 6,\n    \"skillRootCount\": 1,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"ZCode usage and self-diagnosis guide: teaches agents and users how to configure MCP servers, commands, skills, hooks, and plugins, and how to locate and fix configuration problems for each.\",\n    \"version\": \"0.3.0\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/computer-use@zcode-plugins-official\",\n    \"enabled\": false,\n    \"id\": \"computer-use@zcode-plugins-official\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/computer-use/0.6.4/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"zcode-plugins-official\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"computer-use\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/zcode-plugins-official/computer-use/0.6.4\",\n    \"skillCount\": 0,\n    \"skillRootCount\": 0,\n    \"source\": \"official\",\n    \"diagnostics\": [],\n    \"description\": \"Computer Use: automate desktop apps with mouse, keyboard, and UI element control.\",\n    \"version\": \"0.6.4\"\n  },\n  {\n    \"commandRootCount\": 0,\n    \"dataPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/data/hub-probe@skill-hub-hub-probe\",\n    \"enabled\": true,\n    \"id\": \"hub-probe@skill-hub-hub-probe\",\n    \"manifestPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/skill-hub-hub-probe/hub-probe/1.0.0/.zcode-plugin/plugin.json\",\n    \"marketplace\": \"skill-hub-hub-probe\",\n    \"declaredMcpServerNames\": [],\n    \"mcpServerNames\": [],\n    \"hookDetails\": [],\n    \"name\": \"hub-probe\",\n    \"rootPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/zcode/home/.zcode/cli/plugins/cache/skill-hub-hub-probe/hub-probe/1.0.0\",\n    \"skillCount\": 1,\n    \"skillRootCount\": 1,\n    \"source\": \"cache\",\n    \"diagnostics\": [],\n    \"description\": \"Isolated Hub Probe\",\n    \"version\": \"1.0.0\"\n  }\n]\n",
+      "stderr": ""
+    },
+    {
+      "client": "zcode",
+      "args": [
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "plugins",
+        "uninstall",
+        "hub-probe",
+        "--force"
+      ],
+      "exitCode": 0,
+      "stdout": "Uninstalled plugin hub-probe@skill-hub-hub-probe\n",
+      "stderr": ""
+    },
+    {
+      "client": "kimi",
+      "args": [
+        "-B",
+        "/Applications/Kimi.app/Contents/Resources/resources/daimon-bundle/app/daimon/assets/builtin-skills/plugin-builder/scripts/validate_plugin.py",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v1/plugins/hub-probe"
+      ],
+      "exitCode": 0,
+      "stdout": "[WARN]  interface.defaultLocale is missing (required by the platform, limited to zh-CN/en-US; may be left empty for the personal market)\n[WARN]  interface.tryPrompts is missing or empty (required by the platform; at least one sample prompt)\n[WARN]  interface.skillOverrides is missing (the platform requires every plugin skill entry to have displayName and description)\n[WARN]  interface.locales is missing (required by the platform; locales/ together with defaultLocale must cover both zh-CN and en-US)\n=> OK  (0 error, 4 warning)\n",
+      "stderr": ""
+    },
+    {
+      "client": "kimi",
+      "args": [
+        "--node",
+        "/Applications/Kimi.app/Contents/Resources/resources/runtime/node",
+        "kimi-plugin",
+        "register-personal",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v1/plugins/hub-probe",
+        "--share-dir",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share",
+        "--market",
+        "hub-acceptance",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"link\": \"kimi-work://plugin?id=hub-probe%40hub-acceptance\",\n  \"id\": \"hub-probe@hub-acceptance\",\n  \"market\": \"hub-acceptance\",\n  \"displayName\": \"Isolated Hub Probe\",\n  \"sourceVersion\": \"1.0.0\",\n  \"status\": \"not_installed\",\n  \"health\": \"ok\",\n  \"actions\": [\n    \"installPlugin\",\n    \"purgePlugin\"\n  ],\n  \"skillNames\": [\n    \"probe-skill\"\n  ],\n  \"mcpServerNames\": [],\n  \"agentNames\": [],\n  \"hookEvents\": [],\n  \"commandNames\": [],\n  \"hasSystemPrompt\": true\n}\n",
+      "stderr": ""
+    },
+    {
+      "client": "kimi",
+      "args": [
+        "--node",
+        "/Applications/Kimi.app/Contents/Resources/resources/runtime/node",
+        "kimi-plugin",
+        "install",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v1/plugins/hub-probe",
+        "--share-dir",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"installed\": true,\n  \"plugin\": {\n    \"id\": \"hub-probe\",\n    \"displayName\": \"Isolated Hub Probe\",\n    \"version\": \"1.0.0\",\n    \"enabled\": true,\n    \"state\": \"ok\",\n    \"skillCount\": 1,\n    \"mcpServerCount\": 0,\n    \"enabledMcpServerCount\": 0,\n    \"hookCount\": 0,\n    \"commandCount\": 0,\n    \"hasErrors\": false,\n    \"source\": \"local-path\",\n    \"originalSource\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v1/plugins/hub-probe\"\n  },\n  \"target\": {\n    \"source\": \"share-dir\",\n    \"shareDir\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share\",\n    \"homeDir\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share/daimon/runtime/kimi-code/home\",\n    \"configPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share/daimon/runtime/kimi-code/config.toml\"\n  },\n  \"existingProcessBehavior\": \"restart-required\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "client": "kimi",
+      "args": [
+        "-B",
+        "/Applications/Kimi.app/Contents/Resources/resources/daimon-bundle/app/daimon/assets/builtin-skills/plugin-builder/scripts/validate_plugin.py",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v2/plugins/hub-probe"
+      ],
+      "exitCode": 0,
+      "stdout": "[WARN]  interface.defaultLocale is missing (required by the platform, limited to zh-CN/en-US; may be left empty for the personal market)\n[WARN]  interface.tryPrompts is missing or empty (required by the platform; at least one sample prompt)\n[WARN]  interface.skillOverrides is missing (the platform requires every plugin skill entry to have displayName and description)\n[WARN]  interface.locales is missing (required by the platform; locales/ together with defaultLocale must cover both zh-CN and en-US)\n=> OK  (0 error, 4 warning)\n",
+      "stderr": ""
+    },
+    {
+      "client": "kimi",
+      "args": [
+        "--node",
+        "/Applications/Kimi.app/Contents/Resources/resources/runtime/node",
+        "kimi-plugin",
+        "register-personal",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v2/plugins/hub-probe",
+        "--share-dir",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share",
+        "--market",
+        "hub-acceptance",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"link\": \"kimi-work://plugin?id=hub-probe%40hub-acceptance\",\n  \"id\": \"hub-probe@hub-acceptance\",\n  \"market\": \"hub-acceptance\",\n  \"displayName\": \"Isolated Hub Probe\",\n  \"sourceVersion\": \"1.1.0\",\n  \"status\": \"not_installed\",\n  \"health\": \"ok\",\n  \"actions\": [\n    \"installPlugin\",\n    \"purgePlugin\"\n  ],\n  \"skillNames\": [\n    \"probe-skill\"\n  ],\n  \"mcpServerNames\": [],\n  \"agentNames\": [],\n  \"hookEvents\": [],\n  \"commandNames\": [],\n  \"hasSystemPrompt\": true\n}\n",
+      "stderr": ""
+    },
+    {
+      "client": "kimi",
+      "args": [
+        "--node",
+        "/Applications/Kimi.app/Contents/Resources/resources/runtime/node",
+        "kimi-plugin",
+        "install",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v2/plugins/hub-probe",
+        "--share-dir",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"installed\": true,\n  \"plugin\": {\n    \"id\": \"hub-probe\",\n    \"displayName\": \"Isolated Hub Probe\",\n    \"version\": \"1.1.0\",\n    \"enabled\": true,\n    \"state\": \"ok\",\n    \"skillCount\": 1,\n    \"mcpServerCount\": 0,\n    \"enabledMcpServerCount\": 0,\n    \"hookCount\": 0,\n    \"commandCount\": 0,\n    \"hasErrors\": false,\n    \"source\": \"local-path\",\n    \"originalSource\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v2/plugins/hub-probe\"\n  },\n  \"target\": {\n    \"source\": \"share-dir\",\n    \"shareDir\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share\",\n    \"homeDir\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share/daimon/runtime/kimi-code/home\",\n    \"configPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share/daimon/runtime/kimi-code/config.toml\"\n  },\n  \"existingProcessBehavior\": \"restart-required\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "client": "kimi",
+      "args": [
+        "-B",
+        "/Applications/Kimi.app/Contents/Resources/resources/daimon-bundle/app/daimon/assets/builtin-skills/plugin-builder/scripts/validate_plugin.py",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v1/plugins/hub-probe"
+      ],
+      "exitCode": 0,
+      "stdout": "[WARN]  interface.defaultLocale is missing (required by the platform, limited to zh-CN/en-US; may be left empty for the personal market)\n[WARN]  interface.tryPrompts is missing or empty (required by the platform; at least one sample prompt)\n[WARN]  interface.skillOverrides is missing (the platform requires every plugin skill entry to have displayName and description)\n[WARN]  interface.locales is missing (required by the platform; locales/ together with defaultLocale must cover both zh-CN and en-US)\n=> OK  (0 error, 4 warning)\n",
+      "stderr": ""
+    },
+    {
+      "client": "kimi",
+      "args": [
+        "--node",
+        "/Applications/Kimi.app/Contents/Resources/resources/runtime/node",
+        "kimi-plugin",
+        "register-personal",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v1/plugins/hub-probe",
+        "--share-dir",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share",
+        "--market",
+        "hub-acceptance",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"link\": \"kimi-work://plugin?id=hub-probe%40hub-acceptance\",\n  \"id\": \"hub-probe@hub-acceptance\",\n  \"market\": \"hub-acceptance\",\n  \"displayName\": \"Isolated Hub Probe\",\n  \"sourceVersion\": \"1.0.0\",\n  \"status\": \"not_installed\",\n  \"health\": \"ok\",\n  \"actions\": [\n    \"installPlugin\",\n    \"purgePlugin\"\n  ],\n  \"skillNames\": [\n    \"probe-skill\"\n  ],\n  \"mcpServerNames\": [],\n  \"agentNames\": [],\n  \"hookEvents\": [],\n  \"commandNames\": [],\n  \"hasSystemPrompt\": true\n}\n",
+      "stderr": ""
+    },
+    {
+      "client": "kimi",
+      "args": [
+        "--node",
+        "/Applications/Kimi.app/Contents/Resources/resources/runtime/node",
+        "kimi-plugin",
+        "install",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v1/plugins/hub-probe",
+        "--share-dir",
+        "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"ok\": true,\n  \"installed\": true,\n  \"plugin\": {\n    \"id\": \"hub-probe\",\n    \"displayName\": \"Isolated Hub Probe\",\n    \"version\": \"1.0.0\",\n    \"enabled\": true,\n    \"state\": \"ok\",\n    \"skillCount\": 1,\n    \"mcpServerCount\": 0,\n    \"enabledMcpServerCount\": 0,\n    \"hookCount\": 0,\n    \"commandCount\": 0,\n    \"hasErrors\": false,\n    \"source\": \"local-path\",\n    \"originalSource\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/v1/plugins/hub-probe\"\n  },\n  \"target\": {\n    \"source\": \"share-dir\",\n    \"shareDir\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share\",\n    \"homeDir\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share/daimon/runtime/kimi-code/home\",\n    \"configPath\": \"/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-native-acceptance-JgY173/kimi/home/share/daimon/runtime/kimi-code/config.toml\"\n  },\n  \"existingProcessBehavior\": \"restart-required\"\n}\n",
+      "stderr": ""
+    }
+  ],
+  "clients": {
+    "codex": {
+      "version": "codex-cli 0.162.0-alpha.17.2",
+      "nativeInstalled": true,
+      "uninstall": true,
+      "userFilesPreserved": true
+    },
+    "zcode": {
+      "version": "0.16.9",
+      "nativeInstalled": true,
+      "uninstall": true,
+      "userFilesPreserved": true
+    },
+    "kimi": {
+      "desktopVersion": "3.2.16",
+      "registered": true,
+      "nativeInstalled": true,
+      "desktopActivated": false,
+      "userFilesPreserved": true
+    }
+  },
+  "limits": [
+    "Desktop activation and new/old model sessions are not tested.",
+    "MCP SDK verification is not native desktop MCP invocation."
+  ],
+  "status": "offline-native-passed-desktop-session-pending"
+}

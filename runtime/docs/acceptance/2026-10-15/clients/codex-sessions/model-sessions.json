@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-15T07:52:22.639Z",
+  "root": "/private/var/folders/h7/lf0gyg7n2hn7n2d0_rkmq4w80000gn/T/skillhub-model-acceptance-E8GENy",
+  "client": "codex",
+  "nativePluginActivation": "not-tested-by-this-probe",
+  "loadingRoute": "project-AGENTS.md-and-.agents/skills",
+  "cases": [
+    {
+      "phase": "install",
+      "releaseId": "session-probe@1.0.0",
+      "sessionId": "01a13e8c-4598-75f2-8dc9-497c450eb458",
+      "result": "passed",
+      "answer": {
+        "rule_marker": "hub_probe_release = v1",
+        "reference_marker": "hub_probe_reference = v1"
+      },
+      "events": "install.jsonl",
+      "usage": {
+        "input_tokens": 30125,
+        "cached_input_tokens": 27136,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 110,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "phase": "update",
+      "releaseId": "session-probe@1.1.0",
+      "sessionId": "01a13e8c-a6fc-73b1-890b-153843bcb17e",
+      "result": "passed",
+      "answer": {
+        "rule_marker": "hub_probe_release = v2",
+        "reference_marker": "hub_probe_reference = v2"
+      },
+      "events": "update.jsonl",
+      "usage": {
+        "input_tokens": 30123,
+        "cached_input_tokens": 27136,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 110,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "phase": "rollback",
+      "releaseId": "session-probe@1.0.0",
+      "sessionId": "01a13e8d-1bce-76c1-bdf7-63a4417953dd",
+      "result": "passed",
+      "answer": {
+        "rule_marker": "hub_probe_release = v1",
+        "reference_marker": "hub_probe_reference = v1"
+      },
+      "events": "rollback.jsonl",
+      "usage": {
+        "input_tokens": 45467,
+        "cached_input_tokens": 39424,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 201,
+        "reasoning_output_tokens": 65
+      }
+    }
+  ],
+  "limits": [
+    "Ephemeral fresh sessions only; old-session pinning is not established.",
+    "Model responses are observed behavior, not a trusted server injection receipt."
+  ],
+  "status": "fresh-session-install-update-rollback-passed"
+}

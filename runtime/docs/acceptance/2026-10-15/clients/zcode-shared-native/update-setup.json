@@ -1,0 +1,25 @@
+[
+  {
+    "args": [
+      "plugins",
+      "marketplace",
+      "update",
+      "skill-hub-hub-probe"
+    ],
+    "code": 0,
+    "stdout": "Updated marketplace skill-hub-hub-probe (1 plugins)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugins",
+      "install",
+      "hub-probe@skill-hub-hub-probe",
+      "--scope",
+      "project"
+    ],
+    "code": 0,
+    "stdout": "Installed plugin hub-probe@skill-hub-hub-probe (1.1.0) [enabled]\n",
+    "stderr": ""
+  }
+]

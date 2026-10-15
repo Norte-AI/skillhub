@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17.11-alpine
+    environment:
+      POSTGRES_DB: skillhub
+      POSTGRES_USER: skillhub
+      POSTGRES_PASSWORD: ${SKILLHUB_POSTGRES_PASSWORD:-skillhub-local-development}
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - skillhub-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U skillhub -d skillhub"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+volumes:
+  skillhub-postgres:

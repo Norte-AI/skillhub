@@ -1,0 +1,25 @@
+{
+  "base": "http://127.0.0.1:48230",
+  "createdAt": "2026-10-15T12:07:34.225Z",
+  "checks": [
+    "Registry session login through 48230",
+    "Migrated personal bundle visible through Java gateway",
+    "Three-target Release Ed25519 signatures verified with mounted public key",
+    "Signed Release published to stable, marketplace and Codex Git snapshot",
+    "Device token restricted to assigned acceptance bundle",
+    "Scoped Streamable HTTP MCP fixed Release get_content through /runtime/mcp",
+    "Git ls-remote through /runtime/git/codex.git"
+  ],
+  "oldBundleIds": [
+    "personal",
+    "unified-client-acceptance-20261015"
+  ],
+  "releaseId": "unified-client-acceptance-20261015@1.0.0",
+  "releaseDigest": "979639bd726f01d976231339e2c1a53671f0cfc6972707817d33e9fd89ce012d",
+  "gitRefs": [
+    "a89344a846043f3077a2f02cd8e667219faf3f10\tHEAD",
+    "a89344a846043f3077a2f02cd8e667219faf3f10\trefs/heads/main",
+    "a89344a846043f3077a2f02cd8e667219faf3f10\trefs/tags/snapshot-codex-a2d753fc9fcb564fc594fcc6ccecddd74c22cc0057082b343f7028e44a18d236"
+  ],
+  "status": "passed"
+}

@@ -8,7 +8,7 @@ import java.util.*;
 @Component
 @ConfigurationProperties(prefix = "skillhub.git")
 public class GitImportProperties {
-    public enum Kind { GITHUB, GITLAB, GITEE }
+    public enum Kind { GITHUB, GITLAB }
     public static class Provider {
         private Kind kind = Kind.GITHUB;
         private String apiBase;

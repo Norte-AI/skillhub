@@ -1,0 +1,26 @@
+{
+  "sessionId": "sess_f9e456ed-ae2d-4219-9764-1d1bb093d97c",
+  "traceId": "cf1d2d6f-f298-4319-8066-78a4c2983c12",
+  "turnId": "turn_cdb9933f-4d19-4fa2-a87a-f5d958f06319",
+  "response": "```json\n{\n  \"rule_marker\": \"v2\",\n  \"reference_marker\": \"v2\"\n}\n```\n\nStartup rules (workspace AGENTS.md, injected at session start — file not opened) contain `hub_probe_release = v2`. The probe-skill from hub-probe 1.1.0 directed me to `references/probe.md`, which contains `hub_probe_reference = v2`. Both markers match. No files were modified.",
+  "usage": {
+    "source": "provider",
+    "modelRequestCount": 3,
+    "inputTokens": 90339,
+    "outputTokens": 1747,
+    "totalTokens": 92086,
+    "cacheReadTokens": 84480,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 1567,
+    "webFetchRequests": 0,
+    "webSearchRequests": 0
+  },
+  "eventCount": 110,
+  "projection": {
+    "status": "idle",
+    "turnCount": 1,
+    "totalTokenCount": 92086,
+    "contextUsed": 30497,
+    "contextWindow": 200000
+  }
+}

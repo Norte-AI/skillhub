@@ -17,10 +17,60 @@ services:
     image: norte-skillhub-web-git:staging-check
     ports: !override ["127.0.0.1:48280:8080"]
     environment:
+      SPRING_DATASOURCE_HIKARI_SCHEMA: public
+      SPRING_FLYWAY_DEFAULT_SCHEMA: public
+      SKILLHUB_RUNTIME_BASE_URL: http://runtime:4317
+      SKILLHUB_RUNTIME_SERVICE_TOKEN: ${NORTE_RUNTIME_TOKEN:?Run scripts/norte-local.sh}
       SPRING_APPLICATION_JSON: ${NORTE_GIT_CONFIG_JSON:?Run scripts/norte-local.sh to load private Git settings}
       SKILLHUB_PUBLIC_BASE_URL: http://127.0.0.1:48230
       DEVICE_AUTH_VERIFICATION_URI: http://127.0.0.1:48230/cli/auth
       SKILLHUB_STORAGE_S3_PUBLIC_ENDPOINT: http://127.0.0.1:48290
+  runtime-init:
+    image: norte-skillhub-runtime:local
+    user: "0:0"
+    entrypoint: ["node", "-e"]
+    command:
+      - "const fs=require('fs');fs.mkdirSync('/keys',{recursive:true,mode:0o700});for(const name of ['private.pem','public.pem']){fs.copyFileSync('/source/'+name,'/keys/'+name);fs.chmodSync('/keys/'+name,name==='private.pem'?0o600:0o644);fs.chownSync('/keys/'+name,1000,1000)}fs.chownSync('/keys',1000,1000);fs.chmodSync('/keys',0o700)"
+    volumes:
+      - ${NORTE_LOCAL_STATE_ABSOLUTE:?Run scripts/norte-local.sh}/runtime-keys:/source:ro
+      - runtime-keys:/keys
+  runtime:
+    image: norte-skillhub-runtime:local
+    environment:
+      SKILLHUB_HOST: 0.0.0.0
+      PORT: "4317"
+      SKILLHUB_TOKEN: ${NORTE_RUNTIME_TOKEN:?Run scripts/norte-local.sh}
+      SKILLHUB_DATABASE_URL: postgres://skillhub:skillhub_dev@postgres:5432/skillhub
+      SKILLHUB_DATA_DIR: /var/lib/skillhub/data
+      SKILLHUB_GIT_ROOT: /var/lib/skillhub/git
+      SKILLHUB_SIGNING_KEY_FILE: /run/skillhub-keys/private.pem
+      SKILLHUB_ALLOWED_HOSTS: runtime,localhost,127.0.0.1
+      SKILLHUB_GIT_ALLOW_REMOTE: "1"
+    volumes:
+      - runtime-data:/var/lib/skillhub/data
+      - runtime-git:/var/lib/skillhub/git
+      - runtime-keys:/run/skillhub-keys:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      runtime-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4317/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
   web:
+    volumes:
+      - ./deploy/norte-local/runtime.nginx.conf:/etc/nginx/skillhub-runtime.conf:ro
+    depends_on:
+      runtime:
+        condition: service_healthy
     image: nginx:1.27-alpine
     ports: !override ["127.0.0.1:48230:80"]
+
+volumes:
+  runtime-data:
+  runtime-git:
+  runtime-keys:

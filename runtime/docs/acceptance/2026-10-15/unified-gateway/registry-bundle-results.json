@@ -1,0 +1,54 @@
+{
+  "base": "http://127.0.0.1:48230",
+  "createdAt": "2026-10-15T12:11:52.109Z",
+  "checks": [
+    "Registry session login through 48230",
+    "Migrated personal bundle visible through Java gateway",
+    "Imported Registry weather revision 1 referenced with acceptance rule in immutable signed bundle",
+    "All three target artifacts preserve exact Skill body, provenance and resources with matching locked revision digest",
+    "All three Ed25519 artifact signatures verified with mounted trusted public key"
+  ],
+  "oldBundleIds": [
+    "personal",
+    "unified-client-acceptance-20261015",
+    "unified-registry-skill-acceptance-20261015"
+  ],
+  "releaseId": "unified-registry-skill-acceptance-20261015@1.1.0",
+  "releaseDigest": "adf1b7c9129a056804760534cc75de4921986a8e85f7485178a1e2d217c19474",
+  "registrySource": {
+    "namespace": "web-git-review",
+    "slug": "weather",
+    "packageSha256": "1a8f884b3f353069c1cafca34f46eeb5be3a56f46eb1c4dba31413a3172117c9",
+    "version": "1.0.0"
+  },
+  "importedContent": {
+    "id": "registry-84f54fc2bc306ebdabc44284bb86c96b375fdce3",
+    "revision": 1,
+    "digest": "b622cd1292f953c7cccfc690cd7f32073d3da3b6c76edc5caad925fa12a24a83",
+    "resourceCount": 4
+  },
+  "targets": {
+    "codex": {
+      "artifactDigest": "a8a5193a1481a2e329467f9e98b5842509e1b6ad33492926d6f1308650d7fbaf",
+      "contentDigest": "d6ca4e1fa898a94d29ff3fd25f558d8810f3e257beddb5b3bc65dde21e58f28a",
+      "sourceSkillDigest": "b622cd1292f953c7cccfc690cd7f32073d3da3b6c76edc5caad925fa12a24a83",
+      "resourceCount": 4,
+      "signatureVerified": true
+    },
+    "kimi": {
+      "artifactDigest": "b4665651c39b027b7b3727a382a9b9cb355d1d7de890fd97c944989371526f84",
+      "contentDigest": "d6ca4e1fa898a94d29ff3fd25f558d8810f3e257beddb5b3bc65dde21e58f28a",
+      "sourceSkillDigest": "b622cd1292f953c7cccfc690cd7f32073d3da3b6c76edc5caad925fa12a24a83",
+      "resourceCount": 4,
+      "signatureVerified": true
+    },
+    "zcode": {
+      "artifactDigest": "9716f9918ff4c78d8e2c19dc32ccc871bf5311082b7b4ebf5db91fed88e6889d",
+      "contentDigest": "d6ca4e1fa898a94d29ff3fd25f558d8810f3e257beddb5b3bc65dde21e58f28a",
+      "sourceSkillDigest": "b622cd1292f953c7cccfc690cd7f32073d3da3b6c76edc5caad925fa12a24a83",
+      "resourceCount": 4,
+      "signatureVerified": true
+    }
+  },
+  "status": "passed"
+}

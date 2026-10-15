@@ -1,4 +1,17 @@
 {
+  "runtime": {
+    "title": "Rules and clients",
+    "subtitle": "Compose rules and skills, sign fixed releases, and manage Codex, ZCode and Kimi access.",
+    "reload": "Reload",
+    "loading": "Connecting to the rules and clients module…",
+    "help": "Uses your platform administrator session; no separate token is needed. Import published public skills from their detail page, then compose a bundle. Device tokens remain separately assigned.",
+    "import": "Add to rule content library",
+    "importing": "Importing…",
+    "imported": "Fixed skill version imported",
+    "importHelp": "Open Rules and clients to compose and publish a bundle. The original skill version is unchanged.",
+    "importFailed": "Import failed",
+    "publicOnly": "Only published public skills can be copied into the shared rule library."
+  },
   "gitSources": {
     "title": "Git sources",
     "subtitle": "Track repositories and submit new skill versions through the existing review workflow.",

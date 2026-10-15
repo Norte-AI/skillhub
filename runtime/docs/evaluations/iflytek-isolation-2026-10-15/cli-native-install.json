@@ -1,0 +1,5 @@
+{
+  "status": 0,
+  "stdout": "{\"ok\":true,\"namespace\":\"isolation-review\",\"slug\":\"verification-skill\",\"installed\":[{\"agent\":\"codex\",\"dir\":\"/private/tmp/iflytek-isolation-20261015/cli-tests/native-project/.codex/skills/verification-skill\"}]}\n",
+  "stderr": ""
+}

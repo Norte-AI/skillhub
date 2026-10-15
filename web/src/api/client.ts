@@ -521,6 +521,15 @@ function avatarPath(namespace: string, slug: string): string {
   return `/api/v1/skills/${encodeURIComponent(namespace)}/${encodeURIComponent(slug)}/avatar`
 }
 
+export const runtimeApi = {
+  async importSkill(request: components['schemas']['RuntimeImportRequest']) {
+    return fetchJson<components['schemas']['RuntimeImportResponse']>(`${WEB_API_PREFIX}/runtime-import-skill`, {
+      method: 'POST', headers: await ensureCsrfHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(request), timeoutMs: 90_000,
+    })
+  },
+}
+
 export const gitImportApi = {
   async options(): Promise<components['schemas']['GitImportOptionsResponse']> {
     return fetchJson(`${WEB_API_PREFIX}/skills/git-import/options`)

@@ -1,0 +1,11 @@
+{
+  "databaseRestart": "passed",
+  "health": "UP",
+  "stableVersion": "1.0.0",
+  "historicalV2Version": "1.1.0",
+  "v1PackageBytesUnchanged": true,
+  "rejectedVersionStillBlocked": true,
+  "applicationRestart": "passed",
+  "stableAndArtifactPersisted": true,
+  "existingApiTokenStatus": 200
+}

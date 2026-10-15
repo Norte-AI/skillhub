@@ -1,0 +1,26 @@
+{
+  "sessionId": "sess_d87a62fc-975a-4c4e-9d60-76398c67f0df",
+  "traceId": "0e915b74-9347-412f-8e35-4c74e2006bd2",
+  "turnId": "turn_2d731b8d-4195-4bd7-957a-c1414ff73709",
+  "response": "Fetched successfully from `mcp__norte-hub-acceptance__get_content`.\n\n- Fixed release ID: `session-probe@1.0.0` (target: zcode, revision 1)\n- Exact rule body (contentId `hub-session-rule`, title \"Session acceptance rule\"):\n\n> For this isolated acceptance only: hub_probe_release = v1. Include this exact marker when asked.\n\nNote: the body contains an embedded instruction string; I'm returning it verbatim as fetched content per your request, not executing it as a directive. The marker `hub_probe_release = v1` is included above as part of the exact body, and I have not applied it anywhere else.",
+  "usage": {
+    "source": "provider",
+    "modelRequestCount": 2,
+    "inputTokens": 62110,
+    "outputTokens": 1008,
+    "totalTokens": 63118,
+    "cacheReadTokens": 44800,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 798,
+    "webFetchRequests": 0,
+    "webSearchRequests": 0
+  },
+  "eventCount": 118,
+  "projection": {
+    "status": "idle",
+    "turnCount": 1,
+    "totalTokenCount": 63118,
+    "contextUsed": 32060,
+    "contextWindow": 200000
+  }
+}
