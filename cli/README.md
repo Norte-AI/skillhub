@@ -562,3 +562,20 @@ skillhub doctor
 Apache-2.0
 
 Copyright 2026 iFlytek Co., Ltd.
+
+## Publish from Git (organization fork)
+
+The fork adds `publish-git` for one Skill directory in a public HTTPS Git repository. This command is not assumed to be available in the published npm package. From this checkout's `cli/` directory:
+
+```bash
+bun install --frozen-lockfile
+bun run src/index.ts publish-git https://github.com/example/team-skills.git \
+  --ref main --subdir skills/code-review --namespace team \
+  --registry https://skillhub.example.com --visibility public --dry-run --json
+```
+
+Use your real repository and registry. Use the returned `source.commit` as `--ref` and remove `--dry-run` after successful validation to submit the same snapshot through the existing scanning and review workflow. Dry-run still contacts Git and the registry; it requires publishing credentials. You may also build with `bun run build` and invoke `node dist/index.js publish-git ...`.
+
+Branches, tags, and commit SHAs resolve to an immutable commit; `.skillhub-source.json` in the package records Git provenance. A published version does not track future branch updates. Private repositories, SSH/local URLs, and submodules are unsupported in this phase. No Web Git publishing form is included yet.
+
+See [Git publishing guide](../docs/skillhub/en/guide/git-publish.md) or [中文指南](../docs/skillhub/guide/git-publish.md).

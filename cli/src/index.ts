@@ -7,6 +7,7 @@ import { listCommand, type ListCommandOptions } from './commands/list'
 import { loginCommand } from './commands/login'
 import { logoutCommand } from './commands/logout'
 import { publishCommand, type PublishCommandOptions } from './commands/publish'
+import { publishGitCommand, type PublishGitCommandOptions } from './commands/publish-git'
 import { removeCommand, type RemoveCommandOptions } from './commands/remove'
 import { searchCommand } from './commands/search'
 import { suiteCommand, type SuiteCommandOptions } from './commands/suite'
@@ -411,6 +412,24 @@ cli
   .option('--json', 'Output JSON')
   .action((path: string, options: PublishCommandOptions) => {
     return runCommand(() => publishCommand(path, options), Boolean(options.json))
+  })
+
+cli
+  .command('publish-git <repository>', 'Publish a fixed skill snapshot from an HTTPS Git repository')
+  .option('--ref <ref>', 'Branch, tag or full commit SHA (default: HEAD)')
+  .option('--subdir <path>', 'Skill directory relative to the repository (default: .)')
+  .option('--namespace <slug>', 'Namespace')
+  .option('--visibility <v>', 'Visibility (public|namespace-only|private)')
+  .option('--dry-run', 'Validate the Git snapshot without publishing')
+  .option('--registry <url>', 'Registry URL')
+  .option('--token <token>', 'API token')
+  .option('--json', 'Output JSON')
+  .action((repository: string, options: PublishGitCommandOptions) => {
+    return runCommand(() => publishGitCommand(repository, {
+      ...options,
+      ...(options.ref === undefined ? {} : { ref: rawStringOption(process.argv.slice(2), '--ref') ?? String(options.ref) }),
+      ...(options.subdir === undefined ? {} : { subdir: rawStringOption(process.argv.slice(2), '--subdir') ?? String(options.subdir) })
+    }), Boolean(options.json))
   })
 
 cli.help()

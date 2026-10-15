@@ -102,6 +102,14 @@ export const commands = {
     usage: 'skillhub publish <path> [--namespace <slug>] [--visibility <public|namespace-only|private>] [--dry-run] [--registry <url>] [--token <token>] [--json]',
     examples: ['skillhub publish ./my-skill', 'skillhub publish ./my-skill --namespace myspace']
   },
+  'publish-git': {
+    summary: 'Publish a fixed skill snapshot from an HTTPS Git repository',
+    usage: 'skillhub publish-git <repository> [--ref <ref>] [--subdir <path>] [--namespace <slug>] [--visibility <public|namespace-only|private>] [--dry-run] [--registry <url>] [--token <token>] [--json]',
+    examples: [
+      'skillhub publish-git https://github.com/team/skills.git --ref v1.0.0 --subdir skills/code-review --dry-run',
+      'skillhub publish-git https://github.com/team/skills.git --ref main --subdir skills/code-review --namespace team'
+    ]
+  },
   update: {
     summary: 'Check or update CLI itself',
     usage: 'skillhub update [--check] [--json]',
