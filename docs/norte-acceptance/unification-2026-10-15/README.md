@@ -10,7 +10,7 @@
 | Java数据库schema | 通过 | Hikari/Flyway固定public，runtime使用skillhub，不baseline/搬表 |
 | 旧数据迁移 | 通过 | 只读源快照，2内容项/1Bundle/1Release/1渠道/1listing，verify摘要一致；旧源数据保留 |
 | 公开固定技能导入 | 通过 | weather公开PUBLISHED版本导入；重复导入revision仍1；不允许绕过审核或导入私有内容 |
-| runtime真实数据库回归 | 106项通过 | 模块完整数据库测试 |
+| runtime真实数据库回归 | 最终108/108通过，0跳过 | 含真实导入Skill及CRLF回归 |
 | 前端回归 | 1076项通过 | 本轮前端检查 |
 | 签名与发布 | 真实导入衔接复验通过 | Registry weather固定版→runtime→三端签名Bundle通过；12项exporter/productflow检查通过；stable/listing/Git通过 |
 | 客户端同源分发 | 通过 | 限定assignment的设备令牌；48230/runtime/mcp固定Release get_content；48230/runtime/git/codex.git真实ls-remote |
@@ -34,3 +34,5 @@
 
 
 [真实Registry技能到三端签名Bundle结果](../../../runtime/docs/acceptance/2026-10-15/unified-gateway/registry-bundle-results.json)是N06最终证据，独立于之前合成Bundle网关验证。
+
+仓库交付：[PR #2](https://github.com/Norte-AI/skillhub/pull/2)，分支`codex/unify-platform`。本机已运行该分支；PR尚未合入main。

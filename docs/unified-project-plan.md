@@ -26,7 +26,7 @@
 | U2 客户端可使用 | Codex/ZCode固定新旧会话与回滚；Kimi固定版本显式初始化；三端MCP | 完成：历史模型证据及本轮同源分发核验通过 | `runtime/docs/acceptance/2026-10-15/clients/`；Kimi采用用户接受的显式初始化及HTTP MCP |
 | U3 一个项目与入口 | runtime入主仓库；SUPER_ADMIN会话网关；同源运行时工作台；已发布Skill导入 | 完成：统一权限/页面/导入验收通过 | `/dashboard/runtime`可达；非管理员拒绝；公开PUBLISHED固定版本导入，冲突/越界拒绝 |
 | U4 旧数据可接续 | 只读源快照、私有备份、导入新runtime schema、摘要核对 | 完成：迁移摘要与统一运行链路通过 | 已迁移2个内容项、1 Bundle、1 Release、1渠道、1 listing；初始快照只读verify一致，迁移后HTTP/MCP/Git/签名与设备受限分发链路实测通过 |
-| U5 本机可交付 | 单一启动说明、恢复演练、故障检查、当前状态与历史材料归档 | 本机运行验收通过，仓库交付中 | 唯一主仓库与启动脚本、完整备份边界、统一验收报告；不以源码合并代替运行验收 |
+| U5 本机可交付 | 单一启动说明、恢复演练、故障检查、当前状态与历史材料归档 | 本机运行及分支交付完成；整栈恢复演练待执行 | 唯一主仓库与启动脚本、完整备份边界、统一验收报告；不以源码合并代替运行验收 |
 
 下一步完成runtime最终回归及仓库提交/推送，更新U5交付状态。更新本表时附本轮证据路径及失败/修复记录。历史原任务T01–T29映射：T01–T12归U1，T13–T25/T28归U2，T26–T27归U5，T29归统一文档；U3/U4是本轮合仓新增交付。
 
@@ -70,7 +70,7 @@ Git平台支持GitHub与GitLab，**不支持Gitee**。公网部署按用户确�
 | N06 | 同源签名发布、设备API/MCP与Git出口及真实导入衔接 | 完成 | 真实Registry weather→三端签名Bundle通过；设备固定MCP与Git出口通过；12项exporter/productflow检查通过 |
 | N07 | 跨卷Git发布EXDEV故障修复 | 完成 | 8定向测试及部署后实际发布 |
 | N08 | 统一Compose本机部署、文档与冒烟 | 运行验收完成 | staging18/18；文档以本计划为唯一状态入口 |
-| N09 | 本轮后端全量回归、最终仓库提交推送 | 回归通过，仓库交付中 | Java BUILD SUCCESS：2285项，0失败/0错误/1跳过；待commit/push/PR |
+| N09 | 本轮后端全量回归、最终仓库提交推送 | 完成 | Java2285项0失败0错误1跳过；runtime108/108；[PR #2](https://github.com/Norte-AI/skillhub/pull/2)已提交，尚未合入main |
 | N10 | 旧4317停止并保留数据、密钥、历史 | 完成 | service已停止，原目录/数据/密钥保留；旧README重定向主项目 |
 | N11 | 公网部署 | 不执行（用户排除本轮） | 本机loopback交付，不作为阻断 |
 | N12 | 真实外部私有GitHub/GitLab取件 | 延期（用户同意后补） | 隔离集成测试已交付，不声称真实外部通过 |
@@ -87,7 +87,7 @@ Git平台支持GitHub与GitLab，**不支持Gitee**。公网部署按用户确�
 补充边界：N05实际weather固定版本导入通过，但将其继续组合为三目标Bundle时发现SKILL frontmatter name与registry-hash内容ID映射差异导致构建400。已修复exporter并补12项检查，真实weather导入后成功构建三端签名Bundle，N06复验通过。原400保留为故障历史，不是当前未解决项。
 
 
-后端全量最终结果：BUILD SUCCESS，2285 tests、0 failures、0 errors、1 skipped；不把跳过项计为通过。N09现只剩最终commit/push/PR交付，N06真实weather后续构建复验已通过。
+后端全量最终结果：BUILD SUCCESS，2285 tests、0 failures、0 errors、1 skipped；不把跳过项计为通过。N09已提交推送并创建PR #2，尚未合入main；N06真实weather后续构建复验已通过。
 
 
 N06最终证据：`runtime/docs/acceptance/2026-10-15/unified-gateway/registry-bundle-results.json`。真实Registry weather固定版本经受控导入、组合、三端构建及验签通过；exporter/productflow 12项检查通过。runtime全量最终复跑收尾中，不再将名称映射400记为当前失败。
