@@ -18,6 +18,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.28.0</version>
+        </dependency>
         <!-- Private local images use the official moderation upload token flow; the existing MinIO client cannot use that token. -->
         <dependency>
             <groupId>com.aliyun</groupId>

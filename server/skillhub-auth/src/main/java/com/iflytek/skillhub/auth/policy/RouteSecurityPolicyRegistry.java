@@ -17,6 +17,8 @@ import org.springframework.util.AntPathMatcher;
 public class RouteSecurityPolicyRegistry {
 
     private static final List<RouteAuthorizationPolicy> AUTHORIZATION_POLICIES = List.of(
+            RouteAuthorizationPolicy.authenticated(HttpMethod.POST, "/api/web/skills/git-import"),
+            RouteAuthorizationPolicy.authenticated(HttpMethod.POST, "/api/v1/skills/git-import"),
             RouteAuthorizationPolicy.permitAll(null, "/api/v1/health"),
             RouteAuthorizationPolicy.permitAll(null, "/api/v1/search"),
             RouteAuthorizationPolicy.permitAll(null, "/api/v1/resolve/**"),
@@ -269,6 +271,8 @@ public class RouteSecurityPolicyRegistry {
             ApiTokenPolicy.require(HttpMethod.POST, "/api/v1/skills/*/*/versions/*/yank", "skill:publish"),
             ApiTokenPolicy.require(HttpMethod.POST, "/api/web/skills/*/*/versions/*/yank", "skill:publish"),
             ApiTokenPolicy.require(HttpMethod.POST, "/api/v1/skills", "skill:publish"),
+            ApiTokenPolicy.require(HttpMethod.POST, "/api/v1/skills/git-import", "skill:publish"),
+            ApiTokenPolicy.require(HttpMethod.POST, "/api/web/skills/git-import", "skill:publish"),
             ApiTokenPolicy.require(HttpMethod.POST, "/api/v1/skills/*/publish", "skill:publish"),
             ApiTokenPolicy.require(HttpMethod.POST, "/api/v1/skills/*/versions/*/security-audit/retry", "skill:publish"),
             ApiTokenPolicy.require(HttpMethod.POST, "/api/web/skills/*/publish", "skill:publish"),

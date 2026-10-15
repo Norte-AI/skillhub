@@ -4,11 +4,22 @@
 
 This is a new command in the organization's fork. Its presence here does **not** mean the published npm package `@astron-team/skillhub` includes it. Run the examples from this checkout's `cli/` directory using local source or locally built output.
 
+## Publish from the web
+
+1. Sign in, open Publish Skill, select a namespace and visibility, and choose **Git repository** as the package source.
+2. Enter a public GitHub HTTPS repository URL, a branch/tag/full commit (default `HEAD`), and the directory containing `SKILL.md` (`.` for the repository root).
+3. Choose **Read and validate repository**. Review the name, version, description, fixed commit, file list, and warnings. This prepares a package without creating a version or completing the security scan.
+4. Submit using the existing publish button. Namespace permissions, version conflicts, warning confirmation, scanning, and review use the ordinary upload workflow.
+
+The browser submits the exact ZIP prepared during preview, without resolving the branch again. Changing any source field clears the preview; leaving or refreshing the page discards it. The skill version comes from `SKILL.md`.
+
+Web import supports public `github.com/owner/repository` URLs only. Private credentials, SSH, custom hosts/ports, query strings and `/tree/` URLs are rejected. The server contacts fixed GitHub API/archive hosts without redirects or repository-code execution. Limits: 50 MiB archive, 20 MiB selected content, 10 MiB per file, and 499 source files plus one provenance record (or stricter platform limits). Symlinks, LFS pointers, and conflicting paths are rejected; submodule contents are omitted. Retry later or upload files if GitHub rate-limits requests. Future commits do not sync automatically.
+
 ## Prerequisites
 
 Install Git and a supported Bun runtime, then install the CLI dependencies. Prepare a publicly readable HTTPS repository, a Skill directory containing a valid `SKILL.md`, and credentials with publishing permission in the target namespace. Skill metadata and version must satisfy the existing package rules.
 
-Always pass `--registry` to select the intended registry. Private repositories, SSH/local repository URLs, submodules, and symbolic links are outside this first implementation. Repository URLs must not include credentials, query strings, or nonstandard ports. Redirects, Git hooks, checkout filters, and automatic Git LFS downloads are disabled; include required files as ordinary tracked Git files. There is no Git repository form in the Web publishing page yet. Git retrieval runs on the CLI machine; the registry receives an ordinary Skill package. Limits are 499 tracked files (plus one generated source record), 10 MiB per file, and 100 MiB of total package content including provenance (retrieval reserves 8 KiB for it); Git transfer is capped at 256 MiB and 60 seconds.
+Always pass `--registry` to select the intended registry. Private repositories, SSH/local repository URLs, submodules, and symbolic links are outside this first implementation. Repository URLs must not include credentials, query strings, or nonstandard ports. Redirects, Git hooks, checkout filters, and automatic Git LFS downloads are disabled; include required files as ordinary tracked Git files. For web import, use the workflow above; CLI support and limits differ. Git retrieval runs on the CLI machine; the registry receives an ordinary Skill package. Limits are 499 tracked files (plus one generated source record), 10 MiB per file, and 100 MiB of total package content including provenance (retrieval reserves 8 KiB for it); Git transfer is capped at 256 MiB and 60 seconds.
 
 ## Validate before publishing
 

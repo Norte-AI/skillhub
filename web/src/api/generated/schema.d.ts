@@ -1602,6 +1602,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/skills/git-import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["prepare"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/web/skills/git-import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["prepare_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/web/skills/avatar-uploads": {
         parameters: {
             query?: never;
@@ -6760,6 +6792,37 @@ export interface components {
             fileCount?: number;
             /** Format: int64 */
             totalSize?: number;
+        };
+        GitImportRequest: {
+            repository: string;
+            ref?: string;
+            subdir?: string;
+        };
+        ApiResponseGitImportResponse: {
+            /** Format: int32 */
+            code?: number;
+            msg?: string;
+            data?: components["schemas"]["GitImportResponse"];
+            /** Format: date-time */
+            timestamp?: string;
+            requestId?: string;
+        };
+        GitImportResponse: {
+            source?: components["schemas"]["Source"];
+            name?: string;
+            version?: string;
+            description?: string;
+            files?: string[];
+            /** Format: int64 */
+            totalSize?: number;
+            warnings?: string[];
+            packageBase64?: string;
+        };
+        Source: {
+            repository?: string;
+            requestedRef?: string;
+            commit?: string;
+            subdir?: string;
         };
         ApiResponseSkillAvatarUploadResponse: {
             /** Format: int32 */
@@ -12643,6 +12706,54 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["ApiResponsePublishResponse"];
+                };
+            };
+        };
+    };
+    prepare: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GitImportRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseGitImportResponse"];
+                };
+            };
+        };
+    };
+    prepare_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GitImportRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ApiResponseGitImportResponse"];
                 };
             };
         };

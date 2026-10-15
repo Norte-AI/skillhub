@@ -1825,6 +1825,28 @@
     "copyright": "© 2026 SkillHub. Apache-2.0."
   },
   "publish": {
+    "git": {
+      "source": "技能包来源",
+      "upload": "上传文件",
+      "repositorySource": "Git 仓库",
+      "help": "从公开 GitHub 仓库导入技能。预览时固定 commit，发布时提交同一份技能包，并经过正常扫描与审核。",
+      "repository": "仓库地址",
+      "ref": "分支、标签或 commit",
+      "refHelp": "HEAD 表示默认分支，也可填写完整 commit SHA。",
+      "subdir": "技能目录",
+      "subdirHelp": "包含 SKILL.md 的目录；仓库根目录填写 .。",
+      "prepare": "读取并校验仓库",
+      "preparing": "正在读取仓库…",
+      "wait": "正在解析 commit 并校验技能包，较大仓库可能需要约两分钟。",
+      "failed": "仓库导入失败，请检查来源后重试。",
+      "preview": "Git 技能预览",
+      "defaultVersion": "默认版本",
+      "commit": "固定 commit",
+      "contents": "技能包内容",
+      "summary": "{{count}} 个文件 · {{size}} KiB",
+      "fileList": "查看文件清单",
+      "ready": "已准备好发布。修改来源后需要重新预览；后续提交不会自动同步。"
+    },
     "title": "发布技能",
     "subtitle": "上传技能包到 SkillHub",
     "reviewNotice": {

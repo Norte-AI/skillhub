@@ -1826,6 +1826,30 @@
     "copyright": "© 2026 SkillHub. Apache-2.0."
   },
   "publish": {
+    "git": {
+      "source": "Package source",
+      "upload": "Upload files",
+      "repositorySource": "Git repository",
+      "help": "Import a skill from a public GitHub repository. Preview fixes the commit; publishing submits this exact package for normal scanning and review.",
+      "repository": "Repository URL",
+      "ref": "Branch, tag or commit",
+      "refHelp": "HEAD uses the default branch. You can also enter a full commit SHA.",
+      "subdir": "Skill directory",
+      "subdirHelp": "Directory containing SKILL.md. Use . for the repository root.",
+      "prepare": "Read and validate repository",
+      "preparing": "Reading repository…",
+      "wait": "Resolving the commit and checking the skill package. Large repositories may take up to two minutes.",
+      "failed": "Could not import the repository. Check the source and retry.",
+      "preview": "Git skill preview",
+      "defaultVersion": "Default version",
+      "commit": "Fixed commit",
+      "contents": "Package contents",
+      "summary": "{{count}} files · {{size}} KiB",
+      "summary_one": "{{count}} file · {{size}} KiB",
+      "summary_other": "{{count}} files · {{size}} KiB",
+      "fileList": "View file list",
+      "ready": "Ready to publish. Changing the source requires a new preview. This does not automatically sync future commits."
+    },
     "title": "Publish Skill",
     "subtitle": "Upload skill package to SkillHub",
     "reviewNotice": {
