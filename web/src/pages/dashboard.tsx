@@ -7,7 +7,7 @@ import { APP_SHELL_PAGE_CLASS_NAME } from '@/app/page-shell-style'
 import { DashboardPageHeader } from '@/shared/components/dashboard-page-header'
 import {
   Star, Heart, Package, Boxes, Key, Shield, Flag, Globe,
-  UserCog, Lock, Bell, Clock, ChevronDown, ChevronRight,
+  UserCog, Lock, Bell, Clock, ChevronDown, ChevronRight, GitBranch,
 } from 'lucide-react'
 
 /**
@@ -45,6 +45,7 @@ export const SIDEBAR_GROUPS: SidebarGroup[] = [
     label: 'sidebar.skillsAndData',
     items: [
       { key: 'skills', icon: Package, label: 'sidebar.mySkills', to: '/dashboard/skills' },
+      { key: 'gitSources', icon: GitBranch, label: 'gitSources.title', to: '/dashboard/git-sources' },
       { key: 'suites', icon: Boxes, label: 'sidebar.mySuites', to: '/dashboard/suites' },
       { key: 'namespaces', icon: Globe, label: 'sidebar.namespaces', to: '/dashboard/namespaces' },
       { key: 'stars', icon: Star, label: 'sidebar.stars', to: '/dashboard/stars' },

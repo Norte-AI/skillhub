@@ -68,7 +68,7 @@ class SkillPublishControllerTest {
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/api/web/skills/git-import")
                 .contentType("application/json").content(body).with(authentication(auth)))
                 .andExpect(status().isUnauthorized());
-        verify(gitImportService, never()).prepare(ArgumentMatchers.any());
+        verify(gitImportService, never()).prepare(ArgumentMatchers.any(), ArgumentMatchers.anyString());
     }
 
     @Test
@@ -76,7 +76,7 @@ class SkillPublishControllerTest {
         var result = new com.iflytek.skillhub.dto.GitImportResponse(
                 new com.iflytek.skillhub.dto.GitImportResponse.Source("https://github.com/Norte-AI/skillhub.git", "main", "a".repeat(40), "."),
                 "weather", "1.0.0", "Weather", List.of("SKILL.md"), 100, List.of(), "UEs=");
-        given(gitImportService.prepare(ArgumentMatchers.any())).willReturn(result);
+        given(gitImportService.prepare(ArgumentMatchers.any(), ArgumentMatchers.anyString())).willReturn(result);
         var principal = new PlatformPrincipal("usr_1", "publisher", "publisher@example.com", "", "local", Set.of());
         var auth = new UsernamePasswordAuthenticationToken(principal, null, List.of());
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/api/web/skills/git-import")

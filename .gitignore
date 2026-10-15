@@ -93,3 +93,6 @@ charts/skillhub/charts/*.tgz
 
 # Local config file
 .mcp.json
+
+# Norte local deployment secrets/state
+.norte-local/

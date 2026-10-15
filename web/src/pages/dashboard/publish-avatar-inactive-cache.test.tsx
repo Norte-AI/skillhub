@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 
 const api = vi.hoisted(() => ({ remove: vi.fn(), status: vi.fn(), navigate: vi.fn() }))
 vi.mock('@/api/client', async () => ({ ...await vi.importActual<typeof import('@/api/client')>('@/api/client'), skillAvatarApi: { delete: api.remove, status: api.status } }))
-vi.mock('@tanstack/react-router', () => ({ useNavigate: () => api.navigate, useSearch: () => ({ namespace: 'team', visibility: 'PUBLIC', updateSkill: 'foo' }) }))
+vi.mock('@tanstack/react-router', () => ({ Link: ({ children }: { children: React.ReactNode }) => children, useNavigate: () => api.navigate, useSearch: () => ({ namespace: 'team', visibility: 'PUBLIC', updateSkill: 'foo' }) }))
 vi.mock('react-i18next', async () => ({ ...await vi.importActual<typeof import('react-i18next')>('react-i18next'), useTranslation: () => ({ t: (key: string) => key }) }))
 vi.mock('@/shared/hooks/use-namespace-queries', () => ({ useMyNamespaces: () => ({ data: [{ slug: 'team', displayName: 'Team' }], isLoading: false }) }))
 vi.mock('@/features/publish/upload-zone', () => ({ UploadZone: () => null }))

@@ -19,6 +19,20 @@ class RouteSecurityPolicyRegistryTest {
     private final RouteSecurityPolicyRegistry registry = new RouteSecurityPolicyRegistry();
 
     @Test
+    void gitSourcesRequirePublishScopeAndHooksOnlyBypassCsrfAtTheirExactPath() {
+        assertEquals(RouteSecurityPolicyRegistry.AccessLevel.AUTHENTICATED,
+                registry.accessLevel("GET", "/api/web/skills/git-import/options"));
+        assertEquals(RouteSecurityPolicyRegistry.AccessLevel.AUTHENTICATED,
+                registry.accessLevel("POST", "/api/web/git-sources/id/sync"));
+        assertFalse(registry.authorizeApiToken("POST", "/api/web/git-sources/id/sync", Set.of("skill:read")).allowed());
+        assertTrue(registry.authorizeApiToken("POST", "/api/web/git-sources/id/sync", Set.of("skill:publish")).allowed());
+        assertFalse(registry.authorizeApiToken("GET", "/api/web/skills/git-import/options", Set.of("skill:read")).allowed());
+        assertTrue(registry.shouldIgnoreCsrf("POST", "/api/v1/git-source-hooks/id", null));
+        assertFalse(registry.shouldIgnoreCsrf("POST", "/api/v1/git-source-hooks/id/extra", null));
+        assertFalse(registry.shouldIgnoreCsrf("POST", "/api/web/git-sources/id/sync", null));
+    }
+
+    @Test
     void accessLevel_respectsMethodSpecificPublicRoutesAndProtectedFallback() {
         assertEquals(RouteSecurityPolicyRegistry.AccessLevel.PERMIT_ALL,
                 registry.accessLevel("GET", "/api/v1/skills"));

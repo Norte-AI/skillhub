@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { Label } from '@/shared/ui/label'
-import { gitPreviewFile, importGitSkill, type GitImportPreview } from './git-import-api'
+import { gitPreviewFile, importGitSkill, type GitImportPreview, useGitImportOptions } from './git-import-api'
 
 interface GitImportPanelProps {
   disabled: boolean
@@ -14,6 +14,8 @@ interface GitImportPanelProps {
 /** Editing the source invalidates the package; publishing always uses the previewed bytes. */
 export function GitImportPanel({ disabled, onFileSelect, onBusyChange }: GitImportPanelProps) {
   const { t } = useTranslation()
+  const options = useGitImportOptions()
+  const [credentialId, setCredentialId] = useState('')
   const [repository, setRepository] = useState('')
   const [ref, setRef] = useState('HEAD')
   const [subdir, setSubdir] = useState('.')
@@ -38,7 +40,7 @@ export function GitImportPanel({ disabled, onFileSelect, onBusyChange }: GitImpo
     setError('')
     onFileSelect(null)
     try {
-      const result = await importGitSkill({ repository: repository.trim(), ref: ref.trim() || 'HEAD', subdir: subdir.trim() || '.' })
+      const result = await importGitSkill({ repository: repository.trim(), ref: ref.trim() || 'HEAD', subdir: subdir.trim() || '.', ...(credentialId ? { credentialId } : {}) })
       const file = gitPreviewFile(result)
       setPreview(result)
       onFileSelect(file)
@@ -60,6 +62,15 @@ export function GitImportPanel({ disabled, onFileSelect, onBusyChange }: GitImpo
           disabled={disabled || loading} aria-describedby="git-import-help" autoComplete="off" spellCheck={false}
           onChange={event => edit(setRepository, event.target.value)} />
       </div>
+      {!!options.data?.credentials?.length && <div className="space-y-2">
+        <Label htmlFor="git-credential">{t('gitSources.credential')}</Label>
+        <select id="git-credential" className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm"
+          value={credentialId} disabled={disabled || loading} onChange={event => edit(setCredentialId, event.target.value)}>
+          <option value="">{t('gitSources.anonymous')}</option>
+          {options.data.credentials.map(credential => <option key={credential.id} value={credential.id}>{credential.id} — {credential.repository}</option>)}
+        </select>
+      </div>}
+      {options.data?.providers && <p className="text-xs text-muted-foreground">{t('gitSources.hosts')}: {options.data.providers.map(provider => provider.host).join(', ')}</p>}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="git-ref">{t('publish.git.ref')}</Label>

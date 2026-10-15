@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useNavigate, useSearch } from '@tanstack/react-router'
+import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { GitImportPanel } from '@/features/publish/git-import-panel'
 import { UploadZone } from '@/features/publish/upload-zone'
@@ -196,7 +196,7 @@ export function PublishPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-8 animate-fade-up">
-      <DashboardPageHeader title={t(isUpdate ? 'publish.updateTitle' : 'publish.title')} subtitle={t(isUpdate ? 'publish.updateSubtitle' : 'publish.subtitle')} />
+      <DashboardPageHeader title={t(isUpdate ? 'publish.updateTitle' : 'publish.title')} subtitle={t(isUpdate ? 'publish.updateSubtitle' : 'publish.subtitle')} actions={<Link to="/dashboard/git-sources" className="text-sm text-primary underline underline-offset-4">{t('gitSources.title')}</Link>} />
 
       <Card className="space-y-8 p-6 md:p-8">
         {prefill.resubmitSkill && prefill.resubmitVersion ? (

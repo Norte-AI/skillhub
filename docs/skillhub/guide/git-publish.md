@@ -7,13 +7,67 @@
 ## 网页发布
 
 1. 登录后进入「发布技能」，选择目标命名空间与可见性，将技能包来源切换为「Git 仓库」。
-2. 输入公开 GitHub 仓库的 HTTPS 地址，例如 `https://github.com/Norte-AI/skillhub`。填写分支、标签或完整 commit（默认 `HEAD`），以及包含 `SKILL.md` 的目录，例如 `builtin-skills/skills/weather`。
+2. 输入已启用 Git 平台仓库的 HTTPS 地址，例如 `https://github.com/Norte-AI/skillhub`。填写分支、标签或完整 commit（默认 `HEAD`），以及包含 `SKILL.md` 的目录，例如 `builtin-skills/skills/weather`。
 3. 点击「读取并校验仓库」。检查返回的技能名称、版本、描述、完整 commit、文件清单和警告。此操作仅准备技能包，不创建技能版本，也不代表已完成安全扫描。
 4. 点击页面底部的发布按钮，提交到既有扫描与审核流程。权限、版本冲突、校验警告与文件上传采用同一规则。
 
 浏览器保留的是预览生成的那份 ZIP，提交时不会再次解析分支。修改仓库、ref 或目录会清除预览，需要重新读取；刷新或离开页面也不会保存预览。版本仍由 `SKILL.md` 决定，不会用分支名覆盖技能版本。
 
-网页导入仅支持公开 `github.com/owner/repository` 地址；不接受私有凭据、SSH、任意主机、端口、查询串或网页 `/tree/` 地址。服务端只访问固定的 GitHub API 与 archive 主机，禁止跟随重定向，不执行仓库代码。GitHub archive 上限 50 MiB，所选技能内容上限 20 MiB，单文件 10 MiB，最多 499 个来源文件加 1 个来源记录（如平台配置更严格，则采用更严格限制）。拒绝符号链接、LFS 指针和路径冲突；子模块内容不导入。GitHub API 限流时可稍后重试或改用文件上传。此功能不会自动同步新提交。
+网页导入默认启用 `github.com`；管理员可以精确启用 GitLab（包括嵌套 group）及授权的私有仓库凭据别名。页面只展示当前用户获授权的凭据别名，绝不接收或返回 Token。仓库 URL 不得包含凭证、SSH、端口、查询串、片段或网页 `/tree/` 地址。后端只访问管理员配置的固定 HTTPS API/archive 地址，禁止跟随重定向，不执行仓库代码。archive 上限 50 MiB，所选技能 20 MiB，单文件 10 MiB，最多 499 个来源文件加 1 个来源记录；拒绝符号链接、LFS 指针和路径冲突，子模块内容不导入。平台更严格的包限制仍然生效。
+
+## Git 来源与同步
+
+「Git 来源」页面保存仓库、ref、技能目录、目标命名空间与可见性。来源记录保存在数据库，凭据仅保存配置别名，不保存 Token。每位用户最多 20 个来源；只有创建者能管理来源、触发手动同步和轮换 Webhook 密钥。
+
+创建来源不立即发布。点击「同步」后，服务端重新读取配置 ref 对应的完整 commit，用该 commit 获取快照，复用正常发布、安全扫描及审核流程。同步按创建者当前账号状态和命名空间成员资格检查；不会继承管理员直接发布特权，也不会自动确认新的包警告。使用来源前请加入目标命名空间。
+
+- 同一来源 commit 已成功提交时，再次同步返回 `UNCHANGED`，不重复提交。
+- 新 commit 必须使用新的 `SKILL.md` 版本；已有版本不可静默覆盖。版本冲突、权限撤销、包警告及取件失败会保留原成功 commit，状态标为 `FAILED`，在网页中查看后处理。
+- 每个来源使用数据库租约避免并发重复发布；运行中的来源不能删除。进程异常退出后租约 3 分钟到期，可重新同步；若上次已提交成功但尚未记录结果，重试由不可变版本规则拒绝覆盖，需检查已提交版本后再发布新的版本。
+- 来源停用后，新的手动、定时和 Webhook 同步均不会启动。已启动的同步可继续完成。
+- 自动同步默认全局关闭。管理员开启后，还需在来源中勾选；轮询每分钟检查最多 10 个来源，每个来源至少间隔 15 分钟。失败状态也遵循该间隔。
+
+### 管理员配置 GitLab 与私有访问
+
+将以下配置放入部署专用 Spring 配置，通过受控环境变量/secret 提供值，不把真实 Token 写入仓库。`providers` 的 key 是精确的仓库主机，API/archive 地址由管理员指定，用户不能覆盖。自托管 GitLab 可替换为本组织的固定 HTTPS 地址；部署网络出口策略应只允许这些地址。
+
+```yaml
+skillhub:
+  git:
+    providers:
+      "[github.com]":
+        kind: GITHUB
+        api-base: https://api.github.com
+        archive-base: https://codeload.github.com
+      "[gitlab.com]":
+        kind: GITLAB
+        api-base: https://gitlab.com/api/v4
+        archive-base: https://gitlab.com/api/v4
+    credentials:
+      team-read:
+        token: ${SKILLHUB_GIT_TEAM_READ_TOKEN}
+        repository: https://gitlab.com/my-team/skills.git
+        user-ids: [actual-platform-user-id]
+    automatic-sync-enabled: false
+    webhook-secret: ${SKILLHUB_GIT_WEBHOOK_SECRET}
+```
+
+使用只读、最小仓库权限的 Token。凭据绑定**完整规范仓库地址（含 `.git`）和平台用户 ID**，不会授权同组织其他仓库；移除授权或轮换 Token 后，下次读取立即按新配置检查。GitLab 通过 `PRIVATE-TOKEN` 请求头发送，GitHub 通过 `Authorization: Bearer` 请求头发送，凭据不会进入 URL、来源文件、下载包或错误记录。
+
+GitHub 私有仓库使用固定 API 的 Git Trees / Git Blobs 读取已固定 commit 的文件，不使用需要跳转的私有 archive 下载地址；原始 blob 使用官方 `application/vnd.github.raw+json` 媒体类型。树元数据最多 2 MiB，拒绝截断的树；树取回后的文件请求开始前检查 90 秒总期限，已启动的单个请求仍受连接/响应体期限限制（最多额外 30 秒）。文件数量、总大小、符号链接和来源记录规则仍适用。较大仓库/文件数过多时建议上传 ZIP。参见 [Git Trees API](https://docs.github.com/en/rest/git/trees) 和 [Git Blobs API](https://docs.github.com/en/rest/git/blobs)。
+
+GitHub 公开仓库默认可直接使用；GitLab 和私有凭据需要管理员配置。本轮私有 GitLab 与 GitHub 的固定提交、认证请求头与快照打包使用隔离 fake-provider 传输集成测试验证；在组织提供真实私有仓库凭据前，不宣称已完成真实外部私有仓库验收。
+
+### Webhook
+
+管理员配置至少 32 字符的随机 `webhook-secret` 后，来源创建者在网页点击「生成/轮换 Webhook 密钥」。响应只显示这一次生成的来源专属密钥、相对 URL 和需要的请求头；列表不会回显密钥。将相对 URL 拼接平台地址，在仓库的 Push Webhook 中配置该密钥：
+
+- GitHub：选择 JSON 内容格式，在 Secret 中填入来源密钥；原生 `X-Hub-Signature-256` 使用原始请求体 HMAC-SHA256，按恒定时间比较。
+- GitLab：在 Secret token 中填入来源密钥；原生 `X-Gitlab-Token` 按恒定时间比较。
+
+服务端只把验签成功的请求当作唤醒信号，不信任 payload 中的仓库、commit、ref、文件或版本，而是重新解析来源配置。请求体最多 64 KiB；重复投递由固定 commit 幂等处理；轮换后旧密钥失效。来源专属密钥由全局主密钥与来源随机 nonce 派生，数据库不保存明文 Webhook 密钥。
+
+本机部署的 `127.0.0.1` 地址无法接受外部 GitHub/GitLab 的回调；可以在本机通过签名请求验证，真实外部回调需要将平台部署到托管平台可访问的 HTTPS 地址。本轮范围是本机交付，不会自动创建公网入口。
 
 ## CLI 准备
 

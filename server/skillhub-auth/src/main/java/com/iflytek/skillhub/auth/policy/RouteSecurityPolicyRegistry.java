@@ -17,6 +17,11 @@ import org.springframework.util.AntPathMatcher;
 public class RouteSecurityPolicyRegistry {
 
     private static final List<RouteAuthorizationPolicy> AUTHORIZATION_POLICIES = List.of(
+            RouteAuthorizationPolicy.authenticated(HttpMethod.GET, "/api/web/skills/git-import/options"),
+            RouteAuthorizationPolicy.authenticated(HttpMethod.GET, "/api/v1/skills/git-import/options"),
+            RouteAuthorizationPolicy.authenticated(null, "/api/web/git-sources/**"),
+            RouteAuthorizationPolicy.authenticated(null, "/api/v1/git-sources/**"),
+            RouteAuthorizationPolicy.permitAll(HttpMethod.POST, "/api/v1/git-source-hooks/*"),
             RouteAuthorizationPolicy.authenticated(HttpMethod.POST, "/api/web/skills/git-import"),
             RouteAuthorizationPolicy.authenticated(HttpMethod.POST, "/api/v1/skills/git-import"),
             RouteAuthorizationPolicy.permitAll(null, "/api/v1/health"),
@@ -169,6 +174,8 @@ public class RouteSecurityPolicyRegistry {
     );
 
     private static final List<ApiTokenPolicy> API_TOKEN_POLICIES = List.of(
+            ApiTokenPolicy.require(HttpMethod.GET, "/api/v1/skills/git-import/options", "skill:publish"),
+            ApiTokenPolicy.require(HttpMethod.GET, "/api/web/skills/git-import/options", "skill:publish"),
             ApiTokenPolicy.allow(null, "/api/v1/health"),
             ApiTokenPolicy.allow(null, "/api/v1/auth/providers"),
             ApiTokenPolicy.allow(null, "/api/v1/auth/methods"),
@@ -271,6 +278,9 @@ public class RouteSecurityPolicyRegistry {
             ApiTokenPolicy.require(HttpMethod.POST, "/api/v1/skills/*/*/versions/*/yank", "skill:publish"),
             ApiTokenPolicy.require(HttpMethod.POST, "/api/web/skills/*/*/versions/*/yank", "skill:publish"),
             ApiTokenPolicy.require(HttpMethod.POST, "/api/v1/skills", "skill:publish"),
+            ApiTokenPolicy.require(null, "/api/v1/git-sources/**", "skill:publish"),
+            ApiTokenPolicy.require(null, "/api/web/git-sources/**", "skill:publish"),
+            ApiTokenPolicy.allow(HttpMethod.POST, "/api/v1/git-source-hooks/*"),
             ApiTokenPolicy.require(HttpMethod.POST, "/api/v1/skills/git-import", "skill:publish"),
             ApiTokenPolicy.require(HttpMethod.POST, "/api/web/skills/git-import", "skill:publish"),
             ApiTokenPolicy.require(HttpMethod.POST, "/api/v1/skills/*/publish", "skill:publish"),
@@ -397,7 +407,8 @@ public class RouteSecurityPolicyRegistry {
         if (!"POST".equalsIgnoreCase(method)) {
             return false;
         }
-        return "/api/v1/auth/device/code".equals(path)
+        return pathMatcher.match("/api/v1/git-source-hooks/*", path)
+                || "/api/v1/auth/device/code".equals(path)
                 || "/api/v1/auth/device/token".equals(path);
     }
 

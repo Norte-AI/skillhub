@@ -2,6 +2,8 @@ package com.iflytek.skillhub.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iflytek.skillhub.config.SkillPublishProperties;
+import com.iflytek.skillhub.config.GitImportProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.iflytek.skillhub.domain.shared.exception.DomainBadRequestException;
 import com.iflytek.skillhub.domain.skill.metadata.SkillMetadataParser;
 import com.iflytek.skillhub.domain.skill.validation.PackageEntry;
@@ -13,8 +15,6 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.net.URI;
-import java.net.URLEncoder;
 import java.net.http.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
@@ -25,9 +25,9 @@ import java.util.regex.Pattern;
 import java.util.zip.*;
 
 /**
- * Imports public GitHub archives without invoking Git or executing repository code.
- * All remote URLs are constructed from a strict owner/repository grammar against two fixed
- * HTTPS hosts. Redirects, user-provided credentials, custom hosts and ports are never used.
+ * Imports archives from operator-allowlisted Git providers without executing repository code.
+ * Remote hosts are exact operator-owned provider entries. Redirects, request-provided
+ * credentials and ports are never used; credential aliases are user/repository scoped.
  */
 @Service
 public class GitImportService {
@@ -36,13 +36,13 @@ public class GitImportService {
     private static final String MANIFEST = ".skillhub-source.json";
     private static final Pattern REPOSITORY = Pattern.compile(
             "https://github\\.com/([A-Za-z0-9][A-Za-z0-9-]{0,38})/([A-Za-z0-9_.-]{1,100})/?");
+    private final GitRepositoryProvider providers;
     private final ObjectMapper mapper;
     private final SkillPackageValidator validator;
     private final SkillMetadataParser parser;
     private final SkillPublishProperties limits;
     private final Semaphore slots = new Semaphore(2);
-    private final HttpClient client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10))
-            .followRedirects(HttpClient.Redirect.NEVER).build();
+    private final HttpClient client;
     private final ScheduledExecutorService deadlines = Executors.newSingleThreadScheduledExecutor(r -> {
         Thread thread = new Thread(r, "git-import-deadline");
         thread.setDaemon(true);
@@ -51,6 +51,20 @@ public class GitImportService {
 
     public GitImportService(ObjectMapper mapper, SkillPackageValidator validator,
                             SkillMetadataParser parser, SkillPublishProperties limits) {
+        this(mapper, validator, parser, limits, new GitRepositoryProvider(new GitImportProperties(), mapper));
+    }
+
+    @Autowired
+    public GitImportService(ObjectMapper mapper, SkillPackageValidator validator,
+                            SkillMetadataParser parser, SkillPublishProperties limits, GitRepositoryProvider providers) {
+        this(mapper,validator,parser,limits,providers,HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10))
+                .followRedirects(HttpClient.Redirect.NEVER).build());
+    }
+
+    GitImportService(ObjectMapper mapper, SkillPackageValidator validator, SkillMetadataParser parser,
+                     SkillPublishProperties limits, GitRepositoryProvider providers, HttpClient client) {
+        this.client = client;
+        this.providers = providers;
         this.mapper = mapper;
         this.validator = validator;
         this.parser = parser;
@@ -64,7 +78,11 @@ public class GitImportService {
     }
 
     public GitImportResponse prepare(GitImportRequest request) {
-        Repository repository = parseRepository(request.repository());
+        return prepare(request, null);
+    }
+
+    public GitImportResponse prepare(GitImportRequest request, String actor) {
+        var repository = providers.parse(request.repository());
         String ref = request.ref() == null || request.ref().isBlank() ? "HEAD" : request.ref().trim();
         if (ref.length() > 256 || ref.chars().anyMatch(c -> c < 32 || c == 127)) {
             throw invalid("Invalid branch, tag or commit.");
@@ -73,26 +91,71 @@ public class GitImportService {
         if (!slots.tryAcquire()) throw invalid("Git imports are busy. Please retry shortly.");
         Path archive = null;
         try {
-            String encodedRef = URLEncoder.encode(ref, StandardCharsets.UTF_8).replace("+", "%20");
-            // GitHub's SHA media type avoids downloading an unbounded commit diff.
-            String commit = new String(download(URI.create("https://api.github.com/repos/"
-                    + repository.coordinate() + "/commits/" + encodedRef),
-                    "application/vnd.github.sha", 1024), StandardCharsets.UTF_8).trim();
-            if (!commit.matches("[0-9a-f]{40}")) throw invalid("GitHub returned an invalid commit.");
+            var commitRequest = providers.commit(repository, ref, request.credentialId(), actor);
+            String commit = providers.commitSha(repository, download(commitRequest, 256 * 1024));
             archive = Files.createTempFile("skillhub-git-import-", ".zip");
-            downloadArchive(URI.create("https://codeload.github.com/" + repository.coordinate()
-                    + "/zip/" + commit), archive);
+            if (repository.provider().getKind() == GitImportProperties.Kind.GITHUB
+                    && request.credentialId() != null && !request.credentialId().isBlank()) {
+                // Private GitHub archives require redirects. Use only fixed authenticated API tree/blob endpoints instead.
+                privateGithubArchive(repository, commit, subdir, request.credentialId(), actor, archive);
+            } else {
+                downloadArchive(providers.archive(repository, commit, request.credentialId(), actor), archive);
+            }
             return packageArchive(archive, new GitImportResponse.Source(repository.url(), ref, commit, subdir));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw invalid("Git import was interrupted. Please retry.");
         } catch (IOException e) {
-            throw invalid("Could not read the GitHub repository. Check the repository/ref and retry; large or slow repositories may exceed import limits.");
+            throw invalid("Could not read the Git repository. Check the repository/ref and retry; large or slow repositories may exceed import limits.");
         } finally {
             if (archive != null) {
                 try { Files.deleteIfExists(archive); } catch (IOException ignored) { archive.toFile().deleteOnExit(); }
             }
             slots.release();
+        }
+    }
+
+    private void privateGithubArchive(GitRepositoryProvider.Repository repository, String commit, String subdir,
+                                      String credential, String actor, Path archive) throws IOException, InterruptedException {
+        long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(90);
+        var tree = mapper.readTree(download(providers.githubObject(repository, "trees", commit, credential, actor), 2 * 1024 * 1024));
+        if (tree.path("truncated").asBoolean(true) || !tree.path("tree").isArray()) {
+            throw invalid("Repository tree is incomplete or exceeds private import limits.");
+        }
+        String prefix = subdir.equals(".") ? "" : subdir + "/";
+        List<com.fasterxml.jackson.databind.JsonNode> selected = new ArrayList<>();
+        long declaredTotal = 0;
+        for (var entry : tree.path("tree")) {
+            String path = entry.path("path").asText();
+            validatePath(path);
+            if (!path.startsWith(prefix)) continue;
+            String type = entry.path("type").asText();
+            if (type.equals("tree")) continue;
+            if (!type.equals("blob") || !Set.of("100644", "100755").contains(entry.path("mode").asText())) {
+                throw invalid("Private GitHub skill contains symlinks, submodules or unsupported objects.");
+            }
+            long size = entry.path("size").asLong(-1);
+            if (size < 0 || size > Math.min(limits.getMaxSingleFileSize(), 10 * 1024 * 1024)) throw invalid("Private GitHub file exceeds import limits.");
+            declaredTotal += size;
+            if (declaredTotal > Math.min(MAX_SELECTED_BYTES, limits.getMaxPackageSize()) - 8192
+                    || selected.size() >= Math.min(499, limits.getMaxFileCount()-1)) throw invalid("Private GitHub skill exceeds import limits.");
+            selected.add(entry);
+        }
+        try (ZipOutputStream zip = new ZipOutputStream(Files.newOutputStream(archive))) {
+            long total = 0;
+            for (var entry : selected) {
+                if (System.nanoTime() > deadline) throw invalid("Private GitHub import exceeded its 90-second deadline.");
+                String sha = entry.path("sha").asText();
+                byte[] bytes = download(providers.githubObject(repository,"blobs",sha,credential,actor),
+                        (int)Math.min(limits.getMaxSingleFileSize(),10 * 1024 * 1024));
+                if (bytes.length != entry.path("size").asLong()) throw invalid("GitHub blob size did not match its tree entry.");
+                total += bytes.length;
+                if (total > Math.min(MAX_SELECTED_BYTES,limits.getMaxPackageSize())-8192) throw invalid("Private GitHub skill exceeds import limits.");
+                String path = entry.path("path").asText();
+                zip.putNextEntry(new ZipEntry("snapshot/" + path));
+                zip.write(bytes);
+                zip.closeEntry();
+            }
         }
     }
 
@@ -125,29 +188,31 @@ public class GitImportService {
         }
     }
 
-    private byte[] download(URI uri, String accept, int max) throws IOException, InterruptedException {
-        try (InputStream input = open(uri, accept); ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+    private byte[] download(GitRepositoryProvider.Fetch fetch, int max) throws IOException, InterruptedException {
+        try (InputStream input = open(fetch); ByteArrayOutputStream output = new ByteArrayOutputStream()) {
             copyBounded(input, output, max);
             return output.toByteArray();
         }
     }
 
-    private void downloadArchive(URI uri, Path path) throws IOException, InterruptedException {
-        try (InputStream input = open(uri, "application/zip"); OutputStream output = Files.newOutputStream(path)) {
+    private void downloadArchive(GitRepositoryProvider.Fetch fetch, Path path) throws IOException, InterruptedException {
+        try (InputStream input = open(fetch); OutputStream output = Files.newOutputStream(path)) {
             copyBounded(input, output, MAX_ARCHIVE_BYTES);
         }
     }
 
-    private InputStream open(URI uri, String accept) throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder(uri).timeout(Duration.ofSeconds(20))
-                .header("Accept", accept).header("User-Agent", "Norte-AI-SkillHub-Git-Import").GET().build();
+    private InputStream open(GitRepositoryProvider.Fetch fetch) throws IOException, InterruptedException {
+        HttpRequest.Builder builder = HttpRequest.newBuilder(fetch.uri()).timeout(Duration.ofSeconds(20))
+                .header("Accept", fetch.accept()).header("User-Agent", "Norte-AI-SkillHub-Git-Import");
+        fetch.headers().forEach(builder::header);
+        HttpRequest request = builder.GET().build();
         HttpResponse<InputStream> response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
         if (response.statusCode() != 200) {
             response.body().close();
             if (response.statusCode() == 403 || response.statusCode() == 429) {
-                throw invalid("GitHub rate limit reached. Retry later or upload a ZIP package.");
+                throw invalid("Git provider rate limit reached. Retry later or upload a ZIP package.");
             }
-            throw invalid("GitHub repository/ref is unavailable. Use a public repository and an existing branch, tag or commit.");
+            throw invalid("Git repository/ref is unavailable. Check repository access, configured credential and ref.");
         }
         InputStream body = response.body();
         ScheduledFuture<?> deadline = deadlines.schedule(() -> {

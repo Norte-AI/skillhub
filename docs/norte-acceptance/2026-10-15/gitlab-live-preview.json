@@ -1,0 +1,24 @@
+{
+  "source": {
+    "repository": "https://gitlab.com/gitlab-org/ai/skills.git",
+    "requestedRef": "main",
+    "commit": "0021229ee3b697ee258639de2352c320fb93462a",
+    "subdir": "skills/mcp-creator"
+  },
+  "name": "mcp-creator",
+  "version": "1.0.0",
+  "description": "Guides building production-quality MCP servers in Rust using the rmcp crate. Covers protocol design, tool implementation, testing, security hardening, and AI-tool integration. Use when building an MCP server, creating MCP tools, implementing MCP in Rust, adding tools/resources/prompts to an MCP server, or starting a new MCP project.",
+  "files": [
+    "SKILL.md",
+    "references/production-hardening.md",
+    "references/project-and-integration.md",
+    "references/protocol-fundamentals.md",
+    "references/review-checklist.md",
+    "references/rmcp-implementation.md",
+    "references/server-design-patterns.md",
+    "references/testing-strategies.md",
+    ".skillhub-source.json"
+  ],
+  "totalSize": 49696,
+  "warnings": []
+}

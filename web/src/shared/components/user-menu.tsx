@@ -145,6 +145,9 @@ export function UserMenu({ user, triggerClassName }: UserMenuProps) {
             <Link to="/dashboard/skills" className={menuItemClassName} onClick={closeMenu}>
               {t('user.menu.mySkills')}
             </Link>
+            <Link to="/dashboard/git-sources" className={menuItemClassName} onClick={closeMenu}>
+              {t('gitSources.title')}
+            </Link>
             <Link to="/dashboard/suites" className={menuItemClassName} onClick={closeMenu}>
               {t('user.menu.mySuites')}
             </Link>

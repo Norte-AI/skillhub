@@ -522,13 +522,41 @@ function avatarPath(namespace: string, slug: string): string {
 }
 
 export const gitImportApi = {
+  async options(): Promise<components['schemas']['GitImportOptionsResponse']> {
+    return fetchJson(`${WEB_API_PREFIX}/skills/git-import/options`)
+  },
   async prepare(request: components['schemas']['GitImportRequest']): Promise<components['schemas']['GitImportResponse']> {
-    return fetchJson<components['schemas']['GitImportResponse']>(`${WEB_API_PREFIX}/skills/git-import`, {
-      method: 'POST',
-      headers: await ensureCsrfHeaders({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify(request),
-      timeoutMs: 150_000,
+    return fetchJson(`${WEB_API_PREFIX}/skills/git-import`, {
+      method: 'POST', headers: await ensureCsrfHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(request), timeoutMs: 150_000,
     })
+  },
+}
+
+export const gitSourcesApi = {
+  async list(): Promise<components['schemas']['GitSourceResponse'][]> {
+    return fetchJson(`${WEB_API_PREFIX}/git-sources`)
+  },
+  async create(request: components['schemas']['GitSourceRequest']): Promise<components['schemas']['GitSourceResponse']> {
+    return fetchJson(`${WEB_API_PREFIX}/git-sources`, {
+      method: 'POST', headers: await ensureCsrfHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify(request),
+    })
+  },
+  async sync(id: string): Promise<components['schemas']['GitSourceResponse']> {
+    return fetchJson(`${WEB_API_PREFIX}/git-sources/${encodeURIComponent(id)}/sync`, {
+      method: 'POST', headers: await ensureCsrfHeaders(), timeoutMs: 150_000,
+    })
+  },
+  async update(id: string, request: components['schemas']['GitSourceUpdateRequest']): Promise<components['schemas']['GitSourceResponse']> {
+    return fetchJson(`${WEB_API_PREFIX}/git-sources/${encodeURIComponent(id)}`, {
+      method: 'PATCH', headers: await ensureCsrfHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify(request),
+    })
+  },
+  async remove(id: string): Promise<void> {
+    return fetchJson(`${WEB_API_PREFIX}/git-sources/${encodeURIComponent(id)}`, { method: 'DELETE', headers: await ensureCsrfHeaders() })
+  },
+  async webhookSecret(id: string): Promise<components['schemas']['GitWebhookSecretResponse']> {
+    return fetchJson(`${WEB_API_PREFIX}/git-sources/${encodeURIComponent(id)}/webhook-secret`, { method: 'POST', headers: await ensureCsrfHeaders() })
   },
 }
 
