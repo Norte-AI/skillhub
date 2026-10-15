@@ -26,16 +26,18 @@ class GitSourceServiceTest {
     private final NamespaceMemberRepository members=mock(NamespaceMemberRepository.class);
     private final GitImportProperties properties=new GitImportProperties();
     private final UUID id=UUID.randomUUID();
+    private final UUID lease=UUID.randomUUID();
     private final AtomicReference<GitSourceRepository.Stored> stored=new AtomicReference<>();
     private GitSourceService service;
     @BeforeEach void setup() throws Exception {
         properties.setWebhookSecret("fixture-only-master-secret-at-least-32-characters");
         stored.set(new GitSourceRepository.Stored(new GitSourceResponse(id,"https://github.com/org/skills.git","main",".",null,"team","PUBLIC",false,true,null,null,"READY",null,null),"owner",UUID.randomUUID()));
         when(repository.find(id)).thenAnswer(i->Optional.of(stored.get()));
-        when(repository.acquire(id)).thenReturn(true);
-        when(repository.activeLease(id)).thenReturn(true);
+        when(repository.acquire(id)).thenReturn(Optional.of(lease));
+        when(repository.activeLease(id,lease)).thenReturn(true);
+        when(repository.enqueue(id)).thenReturn(true);
         doAnswer(i->{var s=stored.get().source();stored.set(new GitSourceRepository.Stored(new GitSourceResponse(s.id(),s.repository(),s.ref(),s.subdir(),s.credentialId(),s.namespace(),s.visibility(),s.autoSync(),s.enabled(),
-            i.getArgument(1)==null?s.lastCommit():i.getArgument(1),i.getArgument(2)==null?s.lastVersion():i.getArgument(2),i.getArgument(3),i.getArgument(4),java.time.Instant.now()),"owner",stored.get().nonce()));return null;}).when(repository).finish(eq(id),any(),any(),anyString(),any());
+            i.getArgument(2)==null?s.lastCommit():i.getArgument(2),i.getArgument(3)==null?s.lastVersion():i.getArgument(3),i.getArgument(4),i.getArgument(5),java.time.Instant.now()),"owner",stored.get().nonce()));return null;}).when(repository).finish(eq(id),eq(lease),any(),any(),anyString(),any());
         when(users.findById("owner")).thenReturn(Optional.of(new UserAccount("owner","Owner",null,null)));
         Namespace ns=mock(Namespace.class);when(ns.getId()).thenReturn(7L);
         when(namespaces.findBySlug("team")).thenReturn(Optional.of(ns));
@@ -70,8 +72,10 @@ class GitSourceServiceTest {
         assertThrows(RuntimeException.class,()->service.webhook(id,body,"sha256=bad",null));verifyNoInteractions(imports);
         String key=GitSourceService.hmac(properties.getWebhookSecret(),("git-source:"+id+":"+stored.get().nonce()).getBytes());
         String signature="sha256="+GitSourceService.hmac(key,body);
-        assertEquals("SCANNING",service.webhook(id,body,signature,null).lastStatus());
-        assertEquals("UNCHANGED",service.webhook(id,body,signature,null).lastStatus());
+        service.webhook(id,body,signature,null);
+        service.webhook(id,body,signature,null);
+        verify(repository,times(2)).enqueue(id);
+        verifyNoInteractions(imports,publications);
     }
     @Test void supportsNativeGitlabSecretTokenAndRotatesPerSourceKey() {
         var gitlab=new GitImportProperties.Provider();gitlab.setKind(GitImportProperties.Kind.GITLAB);gitlab.setApiBase("https://gitlab.com/api/v4");gitlab.setArchiveBase("https://gitlab.com/api/v4");properties.getProviders().put("gitlab.com",gitlab);
@@ -80,15 +84,17 @@ class GitSourceServiceTest {
         var first=service.rotateWebhook(id,"owner");assertEquals("X-Gitlab-Token",first.header());
         var second=service.rotateWebhook(id,"owner");assertNotEquals(first.secret(),second.secret());
         assertThrows(RuntimeException.class,()->service.webhook(id,new byte[0],null,first.secret()));
-        assertEquals("SCANNING",service.webhook(id,new byte[0],null,second.secret()).lastStatus());
+        service.webhook(id,new byte[0],null,second.secret());
+        verify(repository).enqueue(id);
+        verifyNoInteractions(imports,publications);
     }
     @Test void disablingSourceDuringFetchPreventsPublication() {
-        when(repository.activeLease(id)).thenReturn(false);
+        when(repository.activeLease(id,lease)).thenReturn(false);
         assertEquals("FAILED",service.syncOwned(id,"owner").lastStatus());
         verifyNoInteractions(publications);
     }
     @Test void rejectsConcurrentOrDisabledSyncBeforeImport() {
-        when(repository.acquire(id)).thenReturn(false);
+        when(repository.acquire(id)).thenReturn(Optional.empty());
         assertThrows(RuntimeException.class,()->service.syncOwned(id,"owner"));verifyNoInteractions(imports);
     }
 }

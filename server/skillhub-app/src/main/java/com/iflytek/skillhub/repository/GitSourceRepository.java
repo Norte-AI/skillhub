@@ -33,21 +33,23 @@ public class GitSourceRepository {
             VALUES (?,?,?,?,?,?,?,?,?,?)
             """,id,owner,url,ref,subdir,request.credentialId(),request.namespace(),request.visibility().toUpperCase(Locale.ROOT),request.autoSync(),UUID.randomUUID());
     }
-    public boolean acquire(UUID id) {
-        return jdbc.update("""
-            UPDATE git_source SET lease_until=CURRENT_TIMESTAMP + INTERVAL '3 minutes'
+    public Optional<UUID> acquire(UUID id) {
+        UUID token=UUID.randomUUID();
+        boolean acquired=jdbc.update("""
+            UPDATE git_source SET lease_until=CURRENT_TIMESTAMP + INTERVAL '3 minutes',lease_token=?,sync_requested=FALSE
             WHERE id=? AND enabled AND (lease_until IS NULL OR lease_until<CURRENT_TIMESTAMP)
-            """,id)==1;
+            """,token,id)==1;
+        return acquired?Optional.of(token):Optional.empty();
     }
-    public boolean activeLease(UUID id) {
-        Integer count=jdbc.queryForObject("SELECT COUNT(*) FROM git_source WHERE id=? AND enabled AND lease_until>CURRENT_TIMESTAMP",Integer.class,id);
+    public boolean activeLease(UUID id,UUID token) {
+        Integer count=jdbc.queryForObject("SELECT COUNT(*) FROM git_source WHERE id=? AND lease_token=? AND enabled AND lease_until>CURRENT_TIMESTAMP",Integer.class,id,token);
         return count!=null && count==1;
     }
-    public void finish(UUID id,String commit,String version,String status,String error) {
+    public void finish(UUID id,UUID token,String commit,String version,String status,String error) {
         jdbc.update("""
             UPDATE git_source SET last_commit=COALESCE(?,last_commit),last_version=COALESCE(?,last_version),
-              last_status=?,last_error=?,last_checked_at=CURRENT_TIMESTAMP,lease_until=NULL WHERE id=?
-            """,commit,version,status,error,id);
+              last_status=?,last_error=?,last_checked_at=CURRENT_TIMESTAMP,lease_until=NULL,lease_token=NULL WHERE id=? AND lease_token=?
+            """,commit,version,status,error,id,token);
     }
     public void update(UUID id,boolean enabled,boolean automatic) {
         jdbc.update("UPDATE git_source SET enabled=?,auto_sync=? WHERE id=?",enabled,automatic,id);
@@ -56,11 +58,16 @@ public class GitSourceRepository {
         return jdbc.update("DELETE FROM git_source WHERE id=? AND (lease_until IS NULL OR lease_until<CURRENT_TIMESTAMP)",id)==1;
     }
     public void rotate(UUID id) { jdbc.update("UPDATE git_source SET hook_nonce=? WHERE id=?",UUID.randomUUID(),id); }
-    public List<UUID> due() {
+    public boolean enqueue(UUID id) {
+        return jdbc.update("UPDATE git_source SET sync_requested=TRUE,last_status='QUEUED',last_error=NULL WHERE id=? AND enabled",id)==1;
+    }
+    public List<UUID> due(boolean automaticEnabled) {
         return jdbc.queryForList("""
-            SELECT id FROM git_source WHERE enabled AND auto_sync
-              AND (last_checked_at IS NULL OR last_checked_at<CURRENT_TIMESTAMP-INTERVAL '15 minutes')
-            ORDER BY last_checked_at NULLS FIRST LIMIT 10
-            """,UUID.class);
+            SELECT id FROM git_source WHERE enabled
+              AND (lease_until IS NULL OR lease_until<CURRENT_TIMESTAMP)
+              AND (sync_requested OR (lease_token IS NOT NULL AND lease_until<CURRENT_TIMESTAMP) OR (? AND auto_sync
+                AND (last_checked_at IS NULL OR last_checked_at<CURRENT_TIMESTAMP-INTERVAL '15 minutes')))
+            ORDER BY sync_requested DESC,last_checked_at NULLS FIRST LIMIT 10
+            """,UUID.class,automaticEnabled);
     }
 }

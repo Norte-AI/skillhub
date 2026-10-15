@@ -43,14 +43,41 @@ class GitSourcePostgresTest {
         var request=new GitSourceRequest("https://github.com/org/repo.git","main",".",null,"team","PUBLIC",true);
         sources.create(id,owner,request,request.repository(),"main",".");
         assertEquals(1,sources.list(owner).size());assertTrue(sources.list("stranger").isEmpty());
-        assertTrue(sources.acquire(id));assertTrue(sources.activeLease(id));assertFalse(sources.acquire(id));assertFalse(sources.delete(id));
-        sources.finish(id,"a".repeat(40),"1.0.0","SCANNING",null);
-        assertTrue(sources.acquire(id));
-        sources.finish(id,null,null,"UNCHANGED",null);
+        UUID first=sources.acquire(id).orElseThrow();
+        assertTrue(sources.activeLease(id,first));assertTrue(sources.acquire(id).isEmpty());assertFalse(sources.delete(id));
+        sources.finish(id,first,"a".repeat(40),"1.0.0","SCANNING",null);
+        UUID second=sources.acquire(id).orElseThrow();
+        assertFalse(sources.activeLease(id,first));assertTrue(sources.activeLease(id,second));
+        sources.finish(id,first,"b".repeat(40),"9.9.9","FAILED","stale worker");
+        assertTrue(sources.activeLease(id,second));
         assertEquals("a".repeat(40),sources.find(id).orElseThrow().source().lastCommit());
+        sources.finish(id,second,null,null,"UNCHANGED",null);
+        assertEquals("a".repeat(40),sources.find(id).orElseThrow().source().lastCommit());
+        UUID expired=sources.acquire(id).orElseThrow();
+        jdbc.update("UPDATE git_source SET lease_until=CURRENT_TIMESTAMP - INTERVAL '1 second' WHERE id=?",id);
+        assertTrue(sources.due(false).contains(id)); // Crashed claimed work recovers even with automatic polling disabled.
+        UUID replacement=sources.acquire(id).orElseThrow();
+        assertFalse(sources.activeLease(id,expired));assertTrue(sources.activeLease(id,replacement));
+        sources.finish(id,expired,"c".repeat(40),"8.0.0","FAILED","expired worker");
+        assertTrue(sources.activeLease(id,replacement));
+        assertEquals("a".repeat(40),sources.find(id).orElseThrow().source().lastCommit());
+        sources.finish(id,replacement,null,null,"UNCHANGED",null);
+        assertFalse(sources.due(false).contains(id));
+        assertTrue(sources.enqueue(id));
+        // A fresh repository instance represents a restarted application; pending work survives.
+        var restarted=new GitSourceRepository(jdbc);
+        assertTrue(restarted.due(false).contains(id));
+        UUID queued=restarted.acquire(id).orElseThrow();
+        assertFalse(restarted.due(false).contains(id));
+        assertTrue(restarted.enqueue(id)); // A second delivery during execution must survive finish.
+        restarted.finish(id,queued,null,null,"UNCHANGED",null);
+        assertTrue(restarted.due(false).contains(id));
+        UUID next=restarted.acquire(id).orElseThrow();
+        restarted.finish(id,next,null,null,"UNCHANGED",null);
+        assertFalse(restarted.due(false).contains(id));
         var nonce=sources.find(id).orElseThrow().nonce();sources.rotate(id);
         assertNotEquals(nonce,sources.find(id).orElseThrow().nonce());
-        sources.update(id,false,false);assertFalse(sources.acquire(id));
+        sources.update(id,false,false);assertTrue(sources.acquire(id).isEmpty());
         assertTrue(sources.delete(id));assertTrue(sources.find(id).isEmpty());
         jdbc.update("DELETE FROM user_account WHERE id=?",owner);
     }

@@ -42,6 +42,7 @@
     "versionHelp": "Every changed release needs a new version in SKILL.md. Sync never overwrites a published version or skips scanning/review. Pausing stops manual, scheduled and webhook sync.",
     "states": {
       "READY": "Not checked yet",
+      "QUEUED": "Queued for sync",
       "UNCHANGED": "No new commit",
       "FAILED": "Sync failed",
       "SCANNING": "Scanning",

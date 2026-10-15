@@ -66,27 +66,27 @@ public class GitSourceService {
     public GitSourceResponse syncOwned(UUID id,String owner) { owned(id,owner);return sync(id); }
     public GitSourceResponse sync(UUID id) {
         var stored=sources.find(id).orElseThrow(()->invalid("Git source is unavailable."));
-        if(!sources.acquire(id)) throw invalid("Git source is disabled or a sync is already running.");
+        UUID lease=sources.acquire(id).orElseThrow(()->invalid("Git source is disabled or a sync is already running."));
         stored=sources.find(id).orElseThrow(()->invalid("Git source is unavailable."));
         var source=stored.source();
         try {
             assertPublisher(stored.owner(),source.namespace());
             var prepared=imports.prepare(new GitImportRequest(source.repository(),source.ref(),source.subdir(),source.credentialId()),stored.owner());
             if(prepared.source().commit().equals(source.lastCommit())) {
-                sources.finish(id,null,null,"UNCHANGED",null);
+                sources.finish(id,lease,null,null,"UNCHANGED",null);
             } else {
                 // Automatic imports never confirm fresh warnings or inherit platform-admin direct publication privileges.
                 if(!prepared.warnings().isEmpty()) throw invalid("Git package has warnings. Import and confirm manually before syncing this source.");
                 assertPublisher(stored.owner(),source.namespace());
-                if(!sources.activeLease(id)) throw invalid("Git source was disabled or its sync lease expired.");
+                if(!sources.activeLease(id,lease)) throw invalid("Git source was disabled or its sync lease expired.");
                 var result=publications.publish(source.namespace(),entries(prepared.packageBase64()),stored.owner(),
                     SkillVisibility.valueOf(source.visibility()),Set.of(),false,SkillPublishAppService.AvatarAction.KEEP,
                     null,null,new AuditRequestContext(null,"SkillHub Git source sync"));
-                sources.finish(id,prepared.source().commit(),result.version().getVersion(),result.version().getStatus().name(),null);
+                sources.finish(id,lease,prepared.source().commit(),result.version().getVersion(),result.version().getStatus().name(),null);
             }
         } catch(Exception e) {
             // Deliberately do not persist remote errors, response bodies or credentials.
-            sources.finish(id,null,null,"FAILED","Sync failed. Check source access, namespace permission, package warnings and a new SKILL.md version; retry manually.");
+            sources.finish(id,lease,null,null,"FAILED","Sync failed. Check source access, namespace permission, package warnings and a new SKILL.md version; retry manually.");
         }
         return sources.find(id).orElseThrow().source();
     }
@@ -122,7 +122,8 @@ public class GitSourceService {
         String actual=gitlab?gitlabToken:githubSignature;
         if(actual==null||!MessageDigest.isEqual(expected.getBytes(StandardCharsets.UTF_8),actual.getBytes(StandardCharsets.UTF_8))) throw invalid("Invalid webhook signature.");
         // Body is only an authenticated wake-up signal: always resolve configured repository/ref ourselves.
-        return sync(id);
+        if(!sources.enqueue(id)) throw invalid("Git source is disabled or unavailable.");
+        return sources.find(id).orElseThrow(()->invalid("Git source is unavailable.")).source();
     }
     private String masterSecret() {
         String secret=properties.getWebhookSecret();

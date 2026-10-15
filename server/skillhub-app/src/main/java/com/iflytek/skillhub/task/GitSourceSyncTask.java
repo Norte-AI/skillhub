@@ -14,8 +14,7 @@ public class GitSourceSyncTask {
     }
     @Scheduled(fixedDelayString="${skillhub.git.poll-delay-ms:60000}")
     public void poll() {
-        if(!properties.isAutomaticSyncEnabled()) return;
-        for(var id:sources.due()) {
+        for(var id:sources.due(properties.isAutomaticSyncEnabled())) {
             try { service.sync(id); } catch(RuntimeException ignored) { /* Another worker owns the source or it was deleted. */ }
         }
     }

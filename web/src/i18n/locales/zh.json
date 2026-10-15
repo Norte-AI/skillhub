@@ -42,6 +42,7 @@
     "versionHelp": "每次变更发布都需要在 SKILL.md 中声明新版本。同步不会覆盖已发布版本，也不会跳过扫描或审核。暂停后手动、定时与 Webhook 同步均停止。",
     "states": {
       "READY": "尚未检查",
+      "QUEUED": "等待同步",
       "UNCHANGED": "没有新提交",
       "FAILED": "同步失败",
       "SCANNING": "正在扫描",
